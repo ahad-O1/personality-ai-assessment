@@ -1,0 +1,301 @@
+question_text,trait,facet,weight,reverse_scoring,is_active,source
+Worry about things.,N,Anxiety,1,False,True,IPIP-120
+Fear for the worst.,N,Anxiety,1,False,True,IPIP-120
+Am afraid of many things.,N,Anxiety,1,False,True,IPIP-120
+Get stressed out easily.,N,Anxiety,1,False,True,IPIP-120
+Get angry easily.,N,Anger,1,False,True,IPIP-120
+Get irritated easily.,N,Anger,1,False,True,IPIP-120
+Lose my temper.,N,Anger,1,False,True,IPIP-120
+Am not easily annoyed.,N,Anger,1,True,True,IPIP-120
+Often feel blue.,N,Depression,1,False,True,IPIP-120
+Dislike myself.,N,Depression,1,False,True,IPIP-120
+Am often down in the dumps.,N,Depression,1,False,True,IPIP-120
+Feel comfortable with myself.,N,Depression,1,True,True,IPIP-120
+Find it difficult to approach others.,N,Self-Consciousness,1,False,True,IPIP-120
+Am afraid to draw attention to myself.,N,Self-Consciousness,1,False,True,IPIP-120
+Only feel comfortable with friends.,N,Self-Consciousness,1,False,True,IPIP-120
+Am not bothered by difficult social situations.,N,Self-Consciousness,1,True,True,IPIP-120
+Go on binges.,N,Immoderation,1,False,True,IPIP-120
+Rarely overindulge.,N,Immoderation,1,True,True,IPIP-120
+Easily resist temptations.,N,Immoderation,1,True,True,IPIP-120
+Am able to control my cravings.,N,Immoderation,1,True,True,IPIP-120
+Panic easily.,N,Vulnerability,1,False,True,IPIP-120
+Become overwhelmed by events.,N,Vulnerability,1,False,True,IPIP-120
+Feel that I'm unable to deal with things.,N,Vulnerability,1,False,True,IPIP-120
+Remain calm under pressure.,N,Vulnerability,1,True,True,IPIP-120
+Make friends easily.,E,Friendliness,1,False,True,IPIP-120
+Feel comfortable around people.,E,Friendliness,1,False,True,IPIP-120
+Avoid contacts with others.,E,Friendliness,1,True,True,IPIP-120
+Keep others at a distance.,E,Friendliness,1,True,True,IPIP-120
+Love large parties.,E,Gregariousness,1,False,True,IPIP-120
+Talk to a lot of different people at parties.,E,Gregariousness,1,False,True,IPIP-120
+Prefer to be alone.,E,Gregariousness,1,True,True,IPIP-120
+Avoid crowds.,E,Gregariousness,1,True,True,IPIP-120
+Take charge.,E,Assertiveness,1,False,True,IPIP-120
+Try to lead others.,E,Assertiveness,1,False,True,IPIP-120
+Take control of things.,E,Assertiveness,1,False,True,IPIP-120
+Wait for others to lead the way.,E,Assertiveness,1,True,True,IPIP-120
+Am always busy.,E,Activity Level,1,False,True,IPIP-120
+Am always on the go.,E,Activity Level,1,False,True,IPIP-120
+Do a lot in my spare time.,E,Activity Level,1,False,True,IPIP-120
+Like to take it easy.,E,Activity Level,1,True,True,IPIP-120
+Love excitement.,E,Excitement-Seeking,1,False,True,IPIP-120
+Seek adventure.,E,Excitement-Seeking,1,False,True,IPIP-120
+Enjoy being reckless.,E,Excitement-Seeking,1,False,True,IPIP-120
+Act wild and crazy.,E,Excitement-Seeking,1,False,True,IPIP-120
+Radiate joy.,E,Cheerfulness,1,False,True,IPIP-120
+Have a lot of fun.,E,Cheerfulness,1,False,True,IPIP-120
+Love life.,E,Cheerfulness,1,False,True,IPIP-120
+Look at the bright side of life.,E,Cheerfulness,1,False,True,IPIP-120
+Have a vivid imagination.,O,Imagination,1,False,True,IPIP-120
+Enjoy wild flights of fantasy.,O,Imagination,1,False,True,IPIP-120
+Love to daydream.,O,Imagination,1,False,True,IPIP-120
+Like to get lost in thought.,O,Imagination,1,False,True,IPIP-120
+Believe in the importance of art.,O,Artistic Interests,1,False,True,IPIP-120
+See beauty in things that others might not notice.,O,Artistic Interests,1,False,True,IPIP-120
+Do not like poetry.,O,Artistic Interests,1,True,True,IPIP-120
+Do not enjoy going to art museums.,O,Artistic Interests,1,True,True,IPIP-120
+Experience my emotions intensely.,O,Emotionality,1,False,True,IPIP-120
+Feel others' emotions.,O,Emotionality,1,False,True,IPIP-120
+Rarely notice my emotional reactions.,O,Emotionality,1,True,True,IPIP-120
+Don't understand people who get emotional.,O,Emotionality,1,True,True,IPIP-120
+Prefer variety to routine.,O,Adventurousness,1,False,True,IPIP-120
+Prefer to stick with things that I know.,O,Adventurousness,1,True,True,IPIP-120
+Dislike changes.,O,Adventurousness,1,True,True,IPIP-120
+Am attached to conventional ways.,O,Adventurousness,1,True,True,IPIP-120
+Love to read challenging material.,O,Intellect,1,False,True,IPIP-120
+Avoid philosophical discussions.,O,Intellect,1,True,True,IPIP-120
+Have difficulty understanding abstract ideas.,O,Intellect,1,True,True,IPIP-120
+Am not interested in theoretical discussions.,O,Intellect,1,True,True,IPIP-120
+Tend to vote for liberal political candidates.,O,Liberalism,1,False,True,IPIP-120
+Believe that there is no absolute right and wrong.,O,Liberalism,1,False,True,IPIP-120
+Tend to vote for conservative political candidates.,O,Liberalism,1,True,True,IPIP-120
+Believe that we should be tough on crime.,O,Liberalism,1,True,True,IPIP-120
+Trust others.,A,Trust,1,False,True,IPIP-120
+Believe that others have good intentions.,A,Trust,1,False,True,IPIP-120
+Trust what people say.,A,Trust,1,False,True,IPIP-120
+Distrust people.,A,Trust,1,True,True,IPIP-120
+Use others for my own ends.,A,Morality,1,True,True,IPIP-120
+Cheat to get ahead.,A,Morality,1,True,True,IPIP-120
+Take advantage of others.,A,Morality,1,True,True,IPIP-120
+Obstruct others' plans.,A,Morality,1,True,True,IPIP-120
+Am concerned about others.,A,Altruism,1,False,True,IPIP-120
+Love to help others.,A,Altruism,1,False,True,IPIP-120
+Am indifferent to the feelings of others.,A,Altruism,1,True,True,IPIP-120
+Take no time for others.,A,Altruism,1,True,True,IPIP-120
+Love a good fight.,A,Cooperation,1,True,True,IPIP-120
+Yell at people.,A,Cooperation,1,True,True,IPIP-120
+Insult people.,A,Cooperation,1,True,True,IPIP-120
+Get back at others.,A,Cooperation,1,True,True,IPIP-120
+Believe that I am better than others.,A,Modesty,1,True,True,IPIP-120
+Think highly of myself.,A,Modesty,1,True,True,IPIP-120
+Have a high opinion of myself.,A,Modesty,1,True,True,IPIP-120
+Boast about my virtues.,A,Modesty,1,True,True,IPIP-120
+Sympathize with the homeless.,A,Sympathy,1,False,True,IPIP-120
+Feel sympathy for those who are worse off than myself.,A,Sympathy,1,False,True,IPIP-120
+Am not interested in other people's problems.,A,Sympathy,1,True,True,IPIP-120
+Try not to think about the needy.,A,Sympathy,1,True,True,IPIP-120
+Complete tasks successfully.,C,Self-Efficacy,1,False,True,IPIP-120
+Excel in what I do.,C,Self-Efficacy,1,False,True,IPIP-120
+Handle tasks smoothly.,C,Self-Efficacy,1,False,True,IPIP-120
+Know how to get things done.,C,Self-Efficacy,1,False,True,IPIP-120
+Like to tidy up.,C,Orderliness,1,False,True,IPIP-120
+Often forget to put things back in their proper place.,C,Orderliness,1,True,True,IPIP-120
+Leave a mess in my room.,C,Orderliness,1,True,True,IPIP-120
+Leave my belongings around.,C,Orderliness,1,True,True,IPIP-120
+Keep my promises.,C,Dutifulness,1,False,True,IPIP-120
+Tell the truth.,C,Dutifulness,1,False,True,IPIP-120
+Break rules.,C,Dutifulness,1,True,True,IPIP-120
+Break my promises.,C,Dutifulness,1,True,True,IPIP-120
+Do more than what's expected of me.,C,Achievement-Striving,1,False,True,IPIP-120
+Work hard.,C,Achievement-Striving,1,False,True,IPIP-120
+Put little time and effort into my work.,C,Achievement-Striving,1,True,True,IPIP-120
+Do just enough work to get by.,C,Achievement-Striving,1,True,True,IPIP-120
+Am always prepared.,C,Self-Discipline,1,False,True,IPIP-120
+Carry out my plans.,C,Self-Discipline,1,False,True,IPIP-120
+Waste my time.,C,Self-Discipline,1,True,True,IPIP-120
+Have difficulty starting tasks.,C,Self-Discipline,1,True,True,IPIP-120
+Jump into things without thinking.,C,Cautiousness,1,True,True,IPIP-120
+Make rash decisions.,C,Cautiousness,1,True,True,IPIP-120
+Rush into things.,C,Cautiousness,1,True,True,IPIP-120
+Act without thinking.,C,Cautiousness,1,True,True,IPIP-120
+Get caught up in my problems.,N,Anxiety,1,False,True,IPIP-300
+Am not easily bothered by things.,N,Anxiety,1,True,True,IPIP-300
+Am relaxed most of the time.,N,Anxiety,1,True,True,IPIP-300
+Am not easily disturbed by events.,N,Anxiety,1,True,True,IPIP-300
+Don't worry about things that have already happened.,N,Anxiety,1,True,True,IPIP-300
+Adapt easily to new situations.,N,Anxiety,1,True,True,IPIP-300
+Get upset easily.,N,Anger,1,False,True,IPIP-300
+Am often in a bad mood.,N,Anger,1,False,True,IPIP-300
+Rarely get irritated.,N,Anger,1,True,True,IPIP-300
+Seldom get mad.,N,Anger,1,True,True,IPIP-300
+Keep my cool.,N,Anger,1,True,True,IPIP-300
+Rarely complain.,N,Anger,1,True,True,IPIP-300
+Have a low opinion of myself.,N,Depression,1,False,True,IPIP-300
+Have frequent mood swings.,N,Depression,1,False,True,IPIP-300
+Feel desperate.,N,Depression,1,False,True,IPIP-300
+Feel that my life lacks direction.,N,Depression,1,False,True,IPIP-300
+Seldom feel blue.,N,Depression,1,True,True,IPIP-300
+Am very pleased with myself.,N,Depression,1,True,True,IPIP-300
+Am easily intimidated.,N,Self-Consciousness,1,False,True,IPIP-300
+Am afraid that I will do the wrong thing.,N,Self-Consciousness,1,False,True,IPIP-300
+Stumble over my words.,N,Self-Consciousness,1,False,True,IPIP-300
+Am not embarrassed easily.,N,Self-Consciousness,1,True,True,IPIP-300
+Am comfortable in unfamiliar situations.,N,Self-Consciousness,1,True,True,IPIP-300
+Am able to stand up for myself.,N,Self-Consciousness,1,True,True,IPIP-300
+Often eat too much.,N,Immoderation,1,False,True,IPIP-300
+Don't know why I do some of the things I do.,N,Immoderation,1,False,True,IPIP-300
+Do things I later regret.,N,Immoderation,1,False,True,IPIP-300
+Love to eat.,N,Immoderation,1,False,True,IPIP-300
+Never spend more than I can afford.,N,Immoderation,1,True,True,IPIP-300
+Never splurge.,N,Immoderation,1,True,True,IPIP-300
+Can't make up my mind.,N,Vulnerability,1,False,True,IPIP-300
+Get overwhelmed by emotions.,N,Vulnerability,1,False,True,IPIP-300
+Can handle complex problems.,N,Vulnerability,1,True,True,IPIP-300
+Know how to cope.,N,Vulnerability,1,True,True,IPIP-300
+Readily overcome setbacks.,N,Vulnerability,1,True,True,IPIP-300
+Am calm even in tense situations.,N,Vulnerability,1,True,True,IPIP-300
+Warm up quickly to others.,E,Friendliness,1,False,True,IPIP-300
+Act comfortably with others.,E,Friendliness,1,False,True,IPIP-300
+Cheer people up.,E,Friendliness,1,False,True,IPIP-300
+Am hard to get to know.,E,Friendliness,1,True,True,IPIP-300
+Often feel uncomfortable around others.,E,Friendliness,1,True,True,IPIP-300
+Am not really interested in others.,E,Friendliness,1,True,True,IPIP-300
+Enjoy being part of a group.,E,Gregariousness,1,False,True,IPIP-300
+Involve others in what I am doing.,E,Gregariousness,1,False,True,IPIP-300
+Love surprise parties.,E,Gregariousness,1,False,True,IPIP-300
+Want to be left alone.,E,Gregariousness,1,True,True,IPIP-300
+Don't like crowded events.,E,Gregariousness,1,True,True,IPIP-300
+Seek quiet.,E,Gregariousness,1,True,True,IPIP-300
+Can talk others into doing things.,E,Assertiveness,1,False,True,IPIP-300
+Seek to influence others.,E,Assertiveness,1,False,True,IPIP-300
+Keep in the background.,E,Assertiveness,1,True,True,IPIP-300
+Have little to say.,E,Assertiveness,1,True,True,IPIP-300
+Don't like to draw attention to myself.,E,Assertiveness,1,True,True,IPIP-300
+Hold back my opinions.,E,Assertiveness,1,True,True,IPIP-300
+Can manage many things at the same time.,E,Activity Level,1,False,True,IPIP-300
+React quickly.,E,Activity Level,1,False,True,IPIP-300
+Like to take my time.,E,Activity Level,1,True,True,IPIP-300
+Like a leisurely lifestyle.,E,Activity Level,1,True,True,IPIP-300
+Let things proceed at their own pace.,E,Activity Level,1,True,True,IPIP-300
+React slowly.,E,Activity Level,1,True,True,IPIP-300
+Love action.,E,Excitement-Seeking,1,False,True,IPIP-300
+Enjoy being part of a loud crowd.,E,Excitement-Seeking,1,False,True,IPIP-300
+Am willing to try anything once.,E,Excitement-Seeking,1,False,True,IPIP-300
+Seek danger.,E,Excitement-Seeking,1,False,True,IPIP-300
+Would never go hang gliding or bungee jumping.,E,Excitement-Seeking,1,True,True,IPIP-300
+Dislike loud music.,E,Excitement-Seeking,1,True,True,IPIP-300
+Express childlike joy.,E,Cheerfulness,1,False,True,IPIP-300
+Laugh my way through life.,E,Cheerfulness,1,False,True,IPIP-300
+Laugh aloud.,E,Cheerfulness,1,False,True,IPIP-300
+Amuse my friends.,E,Cheerfulness,1,False,True,IPIP-300
+Am not easily amused.,E,Cheerfulness,1,True,True,IPIP-300
+Seldom joke around.,E,Cheerfulness,1,True,True,IPIP-300
+Indulge in my fantasies.,O,Imagination,1,False,True,IPIP-300
+Spend time reflecting on things.,O,Imagination,1,False,True,IPIP-300
+Seldom daydream.,O,Imagination,1,True,True,IPIP-300
+Do not have a good imagination.,O,Imagination,1,True,True,IPIP-300
+Seldom get lost in thought.,O,Imagination,1,True,True,IPIP-300
+Have difficulty imagining things.,O,Imagination,1,True,True,IPIP-300
+Like music.,O,Artistic Interests,1,False,True,IPIP-300
+Love flowers.,O,Artistic Interests,1,False,True,IPIP-300
+Enjoy the beauty of nature.,O,Artistic Interests,1,False,True,IPIP-300
+Do not like art.,O,Artistic Interests,1,True,True,IPIP-300
+Do not like concerts.,O,Artistic Interests,1,True,True,IPIP-300
+Do not enjoy watching dance performances.,O,Artistic Interests,1,True,True,IPIP-300
+Am passionate about causes.,O,Emotionality,1,False,True,IPIP-300
+Enjoy examining myself and my life.,O,Emotionality,1,False,True,IPIP-300
+Try to understand myself.,O,Emotionality,1,False,True,IPIP-300
+Seldom get emotional.,O,Emotionality,1,True,True,IPIP-300
+Am not easily affected by my emotions.,O,Emotionality,1,True,True,IPIP-300
+Experience very few emotional highs and lows.,O,Emotionality,1,True,True,IPIP-300
+Like to visit new places.,O,Adventurousness,1,False,True,IPIP-300
+Am interested in many things.,O,Adventurousness,1,False,True,IPIP-300
+Like to begin new things.,O,Adventurousness,1,False,True,IPIP-300
+Don't like the idea of change.,O,Adventurousness,1,True,True,IPIP-300
+Am a creature of habit.,O,Adventurousness,1,True,True,IPIP-300
+Dislike new foods.,O,Adventurousness,1,True,True,IPIP-300
+Like to solve complex problems.,O,Intellect,1,False,True,IPIP-300
+Have a rich vocabulary.,O,Intellect,1,False,True,IPIP-300
+Can handle a lot of information.,O,Intellect,1,False,True,IPIP-300
+Enjoy thinking about things.,O,Intellect,1,False,True,IPIP-300
+Am not interested in abstract ideas.,O,Intellect,1,True,True,IPIP-300
+Avoid difficult reading material.,O,Intellect,1,True,True,IPIP-300
+Believe that criminals should receive help rather than,O,Liberalism,1,False,True,IPIP-300
+Believe in one true religion.,O,Liberalism,1,True,True,IPIP-300
+Believe that too much tax money goes to support artists.,O,Liberalism,1,True,True,IPIP-300
+Believe laws should be strictly enforced.,O,Liberalism,1,True,True,IPIP-300
+Believe that we coddle criminals too much.,O,Liberalism,1,True,True,IPIP-300
+Like to stand during the national anthem.,O,Liberalism,1,True,True,IPIP-300
+Believe that people are basically moral.,A,Trust,1,False,True,IPIP-300
+Believe in human goodness.,A,Trust,1,False,True,IPIP-300
+Think that all will be well.,A,Trust,1,False,True,IPIP-300
+Suspect hidden motives in others.,A,Trust,1,True,True,IPIP-300
+Am wary of others.,A,Trust,1,True,True,IPIP-300
+Believe that people are essentially evil.,A,Trust,1,True,True,IPIP-300
+Would never cheat on my taxes.,A,Morality,1,False,True,IPIP-300
+Stick to the rules.,A,Morality,1,False,True,IPIP-300
+Use flattery to get ahead.,A,Morality,1,True,True,IPIP-300
+Know how to get around the rules.,A,Morality,1,True,True,IPIP-300
+Put people under pressure.,A,Morality,1,True,True,IPIP-300
+Pretend to be concerned for others.,A,Morality,1,True,True,IPIP-300
+Make people feel welcome.,A,Altruism,1,False,True,IPIP-300
+Anticipate the needs of others.,A,Altruism,1,False,True,IPIP-300
+Have a good word for everyone.,A,Altruism,1,False,True,IPIP-300
+Look down on others.,A,Altruism,1,True,True,IPIP-300
+Make people feel uncomfortable.,A,Altruism,1,True,True,IPIP-300
+Turn my back on others.,A,Altruism,1,True,True,IPIP-300
+Am easy to satisfy.,A,Cooperation,1,False,True,IPIP-300
+Can't stand confrontations.,A,Cooperation,1,False,True,IPIP-300
+Hate to seem pushy.,A,Cooperation,1,False,True,IPIP-300
+Have a sharp tongue.,A,Cooperation,1,True,True,IPIP-300
+Contradict others.,A,Cooperation,1,True,True,IPIP-300
+Hold a grudge.,A,Cooperation,1,True,True,IPIP-300
+Dislike being the center of attention.,A,Modesty,1,False,True,IPIP-300
+Dislike talking about myself.,A,Modesty,1,False,True,IPIP-300
+Consider myself an average person.,A,Modesty,1,False,True,IPIP-300
+Seldom toot my own horn.,A,Modesty,1,False,True,IPIP-300
+Know the answers to many questions.,A,Modesty,1,True,True,IPIP-300
+Make myself the center of attention.,A,Modesty,1,True,True,IPIP-300
+Value cooperation over competition.,A,Sympathy,1,False,True,IPIP-300
+Suffer from others' sorrows.,A,Sympathy,1,False,True,IPIP-300
+Tend to dislike soft-hearted people.,A,Sympathy,1,True,True,IPIP-300
+Believe in an eye for an eye.,A,Sympathy,1,True,True,IPIP-300
+Believe people should fend for themselves.,A,Sympathy,1,True,True,IPIP-300
+Can't stand weak people.,A,Sympathy,1,True,True,IPIP-300
+Am sure of my ground.,C,Self-Efficacy,1,False,True,IPIP-300
+Come up with good solutions.,C,Self-Efficacy,1,False,True,IPIP-300
+Misjudge situations.,C,Self-Efficacy,1,True,True,IPIP-300
+Don't understand things.,C,Self-Efficacy,1,True,True,IPIP-300
+Have little to contribute.,C,Self-Efficacy,1,True,True,IPIP-300
+Don't see the consequences of things.,C,Self-Efficacy,1,True,True,IPIP-300
+Like order.,C,Orderliness,1,False,True,IPIP-300
+"Want everything to be ""just right.""",C,Orderliness,1,False,True,IPIP-300
+Love order and regularity.,C,Orderliness,1,False,True,IPIP-300
+Do things according to a plan.,C,Orderliness,1,False,True,IPIP-300
+Am not bothered by messy people.,C,Orderliness,1,True,True,IPIP-300
+Am not bothered by disorder.,C,Orderliness,1,True,True,IPIP-300
+Try to follow the rules.,C,Dutifulness,1,False,True,IPIP-300
+Pay my bills on time.,C,Dutifulness,1,False,True,IPIP-300
+Listen to my conscience.,C,Dutifulness,1,False,True,IPIP-300
+Get others to do my duties.,C,Dutifulness,1,True,True,IPIP-300
+Do the opposite of what is asked.,C,Dutifulness,1,True,True,IPIP-300
+Misrepresent the facts.,C,Dutifulness,1,True,True,IPIP-300
+Go straight for the goal.,C,Achievement-Striving,1,False,True,IPIP-300
+Turn plans into actions.,C,Achievement-Striving,1,False,True,IPIP-300
+Plunge into tasks with all my heart.,C,Achievement-Striving,1,False,True,IPIP-300
+Set high standards for myself and others.,C,Achievement-Striving,1,False,True,IPIP-300
+Demand quality.,C,Achievement-Striving,1,False,True,IPIP-300
+Am not highly motivated to succeed.,C,Achievement-Striving,1,True,True,IPIP-300
+Get chores done right away.,C,Self-Discipline,1,False,True,IPIP-300
+Start tasks right away.,C,Self-Discipline,1,False,True,IPIP-300
+Get to work at once.,C,Self-Discipline,1,False,True,IPIP-300
+Find it difficult to get down to work.,C,Self-Discipline,1,True,True,IPIP-300
+Need a push to get started.,C,Self-Discipline,1,True,True,IPIP-300
+Postpone decisions.,C,Self-Discipline,1,True,True,IPIP-300
+Avoid mistakes.,C,Cautiousness,1,False,True,IPIP-300
+Choose my words with care.,C,Cautiousness,1,False,True,IPIP-300
+Stick to my chosen path.,C,Cautiousness,1,False,True,IPIP-300
+Like to act on a whim.,C,Cautiousness,1,True,True,IPIP-300
+Do crazy things.,C,Cautiousness,1,True,True,IPIP-300
+Often make last-minute plans.,C,Cautiousness,1,True,True,IPIP-300

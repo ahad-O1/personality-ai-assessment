@@ -1,0 +1,228 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Register - PersonalityAI{% endblock %}
+
+{% block extra_css %}
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f6f9ff;
+            color: #0f172a;
+        }
+
+        .auth-wrapper {
+            min-height: 100vh;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .left-panel {
+            background: linear-gradient(180deg, #061b4a, #08245f);
+            color: white;
+            padding: 70px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .logo {
+            font-size: 34px;
+            font-weight: bold;
+            margin-bottom: 25px;
+        }
+
+        .logo span {
+            color: #38bdf8;
+        }
+
+        .left-panel h1 {
+            font-size: 44px;
+            margin-bottom: 18px;
+        }
+
+        .left-panel p {
+            font-size: 18px;
+            color: #dbeafe;
+            line-height: 1.7;
+        }
+
+        .feature-list {
+            margin-top: 30px;
+        }
+
+        .feature-list div {
+            background: rgba(255,255,255,0.08);
+            padding: 14px 18px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            font-weight: bold;
+        }
+
+        .right-panel {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+        }
+
+        .auth-card {
+            width: 100%;
+            max-width: 450px;
+            background: white;
+            padding: 40px;
+            border-radius: 22px;
+            box-shadow: 0 8px 25px rgba(15, 23, 42, 0.08);
+        }
+
+        .auth-card h2 {
+            margin-top: 0;
+            color: #0f172a;
+            font-size: 30px;
+        }
+
+        .auth-card p {
+            color: #64748b;
+        }
+
+        .input-group {
+            margin-top: 16px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #334155;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #d1d5db;
+            border-radius: 12px;
+            font-size: 15px;
+            outline: none;
+        }
+
+        .input-group input:focus {
+            border-color: #2563eb;
+        }
+
+        .btn {
+            width: 100%;
+            margin-top: 25px;
+            padding: 15px;
+            border: none;
+            border-radius: 12px;
+            background: #2563eb;
+            color: white;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background: #1e40af;
+        }
+
+        .link-text {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .link-text a {
+            color: #2563eb;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .message {
+            background: #eff6ff;
+            color: #1e3a8a;
+            padding: 12px;
+            border-radius: 10px;
+            margin-bottom: 12px;
+        }
+
+        @media (max-width: 900px) {
+            .auth-wrapper {
+                grid-template-columns: 1fr;
+            }
+
+            .left-panel {
+                display: none;
+            }
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+<div class="auth-wrapper">
+
+    <div class="left-panel">
+        <div class="logo">Personality<span>AI</span></div>
+
+        <h1>Create Your Account</h1>
+        <p>
+            Start your personality assessment and receive AI-based
+            career recommendations according to your OCEAN traits.
+        </p>
+
+        <div class="feature-list">
+            <div>✓ Secure User Registration</div>
+            <div>✓ Dynamic Personality Test</div>
+            <div>✓ Visual Result Dashboard</div>
+            <div>✓ Career & Skill Suggestions</div>
+        </div>
+    </div>
+
+    <div class="right-panel">
+        <div class="auth-card">
+            <h2>Register</h2>
+            <p>Create an account to start your assessment.</p>
+
+            {% for message in messages %}
+                <div class="message">{{ message }}</div>
+            {% endfor %}
+
+            <form method="post">
+                {% csrf_token %}
+
+                <div class="input-group">
+                    <label>Username</label>
+                    <input type="text" name="username" placeholder="Choose username" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Email</label>
+                    <input type="email" name="email" placeholder="Enter email address" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Password</label>
+                    <input type="password" name="password" placeholder="Create password" required>
+                </div>
+
+                <div class="input-group">
+                    <label>Confirm Password</label>
+                    <input type="password" name="confirm_password" placeholder="Confirm password" required>
+                </div>
+
+                <button type="submit" class="btn">Create Account</button>
+            </form>
+
+            <div class="link-text">
+                Already have an account?
+                <a href="{% url 'login' %}">Login</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

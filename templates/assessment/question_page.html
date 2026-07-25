@@ -1,0 +1,289 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Adaptive Personality Assessment{% endblock %}
+
+{% block extra_css %}
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f6f9ff;
+            color: #0f172a;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1050px;
+            margin: 35px auto;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1e3a8a, #2563eb);
+            color: white;
+            padding: 30px;
+            border-radius: 20px;
+            text-align: center;
+        }
+
+        .layout {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 25px;
+            margin-top: 25px;
+        }
+
+        .card {
+            background: white;
+            padding: 28px;
+            border-radius: 18px;
+            box-shadow: 0 8px 25px rgba(15, 23, 42, 0.08);
+        }
+
+        .progress-bar,
+        .small-bar {
+            background: #e5e7eb;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            height: 12px;
+            margin-top: 12px;
+        }
+
+        .progress-fill,
+        .small-fill {
+            height: 100%;
+            background: #2563eb;
+        }
+
+        .question-box {
+            text-align: center;
+            margin-top: 25px;
+        }
+
+        .question-box h2 {
+            font-size: 28px;
+            margin-bottom: 35px;
+        }
+
+        .options {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 15px;
+        }
+
+        .option-box {
+            cursor: pointer;
+            background: #f8fafc;
+            padding: 18px;
+            border-radius: 16px;
+            border: 2px solid transparent;
+        }
+
+        .option-box input {
+            display: none;
+        }
+
+        .option-box:hover,
+        .option-box:has(input:checked) {
+            border-color: #2563eb;
+            background: #eef4ff;
+        }
+
+        .circle {
+            width: 55px;
+            height: 55px;
+            margin: 0 auto 10px;
+            border-radius: 50%;
+            background: #e5e7eb;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        .option-box:has(input:checked) .circle {
+            background: #2563eb;
+            color: white;
+        }
+
+        .submit-btn {
+            margin-top: 30px;
+            width: 100%;
+            padding: 16px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 14px;
+            font-size: 17px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            margin: 16px 0;
+        }
+
+        .trait-item {
+            margin-bottom: 16px;
+        }
+
+        .trait-name {
+            display: flex;
+            justify-content: space-between;
+            font-weight: bold;
+            margin-bottom: 6px;
+        }
+
+        .small-bar {
+            height: 8px;
+        }
+
+        .tip {
+            margin-top: 25px;
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            padding: 18px;
+            border-radius: 16px;
+            color: #1e3a8a;
+        }
+
+        @media (max-width: 850px) {
+
+            .layout,
+            .options {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+
+        <div class="header">
+            <h1>AI Adaptive Personality Assessment</h1>
+            <p>The system selects each next question based on your previous answers.</p>
+        </div>
+
+        <div class="layout">
+
+            <section class="card">
+                <h2>Question {{ answered_count|add:1 }}</h2>
+
+                <p>
+                    Answered: <b>{{ answered_count }}</b> /
+                    Maximum: <b>{{ max_questions }}</b>
+                </p>
+
+                <div class="progress-bar">
+                    <div class="progress-fill" data-width="{{ confidence }}"></div>
+                </div>
+
+                <p><b>AI Confidence:</b> {{ confidence }}%</p>
+
+                <form method="post">
+                    {% csrf_token %}
+
+                    <input type="hidden" name="question_id" value="{{ question.id }}">
+                    <input type="hidden" name="language" value="{{ language }}">
+
+                    <div class="question-box">
+                        <h2>{{ question.question_text }}</h2>
+
+                        <div class="options">
+                            <label class="option-box">
+                                <input type="radio" name="answer" value="1" required>
+                                <div class="circle">1</div>
+                                <div>Strongly<br>Disagree</div>
+                            </label>
+
+                            <label class="option-box">
+                                <input type="radio" name="answer" value="2" required>
+                                <div class="circle">2</div>
+                                <div>Disagree</div>
+                            </label>
+
+                            <label class="option-box">
+                                <input type="radio" name="answer" value="3" required>
+                                <div class="circle">3</div>
+                                <div>Neutral</div>
+                            </label>
+
+                            <label class="option-box">
+                                <input type="radio" name="answer" value="4" required>
+                                <div class="circle">4</div>
+                                <div>Agree</div>
+                            </label>
+
+                            <label class="option-box">
+                                <input type="radio" name="answer" value="5" required>
+                                <div class="circle">5</div>
+                                <div>Strongly<br>Agree</div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="submit-btn">
+                        Save Answer & Continue →
+                    </button>
+                </form>
+            </section>
+
+            <aside class="card">
+                <h2>Adaptive Status</h2>
+
+                <div class="info-row">
+                    <span>Answered</span>
+                    <b>{{ answered_count }}</b>
+                </div>
+
+                <div class="info-row">
+                    <span>Max Questions</span>
+                    <b>{{ max_questions }}</b>
+                </div>
+
+                <div class="info-row">
+                    <span>Confidence</span>
+                    <b>{{ confidence }}%</b>
+                </div>
+
+                <hr>
+
+                <h3>Trait Confidence</h3>
+
+                {% for trait, value in trait_confidences.items %}
+                <div class="trait-item">
+                    <div class="trait-name">
+                        <span>{{ trait }}</span>
+                        <span>{{ value }}%</span>
+                    </div>
+                    <div class="small-bar">
+                        <div class="small-fill" data-width="{{ value }}"></div>
+                    </div>
+                </div>
+                {% endfor %}
+            </aside>
+
+        </div>
+
+        <div class="tip">
+            <b>Tip:</b> You do not need to answer all 200 questions. The AI stops automatically when confidence is high
+            enough.
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block extra_js %}
+    <script>
+        document.querySelectorAll(".progress-fill, .small-fill").forEach(function (bar) {
+            bar.style.width = bar.dataset.width + "%";
+        });
+    </script>
+{% endblock %}

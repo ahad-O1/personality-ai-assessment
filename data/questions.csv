@@ -1,0 +1,31 @@
+question_text,trait,weight,reverse_scoring,is_active
+I enjoy trying new things.,O,1,False,True
+I like learning about different cultures.,O,1,False,True
+I enjoy creative activities.,O,1,False,True
+I am curious about how things work.,O,1,False,True
+I enjoy exploring new ideas.,O,1,False,True
+I dislike change.,O,1,True,True
+I complete tasks on time.,C,1,False,True
+I like keeping my work organized.,C,1,False,True
+I pay attention to details.,C,1,False,True
+I follow schedules regularly.,C,1,False,True
+I plan before making decisions.,C,1,False,True
+I often leave tasks unfinished.,C,1,True,True
+I enjoy meeting new people.,E,1,False,True
+I feel comfortable speaking in groups.,E,1,False,True
+I like being the center of attention.,E,1,False,True
+I enjoy social gatherings.,E,1,False,True
+I start conversations easily.,E,1,False,True
+I prefer staying alone.,E,1,True,True
+I enjoy helping others.,A,1,False,True
+I am considerate of other people's feelings.,A,1,False,True
+I try to avoid conflicts.,A,1,False,True
+I cooperate well with others.,A,1,False,True
+I am willing to compromise when needed.,A,1,False,True
+I find it difficult to trust others.,A,1,True,True
+I often feel stressed.,N,1,False,True
+I worry about things frequently.,N,1,False,True
+I get upset easily.,N,1,False,True
+I feel nervous in difficult situations.,N,1,False,True
+I experience mood changes often.,N,1,False,True
+I remain calm under pressure.,N,1,True,True

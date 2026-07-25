@@ -1,0 +1,6 @@
+usage: manage.py retrain_career_model [-h] [--version] [-v {0,1,2,3}]
+                                      [--settings SETTINGS]
+                                      [--pythonpath PYTHONPATH] [--traceback]
+                                      [--no-color] [--force-color]
+                                      [--skip-checks]
+manage.py retrain_career_model: error: unrecognized arguments: --automatic

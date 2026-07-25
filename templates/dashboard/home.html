@@ -1,0 +1,350 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}AI Personality Dashboard{% endblock %}
+
+{% block extra_css %}
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f6f9ff;
+            color: #0f172a;
+        }
+
+        .app {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 280px;
+            background: linear-gradient(180deg, #061b4a, #08245f);
+            color: white;
+            padding: 28px 22px;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: bold;
+            margin-bottom: 40px;
+        }
+
+        .logo span {
+            color: #38bdf8;
+        }
+
+        .menu a {
+            display: block;
+            color: #dbeafe;
+            text-decoration: none;
+            padding: 16px 18px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            font-weight: bold;
+        }
+
+        .menu a.active,
+        .menu a:hover {
+            background: #2563eb;
+            color: white;
+        }
+
+        .sidebar-card {
+            margin-top: 45px;
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            border-radius: 18px;
+            padding: 24px;
+            text-align: center;
+        }
+
+        .main {
+            margin-left: 280px;
+            width: calc(100% - 280px);
+        }
+
+        .topbar {
+            height: 82px;
+            background: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 45px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .search {
+            width: 420px;
+            background: #f1f5f9;
+            border: none;
+            padding: 14px 20px;
+            border-radius: 30px;
+            font-size: 15px;
+        }
+
+        .user-box {
+            font-weight: bold;
+            color: #1e3a8a;
+        }
+
+        .content {
+            padding: 35px 45px;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #ffffff, #eef4ff);
+            border-radius: 24px;
+            padding: 45px;
+            display: grid;
+            grid-template-columns: 1.3fr 0.7fr;
+            gap: 30px;
+            align-items: center;
+            box-shadow: 0 8px 25px rgba(15, 23, 42, 0.08);
+        }
+
+        .hero h1 {
+            font-size: 42px;
+            margin: 0;
+            color: #0f172a;
+        }
+
+        .hero p {
+            color: #64748b;
+            font-size: 17px;
+            line-height: 1.7;
+            margin: 18px 0;
+        }
+
+        .btn {
+            display: inline-block;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            padding: 15px 28px;
+            border-radius: 12px;
+            font-weight: bold;
+            margin-top: 12px;
+        }
+
+        .hero-card {
+            background: white;
+            border-radius: 22px;
+            padding: 28px;
+            box-shadow: 0 8px 25px rgba(15, 23, 42, 0.08);
+        }
+
+        .hero-card h3 {
+            color: #0f172a;
+            margin-top: 0;
+        }
+
+        .check-item {
+            background: #f8fafc;
+            padding: 14px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            color: #334155;
+            font-weight: bold;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 22px;
+            margin-top: 28px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 18px;
+            box-shadow: 0 8px 25px rgba(15, 23, 42, 0.08);
+        }
+
+        .stat-card h2 {
+            color: #2563eb;
+            margin: 0;
+            font-size: 34px;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+            margin-top: 28px;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 28px;
+            border-radius: 18px;
+            box-shadow: 0 8px 25px rgba(15, 23, 42, 0.08);
+        }
+
+        .feature-card h3 {
+            color: #1e3a8a;
+        }
+
+        .tip {
+            margin-top: 28px;
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            border-radius: 16px;
+            padding: 18px 22px;
+            color: #1e3a8a;
+        }
+
+        @media (max-width: 1000px) {
+            .sidebar {
+                display: none;
+            }
+
+            .main {
+                margin-left: 0;
+                width: 100%;
+            }
+
+            .hero {
+                grid-template-columns: 1fr;
+            }
+
+            .stats,
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .search {
+                display: none;
+            }
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="app">
+
+        <aside class="sidebar">
+            <div class="logo">Personality<span>AI</span></div>
+
+
+            <div class="menu">
+                <a href="{% url 'home' %}" class="active">Home</a>
+
+                {% if user.is_authenticated %}
+                <a href="{% url 'user_dashboard' %}">Dashboard</a>
+                <a href="{% url 'start_assessment' %}">Take Assessment</a>
+                <a href="{% url 'logout' %}">Logout</a>
+                {% else %}
+                <a href="{% url 'login' %}">Login</a>
+                <a href="{% url 'register' %}">Register</a>
+                {% endif %}
+            </div>
+
+            <div class="sidebar-card">
+                <h3>Unlock Your Potential</h3>
+                <p>Complete your assessment and discover your personality-based career path.</p>
+
+                {% if user.is_authenticated %}
+                <a class="btn" href="{% url 'start_assessment' %}">Start Assessment</a>
+                {% else %}
+                <a class="btn" href="{% url 'register' %}">Get Started</a>
+                {% endif %}
+            </div>
+        </aside>
+
+        <main class="main">
+
+            <div class="topbar">
+                <input class="search" type="text" placeholder="Search anything...">
+
+                <div class="user-box">
+                    {% if user.is_authenticated %}
+                    Welcome, {{ user.username }}
+                    {% else %}
+                    Guest User
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="content">
+
+                <section class="hero">
+                    <div>
+                        <h1>AI-Based Adaptive Personality Assessment</h1>
+                        <p>
+                            Discover your Big Five personality traits using a dynamic Django web application
+                            and receive personalized career recommendations with visual reports.
+                        </p>
+
+                        {% if user.is_authenticated %}
+                        <a class="btn" href="{% url 'start_assessment' %}">Start Assessment</a>
+                        {% else %}
+                        <a class="btn" href="{% url 'register' %}">Create Account</a>
+                        {% endif %}
+                    </div>
+
+                    <div class="hero-card">
+                        <h3>What You Will Get</h3>
+                        <div class="check-item">✓ OCEAN Personality Score</div>
+                        <div class="check-item">✓ Radar Chart Report</div>
+                        <div class="check-item">✓ Career Recommendations</div>
+                        <div class="check-item">✓ Personalized Result Dashboard</div>
+                    </div>
+                </section>
+
+                <section class="stats">
+                    <div class="stat-card">
+                        <h2>5</h2>
+                        <p>Personality Traits</p>
+                    </div>
+
+                    <div class="stat-card">
+                        <h2>30+</h2>
+                        <p>Assessment Questions</p>
+                    </div>
+
+                    <div class="stat-card">
+                        <h2>AI</h2>
+                        <p>Based Analysis</p>
+                    </div>
+
+                    <div class="stat-card">
+                        <h2>Career</h2>
+                        <p>Recommendations</p>
+                    </div>
+                </section>
+
+                <section class="feature-grid">
+                    <div class="feature-card">
+                        <h3>Dynamic Assessment</h3>
+                        <p>Questions are loaded from the database and user answers are stored dynamically.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <h3>Visual Reports</h3>
+                        <p>Radar charts and score bars help users understand their personality profile.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <h3>Career Matching</h3>
+                        <p>The system recommends careers according to the user’s OCEAN personality traits.</p>
+                    </div>
+                </section>
+
+                <div class="tip">
+                    <b>Tip:</b> Start your assessment to get a personalized personality report and career path.
+                </div>
+
+            </div>
+        </main>
+
+    </div>
+{% endblock %}

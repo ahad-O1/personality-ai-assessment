@@ -1,0 +1,56 @@
+title,category,description,required_traits,skills,min_openness,min_conscientiousness,min_extraversion,min_agreeableness,max_neuroticism,is_active
+Software Engineer,Technology,Designs and develops software applications.,High Openness and Conscientiousness,"Python, Django, Git, SQL, Problem Solving",70,75,30,40,55,True
+AI Engineer,Technology,Builds AI and machine learning systems.,High Openness and Conscientiousness,"Python, Machine Learning, Deep Learning, TensorFlow, Data Science",80,75,35,45,55,True
+Data Scientist,Technology,Analyzes data and builds predictive models.,High Openness and Analytical Thinking,"Python, Statistics, Pandas, Machine Learning, Visualization",75,75,30,40,55,True
+Machine Learning Engineer,Technology,Builds and deploys machine learning models.,High Openness and Technical Discipline,"Python, ML Algorithms, MLOps, APIs, Cloud",80,78,35,45,55,True
+Cybersecurity Analyst,Technology,Protects systems and networks from security threats.,High Conscientiousness and Emotional Stability,"Networking, Linux, Security Tools, Risk Analysis",60,82,25,40,45,True
+Web Developer,Technology,Builds websites and web applications.,Openness and Discipline,"HTML, CSS, JavaScript, Django, APIs",65,70,35,40,60,True
+Mobile App Developer,Technology,Builds mobile applications for Android and iOS.,Openness and Problem Solving,"Flutter, Kotlin, Java, APIs, UI Design",65,70,35,40,60,True
+Cloud Engineer,Technology,Manages cloud infrastructure and services.,High Conscientiousness and Technical Thinking,"AWS, Azure, Linux, Networking, DevOps",65,80,30,40,50,True
+DevOps Engineer,Technology,Automates deployment and system operations.,High Discipline and Problem Solving,"Docker, CI/CD, Linux, Cloud, Automation",65,80,35,45,50,True
+Database Administrator,Technology,Manages and secures database systems.,High Conscientiousness and Attention to Detail,"SQL, Database Design, Backup, Security, Optimization",55,85,25,40,45,True
+UI UX Designer,Creative,Designs user-friendly digital interfaces.,High Openness and Creativity,"Figma, Design Thinking, User Research, Prototyping",80,55,45,55,60,True
+Graphic Designer,Creative,Creates visual designs for brands and media.,High Openness and Creativity,"Photoshop, Illustrator, Branding, Creativity",80,50,40,50,65,True
+Animator,Creative,Creates motion graphics and animations.,Creativity and Patience,"Animation, Storyboarding, After Effects, Drawing",80,55,35,50,65,True
+Video Editor,Creative,Edits video content for media and online platforms.,Creativity and Attention to Detail,"Premiere Pro, After Effects, Storytelling, Editing",70,60,35,40,65,True
+Photographer,Creative,Captures and edits professional images.,Creativity and Observation,"Photography, Editing, Lighting, Composition",75,55,45,50,65,True
+Content Writer,Creative,Writes articles blogs and professional content.,High Openness and Communication,"Writing, Research, SEO, Communication",75,60,40,55,60,True
+Journalist,Creative,Collects and reports news and stories.,High Openness and Extraversion,"Writing, Interviewing, Research, Communication",75,55,70,55,60,True
+Digital Marketing Specialist,Creative,Promotes brands using digital platforms.,High Openness and Extraversion,"SEO, Social Media, Ads, Analytics, Content Strategy",75,60,75,55,60,True
+Doctor,Medical,Diagnoses and treats patients.,High Conscientiousness and Agreeableness,"Medical Knowledge, Diagnosis, Empathy, Decision Making",70,85,55,80,45,True
+Surgeon,Medical,Performs surgical procedures and patient care.,Very High Conscientiousness and Emotional Stability,"Surgery, Precision, Decision Making, Anatomy",65,92,45,70,35,True
+Dentist,Medical,Diagnoses and treats dental problems.,High Conscientiousness and Patient Care,"Dentistry, Precision, Patient Care, Diagnosis",60,85,45,70,45,True
+Pharmacist,Medical,Provides medicines and healthcare guidance.,High Conscientiousness and Responsibility,"Pharmacology, Accuracy, Patient Care",60,85,40,70,45,True
+Nurse,Medical,Provides patient care and medical support.,High Agreeableness and Emotional Stability,"Patient Care, Communication, Empathy, Medical Support",55,75,55,85,45,True
+Physiotherapist,Medical,Helps patients recover movement and physical strength.,Agreeableness and Patience,"Rehabilitation, Anatomy, Patient Care, Exercise Planning",60,75,55,80,50,True
+Nutritionist,Medical,Guides people about diet and health.,Agreeableness and Discipline,"Nutrition, Health Planning, Communication, Diet Plans",60,70,55,75,55,True
+Psychologist,Medical,Helps people understand and manage emotions and behavior.,High Agreeableness and Openness,"Counseling, Listening, Research, Empathy",80,65,50,85,60,True
+Radiologist,Medical,Interprets medical imaging for diagnosis.,High Conscientiousness and Analytical Thinking,"Medical Imaging, Diagnosis, Anatomy, Attention to Detail",60,85,30,60,45,True
+Medical Laboratory Technologist,Medical,Performs lab tests and analyzes medical samples.,High Conscientiousness and Accuracy,"Lab Testing, Microscopy, Accuracy, Medical Reports",55,85,25,55,45,True
+Teacher,Education,Educates students and supports learning.,High Agreeableness and Communication,"Teaching, Communication, Patience, Planning",60,70,65,80,55,True
+Lecturer,Education,Teaches higher-level academic courses.,Conscientiousness and Communication,"Subject Knowledge, Teaching, Research, Presentation",70,75,60,70,55,True
+Professor,Education,Teaches and conducts advanced academic research.,High Openness and Conscientiousness,"Teaching, Research, Academic Writing, Mentoring",80,80,55,70,55,True
+Researcher,Education,Conducts studies and produces academic research.,High Openness and Discipline,"Research, Statistics, Writing, Critical Thinking",85,75,30,50,55,True
+Academic Advisor,Education,Guides students in academic and career planning.,High Agreeableness and Responsibility,"Counseling, Communication, Planning, Student Support",60,70,60,85,55,True
+HR Manager,Business,Manages hiring employee relations and workplace policies.,High Extraversion and Agreeableness,"Recruitment, Communication, Leadership, HR Policies",60,65,75,85,55,True
+Marketing Manager,Business,Plans marketing campaigns and brand strategies.,High Extraversion and Openness,"Marketing, Communication, Strategy, Creativity",75,60,80,60,60,True
+Business Analyst,Business,Analyzes business needs and improves processes.,Conscientiousness and Communication,"Analysis, Documentation, SQL, Communication",65,75,55,60,55,True
+Financial Analyst,Business,Analyzes financial data and investment decisions.,High Conscientiousness and Analysis,"Finance, Excel, Statistics, Reporting",60,80,35,45,50,True
+Accountant,Business,Manages financial records and reports.,High Conscientiousness,"Accounting, Excel, Accuracy, Finance",45,85,25,45,45,True
+Sales Manager,Business,Leads sales teams and customer growth strategies.,High Extraversion and Communication,"Sales, Negotiation, Leadership, Customer Relations",60,65,85,60,60,True
+Entrepreneur,Business,Starts and manages business ventures.,High Openness and Extraversion,"Leadership, Risk Taking, Sales, Strategy",80,60,75,55,65,True
+Project Manager,Business,Plans and manages projects and teams.,High Conscientiousness and Leadership,"Planning, Leadership, Communication, Risk Management",65,80,70,65,50,True
+Civil Engineer,Engineering,Designs and supervises construction projects.,High Conscientiousness and Problem Solving,"AutoCAD, Project Management, Math, Planning",60,80,40,55,50,True
+Mechanical Engineer,Engineering,Designs mechanical systems and machines.,High Conscientiousness and Technical Thinking,"CAD, Mechanics, Problem Solving, Manufacturing",65,80,35,45,50,True
+Electrical Engineer,Engineering,Works with electrical systems and circuits.,High Conscientiousness and Technical Ability,"Circuits, Electronics, MATLAB, Problem Solving",65,80,35,45,50,True
+Chemical Engineer,Engineering,Designs and manages chemical processes.,High Conscientiousness and Scientific Thinking,"Chemistry, Process Design, Safety, Analysis",65,82,30,45,45,True
+Industrial Engineer,Engineering,Improves systems processes and productivity.,Conscientiousness and Analytical Thinking,"Process Improvement, Statistics, Operations, Planning",65,80,45,50,50,True
+Architect,Engineering,Designs buildings and spaces.,High Openness and Planning,"Design, AutoCAD, Creativity, Planning",80,70,45,55,60,True
+Lawyer,Public Service,Provides legal advice and represents clients.,High Conscientiousness and Communication,"Law, Argumentation, Research, Communication",65,80,70,55,55,True
+Judge,Public Service,Makes legal decisions in courts.,High Conscientiousness and Fair Judgment,"Law, Ethics, Decision Making, Legal Reasoning",60,90,55,60,40,True
+Police Officer,Public Service,Maintains law and public safety.,Conscientiousness and Emotional Stability,"Discipline, Fitness, Decision Making, Communication",45,80,60,60,40,True
+Army Officer,Public Service,Leads and manages military operations.,Discipline and Emotional Stability,"Leadership, Discipline, Strategy, Fitness",45,85,65,55,35,True
+Civil Servant CSS Officer,Public Service,Works in government administration and policy.,High Conscientiousness and Public Responsibility,"Policy, Administration, Communication, Leadership",65,85,65,65,45,True
+Social Worker,Public Service,Supports people and communities in need.,High Agreeableness and Empathy,"Counseling, Communication, Community Work",60,65,55,90,55,True
+Pilot,Aviation,Operates aircraft safely and professionally.,High Conscientiousness and Emotional Stability,"Navigation, Aviation, Decision Making, Discipline",55,92,55,55,30,True
+Environmental Scientist,Science,Studies environment and sustainability issues.,High Openness and Analytical Thinking,"Environmental Science, Research, Data Analysis, Sustainability",80,75,35,60,55,True

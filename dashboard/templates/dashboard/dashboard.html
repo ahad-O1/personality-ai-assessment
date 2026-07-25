@@ -1,0 +1,705 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}AI Personality Dashboard{% endblock %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'dashboard/dashboard.css' %}">
+{% endblock %}
+
+{% block content %}
+    
+
+    <!-- Animated background -->
+    <div class="background-effects">
+        <div class="gradient-blob blob-one"></div>
+        <div class="gradient-blob blob-two"></div>
+        <div class="gradient-blob blob-three"></div>
+    </div>
+
+    <!-- Mobile overlay -->
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+
+        <div class="brand">
+            <div class="brand-icon">
+                <i class="bi bi-cpu-fill"></i>
+            </div>
+
+            <div>
+                <h2>Personality AI</h2>
+                <span>Adaptive Career System</span>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+
+            <a href="{% url 'dashboard_home' %}" class="nav-link active">
+                <i class="bi bi-grid-1x2-fill"></i>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="{% url 'start_assessment' %}" class="nav-link">
+                <i class="bi bi-ui-checks-grid"></i>
+                <span>New Assessment</span>
+            </a>
+
+            {% if latest_result %}
+            <a href="{% url 'recommend_careers' latest_result.id %}" class="nav-link">
+                <i class="bi bi-bar-chart-line-fill"></i>
+                <span>Latest Report</span>
+            </a>
+
+            <a href="{% url 'download_report' latest_result.id %}" class="nav-link">
+                <i class="bi bi-file-earmark-pdf-fill"></i>
+                <span>Download PDF</span>
+            </a>
+            {% endif %}
+
+            <a href="/admin/" class="nav-link">
+                <i class="bi bi-gear-fill"></i>
+                <span>Administration</span>
+            </a>
+
+        </nav>
+
+        <div class="sidebar-footer">
+
+            <div class="sidebar-profile">
+                <div class="avatar">
+                    {{ request.user.username|first|upper }}
+                </div>
+
+                <div class="profile-details">
+                    <strong>{{ request.user.username }}</strong>
+                    <span>Assessment User</span>
+                </div>
+            </div>
+
+            <a href="/accounts/logout/" class="logout-link">
+                <i class="bi bi-box-arrow-right"></i>
+                Logout
+            </a>
+
+        </div>
+
+    </aside>
+
+    <!-- Main content -->
+    <main class="main-content">
+
+        <!-- Top bar -->
+        <header class="topbar">
+
+            <button class="menu-button" id="menuButton" type="button">
+                <i class="bi bi-list"></i>
+            </button>
+
+            <div class="topbar-title">
+                <span>Overview</span>
+                <h1>AI Analytics Dashboard</h1>
+            </div>
+
+            <div class="topbar-actions">
+
+                <a href="{% url 'start_assessment' %}" class="primary-button">
+                    <i class="bi bi-plus-lg"></i>
+                    New Assessment
+                </a>
+
+                <div class="topbar-avatar">
+                    {{ request.user.username|first|upper }}
+                </div>
+
+            </div>
+
+        </header>
+
+        <!-- Hero -->
+        <section class="hero-card reveal">
+
+            <div class="hero-content">
+
+                <span class="hero-label">
+                    <i class="bi bi-stars"></i>
+                    AI-Powered Personality Insights
+                </span>
+
+                <h2>
+                    Welcome back,
+                    <span>{{ request.user.username|title }}</span>
+                </h2>
+
+                <p>
+                    Track your OCEAN personality development, career matches,
+                    reports and AI model insights from one intelligent dashboard.
+                </p>
+
+                <div class="hero-actions">
+
+                    <a href="{% url 'start_assessment' %}" class="hero-primary-button">
+                        Start New Assessment
+                        <i class="bi bi-arrow-right"></i>
+                    </a>
+
+                    {% if latest_result %}
+                    <a href="{% url 'recommend_careers' latest_result.id %}" class="hero-secondary-button">
+                        View Latest Report
+                    </a>
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+            <div class="hero-visual">
+
+                <div class="orbit orbit-one"></div>
+                <div class="orbit orbit-two"></div>
+
+                <div class="brain-core">
+                    <i class="bi bi-brain"></i>
+                </div>
+
+                <div class="floating-chip chip-one">
+                    OCEAN
+                </div>
+
+                <div class="floating-chip chip-two">
+                    AI
+                </div>
+
+                <div class="floating-chip chip-three">
+                    Career
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- Statistics -->
+        <section class="stats-grid">
+
+            <article class="stat-card reveal">
+
+                <div class="stat-icon icon-blue">
+                    <i class="bi bi-clipboard-data-fill"></i>
+                </div>
+
+                <div class="stat-content">
+                    <span>Total Assessments</span>
+
+                    <h3 class="animated-counter" data-target="{{ total_assessments }}">
+                        0
+                    </h3>
+
+                    <small>
+                        <i class="bi bi-arrow-up-right"></i>
+                        Completed personality reports
+                    </small>
+                </div>
+
+            </article>
+
+            <article class="stat-card reveal">
+
+                <div class="stat-icon icon-purple">
+                    <i class="bi bi-person-bounding-box"></i>
+                </div>
+
+                <div class="stat-content">
+                    <span>Latest Personality</span>
+                    <h3 class="text-stat">
+                        {{ latest_personality_type }}
+                    </h3>
+                    <small>Generated from your latest OCEAN profile</small>
+                </div>
+
+            </article>
+
+            <article class="stat-card reveal">
+
+                <div class="stat-icon icon-green">
+                    <i class="bi bi-briefcase-fill"></i>
+                </div>
+
+                <div class="stat-content">
+                    <span>Top Career Match</span>
+
+                    <h3 class="text-stat">
+                        {% if latest_career %}
+                        {{ latest_career.title }}
+                        {% else %}
+                        Not available
+                        {% endif %}
+                    </h3>
+
+                    <small>
+                        {% if latest_career %}
+                        {{ latest_career.final_score }}% compatibility
+                        {% else %}
+                        Complete an assessment first
+                        {% endif %}
+                    </small>
+                </div>
+
+            </article>
+
+            <article class="stat-card reveal">
+
+                <div class="stat-icon icon-orange">
+                    <i class="bi bi-robot"></i>
+                </div>
+
+                <div class="stat-content">
+                    <span>AI Model Accuracy</span>
+
+                    <h3>
+                        {% if model_status %}
+                        {{ model_status.current_accuracy }}%
+                        {% else %}
+                        0%
+                        {% endif %}
+                    </h3>
+
+                    <small>
+                        {% if model_status %}
+                        Model version {{ model_status.model_version }}
+                        {% else %}
+                        Model information unavailable
+                        {% endif %}
+                    </small>
+                </div>
+
+            </article>
+
+        </section>
+
+        <!-- Latest personality overview -->
+        <section class="insight-grid">
+
+            <article class="panel personality-summary reveal">
+
+                <div class="panel-header">
+                    <div>
+                        <span class="section-label">
+                            Latest AI Analysis
+                        </span>
+                        <h3>{{ latest_personality_type }}</h3>
+                    </div>
+
+                    <div class="panel-icon">
+                        <i class="bi bi-lightbulb-fill"></i>
+                    </div>
+                </div>
+
+                <p class="summary-text">
+                    {{ latest_personality_summary }}
+                </p>
+
+                {% if latest_result %}
+                <div class="trait-mini-grid">
+
+                    <div class="trait-mini-card">
+                        <span>Openness</span>
+                        <strong>{{ latest_result.openness }}%</strong>
+                    </div>
+
+                    <div class="trait-mini-card">
+                        <span>Discipline</span>
+                        <strong>
+                            {{ latest_result.conscientiousness }}%
+                        </strong>
+                    </div>
+
+                    <div class="trait-mini-card">
+                        <span>Social Energy</span>
+                        <strong>{{ latest_result.extraversion }}%</strong>
+                    </div>
+
+                    <div class="trait-mini-card">
+                        <span>Cooperation</span>
+                        <strong>{{ latest_result.agreeableness }}%</strong>
+                    </div>
+
+                    <div class="trait-mini-card">
+                        <span>Sensitivity</span>
+                        <strong>{{ latest_result.neuroticism }}%</strong>
+                    </div>
+
+                </div>
+                {% endif %}
+
+            </article>
+
+            <article class="panel model-status-panel reveal">
+
+                <div class="panel-header">
+                    <div>
+                        <span class="section-label">Continuous Learning</span>
+                        <h3>AI Model Status</h3>
+                    </div>
+
+                    <div class="status-indicator">
+                        {% if model_status.retraining_running %}
+                        <span class="status-dot training"></span>
+                        Training
+                        {% else %}
+                        <span class="status-dot ready"></span>
+                        Ready
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="model-details">
+
+                    <div class="model-detail">
+                        <span>Current Version</span>
+                        <strong>
+                            {% if model_status %}
+                            v{{ model_status.model_version }}
+                            {% else %}
+                            N/A
+                            {% endif %}
+                        </strong>
+                    </div>
+
+                    <div class="model-detail">
+                        <span>Current Accuracy</span>
+                        <strong>
+                            {% if model_status %}
+                            {{ model_status.current_accuracy }}%
+                            {% else %}
+                            N/A
+                            {% endif %}
+                        </strong>
+                    </div>
+
+                    <div class="model-detail">
+                        <span>Last Retrained</span>
+                        <strong>
+                            {% if model_status.last_retrained %}
+                            {{ model_status.last_retrained|date:"d M Y" }}
+                            {% else %}
+                            Not yet
+                            {% endif %}
+                        </strong>
+                    </div>
+
+                </div>
+
+                <div class="feedback-progress">
+
+                    <div class="progress-heading">
+                        <span>Feedback before next retraining</span>
+
+                        <strong>
+                            {% if model_status %}
+                            {{ model_status.feedback_since_last_training }}
+                            {% else %}
+                            0
+                            {% endif %}
+                            / 50
+                        </strong>
+                    </div>
+
+                    <div class="progress-track">
+                        <div class="progress-value" data-progress="{{ feedback_progress }}">
+                        </div>
+                    </div>
+
+                    <small>
+                        The model automatically retrains after collecting
+                        50 high-quality feedback records.
+                    </small>
+
+                </div>
+
+            </article>
+
+        </section>
+
+        <!-- Charts -->
+        <section class="charts-grid">
+
+            <article class="panel chart-panel chart-large reveal">
+
+                <div class="panel-header">
+                    <div>
+                        <span class="section-label">
+                            Historical Analytics
+                        </span>
+                        <h3>OCEAN Personality Trends</h3>
+                    </div>
+
+                    <div class="chart-badge">
+                        {{ total_assessments }} Assessments
+                    </div>
+                </div>
+
+                <div class="chart-container line-chart-container">
+                    <canvas id="oceanHistoryChart"></canvas>
+                </div>
+
+            </article>
+
+            <article class="panel chart-panel reveal">
+
+                <div class="panel-header">
+                    <div>
+                        <span class="section-label">Latest Profile</span>
+                        <h3>Personality Radar</h3>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <canvas id="latestRadarChart"></canvas>
+                </div>
+
+            </article>
+
+        </section>
+
+        <section class="charts-grid">
+
+            <article class="panel chart-panel chart-large reveal">
+
+                <div class="panel-header">
+                    <div>
+                        <span class="section-label">Recommendation Analytics</span>
+                        <h3>Top Career Trends</h3>
+                    </div>
+                </div>
+
+                <div class="chart-container career-chart-container">
+                    <canvas id="careerTrendChart"></canvas>
+                </div>
+
+            </article>
+
+            <article class="panel quick-actions-panel reveal">
+
+                <div class="panel-header">
+                    <div>
+                        <span class="section-label">Shortcuts</span>
+                        <h3>Quick Actions</h3>
+                    </div>
+                </div>
+
+                <div class="quick-action-list">
+
+                    <a href="{% url 'start_assessment' %}" class="quick-action">
+
+                        <div class="quick-action-icon">
+                            <i class="bi bi-play-fill"></i>
+                        </div>
+
+                        <div>
+                            <strong>Start Assessment</strong>
+                            <span>Generate a fresh personality profile</span>
+                        </div>
+
+                        <i class="bi bi-chevron-right"></i>
+
+                    </a>
+
+                    {% if latest_result %}
+                    <a href="{% url 'recommend_careers' latest_result.id %}" class="quick-action">
+
+                        <div class="quick-action-icon">
+                            <i class="bi bi-eye-fill"></i>
+                        </div>
+
+                        <div>
+                            <strong>View Latest Result</strong>
+                            <span>Open your detailed AI report</span>
+                        </div>
+
+                        <i class="bi bi-chevron-right"></i>
+
+                    </a>
+
+                    <a href="{% url 'download_report' latest_result.id %}" class="quick-action">
+
+                        <div class="quick-action-icon">
+                            <i class="bi bi-download"></i>
+                        </div>
+
+                        <div>
+                            <strong>Download PDF</strong>
+                            <span>Save your most recent report</span>
+                        </div>
+
+                        <i class="bi bi-chevron-right"></i>
+
+                    </a>
+                    {% endif %}
+
+                </div>
+
+            </article>
+
+        </section>
+
+        <!-- History table -->
+        <section class="panel history-panel reveal">
+
+            <div class="panel-header">
+
+                <div>
+                    <span class="section-label">Assessment Records</span>
+                    <h3>Assessment History</h3>
+                </div>
+
+                <a href="{% url 'start_assessment' %}" class="outline-button">
+                    <i class="bi bi-plus"></i>
+                    New Assessment
+                </a>
+
+            </div>
+
+            <div class="table-wrapper">
+
+                <table class="history-table">
+
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Personality Type</th>
+                            <th>Top Career</th>
+                            <th>Questions</th>
+                            <th>Career Match</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        {% for item in assessment_history %}
+
+                        <tr>
+
+                            <td>
+                                <div class="date-cell">
+                                    <span class="date-day">
+                                        {{ item.assessment_date|date:"d" }}
+                                    </span>
+
+                                    <div>
+                                        <strong>
+                                            {{ item.assessment_date|date:"M Y" }}
+                                        </strong>
+                                        <small>
+                                            {{ item.assessment_date|date:"h:i A" }}
+                                        </small>
+                                    </div>
+                                </div>
+                            </td>
+
+                            <td>
+                                <span class="personality-pill">
+                                    {{ item.personality_type }}
+                                </span>
+                            </td>
+
+                            <td>
+                                {% if item.career %}
+                                <strong>{{ item.career.title }}</strong>
+                                <small class="table-subtext">
+                                    {{ item.career.category }}
+                                </small>
+                                {% else %}
+                                Not available
+                                {% endif %}
+                            </td>
+
+                            <td>
+                                {{ item.answered_questions }}
+                            </td>
+
+                            <td>
+                                {% if item.career %}
+                                <div class="match-score">
+                                    <span>
+                                        {{ item.career.final_score }}%
+                                    </span>
+
+                                    <div class="mini-progress">
+                                        <div class="mini-progress-fill" data-width="{{ item.career.final_score }}">
+                                        </div>
+                                    </div>
+                                </div>
+                                {% else %}
+                                —
+                                {% endif %}
+                            </td>
+
+                            <td>
+                                <div class="table-actions">
+
+                                    <a href="{% url 'recommend_careers' item.result.id %}" title="View result">
+                                        <i class="bi bi-eye"></i>
+                                    </a>
+
+                                    <a href="{% url 'download_report' item.result.id %}" title="Download PDF">
+                                        <i class="bi bi-download"></i>
+                                    </a>
+
+                                </div>
+                            </td>
+
+                        </tr>
+
+                        {% empty %}
+
+                        <tr>
+                            <td colspan="6" class="empty-state">
+
+                                <i class="bi bi-inbox"></i>
+                                <h4>No assessments found</h4>
+                                <p>
+                                    Complete your first assessment to see
+                                    analytics and history.
+                                </p>
+
+                            </td>
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+        <footer class="dashboard-footer">
+            <p>
+                AI Adaptive Personality Assessment System
+                <span>•</span>
+                Intelligent career guidance powered by OCEAN analytics
+            </p>
+        </footer>
+
+    </main>
+
+{% endblock %}
+
+{% block extra_js %}
+    <!-- Safe Django JSON data -->
+    {{ chart_labels|json_script:"chart-labels" }}
+    {{ openness_history|json_script:"openness-history" }}
+    {{ conscientiousness_history|json_script:"conscientiousness-history" }}
+    {{ extraversion_history|json_script:"extraversion-history" }}
+    {{ agreeableness_history|json_script:"agreeableness-history" }}
+    {{ neuroticism_history|json_script:"neuroticism-history" }}
+    {{ latest_radar_scores|json_script:"latest-radar-scores" }}
+    {{ career_labels|json_script:"career-labels" }}
+    {{ career_values|json_script:"career-values" }}
+
+    <script src="{% static 'dashboard/dashboard.js' %}"></script>
+{% endblock %}

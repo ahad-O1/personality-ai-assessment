@@ -1,0 +1,340 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}User Dashboard{% endblock %}
+
+{% block extra_css %}
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f6f9ff;
+            color: #0f172a;
+        }
+
+        .app {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 280px;
+            background: linear-gradient(180deg, #061b4a, #08245f);
+            color: white;
+            padding: 28px 22px;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+        }
+
+        .logo {
+            font-size: 26px;
+            font-weight: bold;
+            margin-bottom: 40px;
+        }
+
+        .logo span {
+            color: #38bdf8;
+        }
+
+        .menu a {
+            display: block;
+            color: #dbeafe;
+            text-decoration: none;
+            padding: 16px 18px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            font-weight: bold;
+        }
+
+        .menu a.active,
+        .menu a:hover {
+            background: #2563eb;
+            color: white;
+        }
+
+        .main {
+            margin-left: 280px;
+            width: calc(100% - 280px);
+        }
+
+        .topbar {
+            height: 82px;
+            background: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 45px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .search {
+            width: 420px;
+            background: #f1f5f9;
+            border: none;
+            padding: 14px 20px;
+            border-radius: 30px;
+            font-size: 15px;
+        }
+
+        .user-box {
+            font-weight: bold;
+            color: #1e3a8a;
+        }
+
+        .content {
+            padding: 35px 45px;
+        }
+
+        .title h1 {
+            margin: 0;
+            font-size: 34px;
+        }
+
+        .title p {
+            color: #64748b;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 22px;
+            margin-top: 28px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 18px;
+            box-shadow: 0 8px 25px rgba(15, 23, 42, 0.08);
+        }
+
+        .stat-card h2 {
+            color: #2563eb;
+            margin: 0;
+            font-size: 34px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 25px;
+            margin-top: 28px;
+        }
+
+        .card {
+            background: white;
+            padding: 28px;
+            border-radius: 18px;
+            box-shadow: 0 8px 25px rgba(15, 23, 42, 0.08);
+        }
+
+        .score-item {
+            margin-bottom: 18px;
+        }
+
+        .bar {
+            height: 12px;
+            background: #e5e7eb;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+
+        .bar-fill {
+            height: 100%;
+            width: 0;
+            background: #2563eb;
+            border-radius: 20px;
+        }
+
+        .history-item {
+            background: #f8fafc;
+            padding: 18px;
+            border-radius: 14px;
+            margin-bottom: 14px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .history-item h3 {
+            margin: 0 0 8px;
+            color: #1e3a8a;
+        }
+
+        .btn {
+            display: inline-block;
+            background: #2563eb;
+            color: white;
+            text-decoration: none;
+            padding: 12px 18px;
+            border-radius: 10px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 1000px) {
+            .sidebar {
+                display: none;
+            }
+
+            .main {
+                margin-left: 0;
+                width: 100%;
+            }
+
+            .stats,
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .search {
+                display: none;
+            }
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+<div class="app">
+
+    <aside class="sidebar">
+        <div class="logo">Personality<span>AI</span></div>
+
+        <div class="menu">
+            <a href="{% url 'home' %}">Home</a>
+            <a href="{% url 'user_dashboard' %}" class="active">Dashboard</a>
+            <a href="{% url 'start_assessment' %}">Take Assessment</a>
+            <a href="{% url 'logout' %}">Logout</a>
+        </div>
+    </aside>
+
+    <main class="main">
+
+        <div class="topbar">
+            <input class="search" type="text" placeholder="Search anything...">
+            <div class="user-box">Welcome, {{ request.user.username }}</div>
+        </div>
+
+        <div class="content">
+
+            <div class="title">
+                <h1>User Dashboard</h1>
+                <p>View your latest personality result and assessment history.</p>
+            </div>
+
+            <section class="stats">
+                <div class="stat-card">
+                    <h2>{{ total_assessments }}</h2>
+                    <p>Total Assessments</p>
+                </div>
+
+                <div class="stat-card">
+                    <h2>{% if latest_result %}{{ latest_result.openness }}{% else %}0{% endif %}</h2>
+                    <p>Latest Openness</p>
+                </div>
+
+                <div class="stat-card">
+                    <h2>{% if latest_result %}{{ latest_result.extraversion }}{% else %}0{% endif %}</h2>
+                    <p>Latest Extraversion</p>
+                </div>
+
+                <div class="stat-card">
+                    <h2>{% if latest_result %}{{ latest_result.conscientiousness }}{% else %}0{% endif %}</h2>
+                    <p>Latest Discipline</p>
+                </div>
+            </section>
+
+            <div class="grid">
+
+                <div class="card">
+                    <h2>Latest OCEAN Result</h2>
+
+                    {% if latest_result %}
+                        <div class="score-item">
+                            <b>Openness: {{ latest_result.openness }}%</b>
+                            <div class="bar">
+                                <div class="bar-fill" data-width="{{ latest_result.openness }}"></div>
+                            </div>
+                        </div>
+
+                        <div class="score-item">
+                            <b>Conscientiousness: {{ latest_result.conscientiousness }}%</b>
+                            <div class="bar">
+                                <div class="bar-fill" data-width="{{ latest_result.conscientiousness }}"></div>
+                            </div>
+                        </div>
+
+                        <div class="score-item">
+                            <b>Extraversion: {{ latest_result.extraversion }}%</b>
+                            <div class="bar">
+                                <div class="bar-fill" data-width="{{ latest_result.extraversion }}"></div>
+                            </div>
+                        </div>
+
+                        <div class="score-item">
+                            <b>Agreeableness: {{ latest_result.agreeableness }}%</b>
+                            <div class="bar">
+                                <div class="bar-fill" data-width="{{ latest_result.agreeableness }}"></div>
+                            </div>
+                        </div>
+
+                        <div class="score-item">
+                            <b>Neuroticism: {{ latest_result.neuroticism }}%</b>
+                            <div class="bar">
+                                <div class="bar-fill" data-width="{{ latest_result.neuroticism }}"></div>
+                            </div>
+                        </div>
+
+                        <a class="btn" href="{% url 'recommend_careers' latest_result.id %}">
+                            View Full Report
+                        </a>
+                    {% else %}
+                        <p>No assessment completed yet.</p>
+                        <a class="btn" href="{% url 'start_assessment' %}">Take Assessment</a>
+                    {% endif %}
+                </div>
+
+                <div class="card">
+                    <h2>Assessment History</h2>
+
+                    {% for result in results %}
+                        <div class="history-item">
+                            <h3>Assessment #{{ forloop.counter }}</h3>
+                            <p><b>Date:</b> {{ result.created_at }}</p>
+                            <p>
+                                O: {{ result.openness }},
+                                C: {{ result.conscientiousness }},
+                                E: {{ result.extraversion }},
+                                A: {{ result.agreeableness }},
+                                N: {{ result.neuroticism }}
+                            </p>
+                            <a class="btn" href="{% url 'recommend_careers' result.id %}">
+                                Open Report
+                            </a>
+                        </div>
+                    {% empty %}
+                        <p>No history found.</p>
+                    {% endfor %}
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.querySelectorAll(".bar-fill").forEach(function (bar) {
+        bar.style.width = bar.dataset.width + "%";
+    });
+</script>
+{% endblock %}
