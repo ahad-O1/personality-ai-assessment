@@ -1,0 +1,34 @@
+{
+    "model": "CatBoostClassifier",
+    "feature_set": [
+        "openness",
+        "conscientiousness",
+        "extraversion",
+        "agreeableness",
+        "neuroticism"
+    ],
+    "best_parameters": {
+        "depth": 7,
+        "iterations": 700,
+        "learning_rate": 0.03,
+        "l2_leaf_reg": 5.0,
+        "random_strength": 1.0
+    },
+    "best_cv_accuracy": 0.7777045116497528,
+    "best_cv_macro_f1": 0.7730210858603535,
+    "test_accuracy": 0.7828181818181819,
+    "test_macro_f1": 0.7829364246524886,
+    "test_weighted_f1": 0.7820056824580781,
+    "best_iteration": 639,
+    "categories": [
+        "Business Management and Finance",
+        "Creative Media and Design",
+        "Education and Research",
+        "Engineering and Architecture",
+        "Environmental Science",
+        "Healthcare and Medical",
+        "Law Government and Security",
+        "Social and Behavioral Sciences",
+        "Technology and IT"
+    ]
+}

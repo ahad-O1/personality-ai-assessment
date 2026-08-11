@@ -4,6 +4,8 @@
 {% block title %}Career Recommendations{% endblock %}
 
 {% block extra_css %}
+
+<link rel="stylesheet" href="{% static 'css/chatbot.css' %}">
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -440,6 +442,8 @@ border:1px solid #dbeafe;">
         </div>
 
     </div>
+    {% include "chatbot/chatbot.html" %}
+
 {% endblock %}
 
 {% block extra_js %}
@@ -484,4 +488,6 @@ border:1px solid #dbeafe;">
             }
         });
     </script>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="{% static 'js/chatbot.js' %}"></script>
 {% endblock %}

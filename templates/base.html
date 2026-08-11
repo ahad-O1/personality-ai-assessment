@@ -1,5 +1,5 @@
 {% load static %}
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 
 <head>
@@ -91,13 +91,22 @@
                 return;
             }
 
-            btn.onclick = function () {
-                if (window.history.length > 1) {
-                    window.history.back();
-                } else {
-                    window.location.href = "/dashboard/";
-                }
-            }
+           btn.onclick = function () {
+
+    const pathname = window.location.pathname;
+
+    // Agar Career Recommendation page par ho
+    if (pathname.includes("/recommendations/")) {
+        window.location.href = "/dashboard/";
+        return;
+    }
+
+    if (window.history.length > 1) {
+        window.history.back();
+    } else {
+        window.location.href = "/dashboard/";
+    }
+}
         });
     </script>
 

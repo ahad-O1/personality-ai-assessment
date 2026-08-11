@@ -236,7 +236,7 @@
 
 
             <div class="menu">
-                <a href="{% url 'home' %}" class="active">Home</a>
+              <a href="{% url 'dashboard_home' %}" class="active">Dashboard</a>
 
                 {% if user.is_authenticated %}
                 <a href="{% url 'user_dashboard' %}">Dashboard</a>

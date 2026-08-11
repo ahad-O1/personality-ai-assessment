@@ -1,0 +1,11 @@
+feature,between_category_variance,within_category_variance,separation_score
+agreeableness,139.9473,65.6457,2.131856
+conscientiousness,56.6623,42.4755,1.333999
+leadership_index,36.4549,33.329,1.093789
+social_index,78.0406,75.856,1.0288
+openness,63.9842,77.5066,0.825532
+extraversion,113.4289,145.7807,0.778079
+emotional_stability,17.9488,34.9827,0.513075
+neuroticism,17.9488,34.9827,0.513075
+creativity_index,28.792,61.8939,0.465184
+analytical_index,9.0012,25.5858,0.351805

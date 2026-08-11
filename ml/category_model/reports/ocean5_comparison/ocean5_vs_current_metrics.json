@@ -1,0 +1,39 @@
+{
+    "dataset_rows": 55000,
+    "test_rows": 11000,
+    "categories": 9,
+    "current_model": {
+        "features": [
+            "openness",
+            "conscientiousness",
+            "extraversion",
+            "agreeableness",
+            "neuroticism",
+            "emotional_stability",
+            "analytical_index",
+            "social_index",
+            "leadership_index",
+            "creativity_index"
+        ],
+        "accuracy": 0.7791818181818182,
+        "macro_f1": 0.7785608144312195,
+        "weighted_f1": 0.7781980334561697
+    },
+    "ocean5_candidate": {
+        "features": [
+            "openness",
+            "conscientiousness",
+            "extraversion",
+            "agreeableness",
+            "neuroticism"
+        ],
+        "accuracy": 0.7828181818181819,
+        "macro_f1": 0.7829364246524886,
+        "weighted_f1": 0.7820056824580781
+    },
+    "difference": {
+        "accuracy": 0.0036363636363636598,
+        "macro_f1": 0.004375610221269088
+    },
+    "winner_by_accuracy": "OCEAN-5 candidate"
+}

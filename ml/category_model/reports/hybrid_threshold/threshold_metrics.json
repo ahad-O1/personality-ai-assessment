@@ -1,0 +1,11 @@
+{
+    "baseline_accuracy": 0.7828181818181819,
+    "baseline_macro_f1": 0.7829364246524886,
+    "best_threshold": 0.5000000000000002,
+    "best_accuracy": 0.7843636363636364,
+    "best_macro_f1": 0.7833107149141013,
+    "accuracy_change": 0.0015454545454545165,
+    "macro_f1_change": 0.0003742902616127308,
+    "engineering_to_technology": 323,
+    "technology_to_engineering": 207
+}

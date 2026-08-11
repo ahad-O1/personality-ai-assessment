@@ -1,0 +1,133 @@
+{
+    "best_model": "Random Forest",
+    "test_accuracy": 77.2727,
+    "cv_mean_accuracy": 76.5618,
+    "cv_standard_deviation": 0.1923,
+    "feature_columns": [
+        "openness",
+        "conscientiousness",
+        "extraversion",
+        "agreeableness",
+        "neuroticism",
+        "emotional_stability",
+        "analytical_index",
+        "social_index",
+        "leadership_index",
+        "creativity_index"
+    ],
+    "total_records": 55000,
+    "total_categories": 9,
+    "model_comparison": {
+        "Random Forest": {
+            "test_accuracy": 77.2727,
+            "macro_f1": 0.7713,
+            "weighted_f1": 0.773
+        },
+        "Extra Trees": {
+            "test_accuracy": 76.9545,
+            "macro_f1": 0.7689,
+            "weighted_f1": 0.7683
+        }
+    },
+    "confusion_matrix": [
+        [
+            1112,
+            105,
+            62,
+            98,
+            0,
+            33,
+            109,
+            1,
+            80
+        ],
+        [
+            113,
+            1384,
+            0,
+            29,
+            10,
+            0,
+            3,
+            0,
+            61
+        ],
+        [
+            27,
+            5,
+            709,
+            9,
+            33,
+            84,
+            12,
+            63,
+            58
+        ],
+        [
+            37,
+            54,
+            5,
+            799,
+            13,
+            52,
+            17,
+            1,
+            222
+        ],
+        [
+            0,
+            7,
+            12,
+            10,
+            164,
+            1,
+            0,
+            1,
+            5
+        ],
+        [
+            28,
+            0,
+            113,
+            63,
+            1,
+            1519,
+            46,
+            21,
+            9
+        ],
+        [
+            47,
+            2,
+            17,
+            16,
+            0,
+            25,
+            1091,
+            0,
+            2
+        ],
+        [
+            1,
+            1,
+            36,
+            0,
+            0,
+            15,
+            0,
+            347,
+            0
+        ],
+        [
+            119,
+            46,
+            67,
+            351,
+            19,
+            19,
+            4,
+            0,
+            1375
+        ]
+    ]
+}

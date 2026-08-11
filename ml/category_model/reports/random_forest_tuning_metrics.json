@@ -1,0 +1,27 @@
+{
+    "best_cv_accuracy": 76.6159,
+    "test_accuracy": 77.0091,
+    "macro_f1": 0.7677,
+    "weighted_f1": 0.7705,
+    "best_parameters": {
+        "n_estimators": 300,
+        "min_samples_split": 2,
+        "min_samples_leaf": 2,
+        "max_features": "log2",
+        "max_depth": 35,
+        "bootstrap": true
+    },
+    "feature_columns": [
+        "openness",
+        "conscientiousness",
+        "extraversion",
+        "agreeableness",
+        "neuroticism",
+        "emotional_stability",
+        "analytical_index",
+        "social_index",
+        "leadership_index",
+        "creativity_index"
+    ],
+    "total_records": 55000
+}

@@ -1,0 +1,50 @@
+{
+    "dataset_rows": 55000,
+    "test_rows": 11000,
+    "engineering_to_technology": 290,
+    "technology_to_engineering": 257,
+    "overall_accuracy": 0.7828181818181819,
+    "macro_f1": 0.7829364246524886,
+    "feature_separation": [
+        {
+            "feature": "agreeableness",
+            "engineering_mean": 58.30853166666667,
+            "technology_mean": 53.511186,
+            "difference": 4.797345666666665,
+            "effect_size": 0.803914033579607,
+            "absolute_effect_size": 0.803914033579607
+        },
+        {
+            "feature": "extraversion",
+            "engineering_mean": 43.28765,
+            "technology_mean": 39.607485,
+            "difference": 3.6801650000000024,
+            "effect_size": 0.5164490206577469,
+            "absolute_effect_size": 0.5164490206577469
+        },
+        {
+            "feature": "openness",
+            "engineering_mean": 73.60505333333333,
+            "technology_mean": 77.245866,
+            "difference": -3.640812666666676,
+            "effect_size": -0.382850896785011,
+            "absolute_effect_size": 0.382850896785011
+        },
+        {
+            "feature": "neuroticism",
+            "engineering_mean": 28.612954999999996,
+            "technology_mean": 29.167451,
+            "difference": -0.5544960000000039,
+            "effect_size": -0.09381242551962216,
+            "absolute_effect_size": 0.09381242551962216
+        },
+        {
+            "feature": "conscientiousness",
+            "engineering_mean": 86.67385333333333,
+            "technology_mean": 86.101952,
+            "difference": 0.5719013333333294,
+            "effect_size": 0.0883285962687223,
+            "absolute_effect_size": 0.0883285962687223
+        }
+    ]
+}

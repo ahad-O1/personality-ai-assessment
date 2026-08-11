@@ -100,12 +100,24 @@
             color: #64748b;
         }
 
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 22px;
-            margin-top: 28px;
-        }
+       .stats {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 22px;
+    margin-top: 28px;
+}
+
+@media (max-width: 1200px) {
+    .stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .stats {
+        grid-template-columns: 1fr;
+    }
+}
 
         .stat-card {
             background: white;
@@ -206,8 +218,8 @@
         <div class="logo">Personality<span>AI</span></div>
 
         <div class="menu">
-            <a href="{% url 'home' %}">Home</a>
-            <a href="{% url 'user_dashboard' %}" class="active">Dashboard</a>
+           <a href="{% url 'dashboard_home' %}">Home</a>
+<a href="{% url 'dashboard_home' %}" class="active">Dashboard</a>
             <a href="{% url 'start_assessment' %}">Take Assessment</a>
             <a href="{% url 'logout' %}">Logout</a>
         </div>
@@ -227,27 +239,39 @@
                 <p>View your latest personality result and assessment history.</p>
             </div>
 
-            <section class="stats">
-                <div class="stat-card">
-                    <h2>{{ total_assessments }}</h2>
-                    <p>Total Assessments</p>
-                </div>
+           <section class="stats">
 
-                <div class="stat-card">
-                    <h2>{% if latest_result %}{{ latest_result.openness }}{% else %}0{% endif %}</h2>
-                    <p>Latest Openness</p>
-                </div>
+    <div class="stat-card">
+        <h2>{{ total_assessments }}</h2>
+        <p>Total Assessments</p>
+    </div>
 
-                <div class="stat-card">
-                    <h2>{% if latest_result %}{{ latest_result.extraversion }}{% else %}0{% endif %}</h2>
-                    <p>Latest Extraversion</p>
-                </div>
+    <div class="stat-card">
+        <h2>{% if latest_result %}{{ latest_result.openness }}{% else %}0{% endif %}</h2>
+        <p>Openness</p>
+    </div>
 
-                <div class="stat-card">
-                    <h2>{% if latest_result %}{{ latest_result.conscientiousness }}{% else %}0{% endif %}</h2>
-                    <p>Latest Discipline</p>
-                </div>
-            </section>
+    <div class="stat-card">
+        <h2>{% if latest_result %}{{ latest_result.conscientiousness }}{% else %}0{% endif %}</h2>
+        <p>Conscientiousness</p>
+    </div>
+
+    <div class="stat-card">
+        <h2>{% if latest_result %}{{ latest_result.extraversion }}{% else %}0{% endif %}</h2>
+        <p>Extraversion</p>
+    </div>
+
+    <div class="stat-card">
+        <h2>{% if latest_result %}{{ latest_result.agreeableness }}{% else %}0{% endif %}</h2>
+        <p>Agreeableness</p>
+    </div>
+
+    <div class="stat-card">
+        <h2>{% if latest_result %}{{ latest_result.neuroticism }}{% else %}0{% endif %}</h2>
+        <p>Neuroticism</p>
+    </div>
+
+</section>
 
             <div class="grid">
 
@@ -301,25 +325,38 @@
 
                 <div class="card">
                     <h2>Assessment History</h2>
+{% for item in assessment_history %}
+    <div class="history-item">
 
-                    {% for result in results %}
-                        <div class="history-item">
-                            <h3>Assessment #{{ forloop.counter }}</h3>
-                            <p><b>Date:</b> {{ result.created_at }}</p>
-                            <p>
-                                O: {{ result.openness }},
-                                C: {{ result.conscientiousness }},
-                                E: {{ result.extraversion }},
-                                A: {{ result.agreeableness }},
-                                N: {{ result.neuroticism }}
-                            </p>
-                            <a class="btn" href="{% url 'recommend_careers' result.id %}">
-                                Open Report
-                            </a>
-                        </div>
-                    {% empty %}
-                        <p>No history found.</p>
-                    {% endfor %}
+        <h3>Assessment #{{ forloop.counter }}</h3>
+
+        <p><b>Date:</b> {{ item.assessment_date }}</p>
+
+        <p>
+            O: {{ item.result.openness }},
+            C: {{ item.result.conscientiousness }},
+            E: {{ item.result.extraversion }},
+            A: {{ item.result.agreeableness }},
+            N: {{ item.result.neuroticism }}
+        </p>
+
+        <p><b>Personality:</b> {{ item.personality_type }}</p>
+
+        {% if item.career %}
+            <p><b>Top Career:</b> {{ item.career.title }}</p>
+        {% endif %}
+
+        <a class="btn" href="{% url 'recommend_careers' item.result.id %}">
+            Open Report
+        </a>
+
+    </div>
+
+{% empty %}
+
+    <p>No history found.</p>
+
+{% endfor %}
                 </div>
 
             </div>

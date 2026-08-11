@@ -1,0 +1,15 @@
+                                 precision    recall  f1-score   support
+
+Business Management and Finance       0.75      0.71      0.73      1600
+      Creative Media and Design       0.87      0.87      0.87      1600
+         Education and Research       0.73      0.68      0.71      1000
+   Engineering and Architecture       0.61      0.59      0.60      1200
+          Environmental Science       0.79      0.78      0.78       200
+         Healthcare and Medical       0.84      0.87      0.85      1800
+    Law Government and Security       0.88      0.90      0.89      1200
+ Social and Behavioral Sciences       0.83      0.84      0.84       400
+              Technology and IT       0.72      0.76      0.74      2000
+
+                       accuracy                           0.78     11000
+                      macro avg       0.78      0.78      0.78     11000
+                   weighted avg       0.78      0.78      0.78     11000

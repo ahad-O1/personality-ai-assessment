@@ -1,0 +1,57 @@
+actual_category,predicted_category,error_count
+Engineering and Architecture,Technology and IT,297
+Technology and IT,Engineering and Architecture,264
+Technology and IT,Business Management and Finance,113
+Creative Media and Design,Business Management and Finance,109
+Education and Research,Healthcare and Medical,107
+Business Management and Finance,Technology and IT,104
+Business Management and Finance,Creative Media and Design,100
+Healthcare and Medical,Education and Research,95
+Business Management and Finance,Law Government and Security,91
+Education and Research,Technology and IT,89
+Business Management and Finance,Engineering and Architecture,79
+Engineering and Architecture,Healthcare and Medical,70
+Law Government and Security,Business Management and Finance,65
+Creative Media and Design,Technology and IT,64
+Engineering and Architecture,Creative Media and Design,57
+Healthcare and Medical,Engineering and Architecture,54
+Education and Research,Social and Behavioral Sciences,48
+Business Management and Finance,Education and Research,45
+Business Management and Finance,Healthcare and Medical,44
+Technology and IT,Creative Media and Design,42
+Social and Behavioral Sciences,Education and Research,39
+Engineering and Architecture,Business Management and Finance,36
+Healthcare and Medical,Law Government and Security,36
+Technology and IT,Education and Research,34
+Law Government and Security,Healthcare and Medical,34
+Education and Research,Business Management and Finance,33
+Creative Media and Design,Engineering and Architecture,28
+Healthcare and Medical,Business Management and Finance,23
+Education and Research,Environmental Science,22
+Technology and IT,Healthcare and Medical,22
+Social and Behavioral Sciences,Healthcare and Medical,21
+Healthcare and Medical,Social and Behavioral Sciences,16
+Law Government and Security,Education and Research,15
+Environmental Science,Education and Research,12
+Environmental Science,Engineering and Architecture,12
+Engineering and Architecture,Law Government and Security,12
+Environmental Science,Technology and IT,10
+Engineering and Architecture,Environmental Science,10
+Healthcare and Medical,Technology and IT,10
+Education and Research,Law Government and Security,10
+Law Government and Security,Engineering and Architecture,8
+Environmental Science,Creative Media and Design,8
+Education and Research,Engineering and Architecture,5
+Technology and IT,Environmental Science,5
+Education and Research,Creative Media and Design,5
+Creative Media and Design,Environmental Science,5
+Engineering and Architecture,Education and Research,5
+Environmental Science,Healthcare and Medical,3
+Law Government and Security,Technology and IT,2
+Social and Behavioral Sciences,Creative Media and Design,2
+Creative Media and Design,Law Government and Security,2
+Engineering and Architecture,Social and Behavioral Sciences,2
+Technology and IT,Law Government and Security,2
+Business Management and Finance,Social and Behavioral Sciences,1
+Creative Media and Design,Education and Research,1
+Social and Behavioral Sciences,Business Management and Finance,1

@@ -1,0 +1,28 @@
+{
+    "dataset_rows": 55000,
+    "category_count": 9,
+    "features": [
+        "openness",
+        "conscientiousness",
+        "extraversion",
+        "agreeableness",
+        "neuroticism",
+        "emotional_stability",
+        "analytical_index",
+        "social_index",
+        "leadership_index",
+        "creativity_index"
+    ],
+    "top_features": [
+        "agreeableness",
+        "conscientiousness",
+        "leadership_index",
+        "social_index",
+        "openness"
+    ],
+    "important_category_pairs": [
+        "Engineering and Architecture vs Technology and IT",
+        "Education and Research vs Healthcare and Medical",
+        "Business Management and Finance vs Creative Media and Design"
+    ]
+}

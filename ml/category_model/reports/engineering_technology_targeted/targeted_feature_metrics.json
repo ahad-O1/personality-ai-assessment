@@ -1,0 +1,16 @@
+{
+    "best_feature_set": "OCEAN_5_BASELINE",
+    "best_cv_accuracy": 0.7792181522512603,
+    "best_cv_macro_f1": 0.7749829134178663,
+    "best_test_accuracy": 0.7828181818181819,
+    "best_test_macro_f1": 0.7829364246524886,
+    "features": [
+        "openness",
+        "conscientiousness",
+        "extraversion",
+        "agreeableness",
+        "neuroticism"
+    ],
+    "baseline_accuracy": 0.782818,
+    "baseline_macro_f1": 0.7829
+}

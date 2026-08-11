@@ -11,10 +11,14 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 from pathlib import Path
+import os
+from dotenv import load_dotenv
+
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+load_dotenv(BASE_DIR / ".env")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
@@ -42,6 +46,7 @@ INSTALLED_APPS = [
     'assessment.apps.AssessmentConfig',
     'recommendations',
     'dashboard',
+     'chatbot', 
 ]
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -133,3 +138,5 @@ LOGIN_URL = '/accounts/login/'
 LOGIN_REDIRECT_URL = '/dashboard/'
 
 LOGOUT_REDIRECT_URL = '/accounts/login/'
+
+OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")

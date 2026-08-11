@@ -1,0 +1,22 @@
+{
+    "ocean5_accuracy": 0.7828181818181819,
+    "hybrid_accuracy": 0.7843636363636364,
+    "accuracy_change": 0.0015454545454545165,
+    "ocean5_macro_f1": 0.7829364246524886,
+    "hybrid_macro_f1": 0.7833107149141013,
+    "macro_f1_change": 0.0003742902616127308,
+    "targeted_samples": 3256,
+    "ocean5_confusion": {
+        "engineering_correct": 728,
+        "engineering_to_technology": 290,
+        "technology_correct": 1521,
+        "technology_to_engineering": 257
+    },
+    "hybrid_confusion": {
+        "engineering_correct": 695,
+        "engineering_to_technology": 323,
+        "technology_correct": 1571,
+        "technology_to_engineering": 207
+    },
+    "changed_predictions": 166
+}

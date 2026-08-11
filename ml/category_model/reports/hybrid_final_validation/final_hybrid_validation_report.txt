@@ -1,0 +1,53 @@
+FINAL HYBRID VALIDATION
+
+Threshold: 0.50
+
+Test rows: 11000
+
+OCEAN-5 Accuracy: 78.28%
+
+Hybrid Accuracy: 78.44%
+
+Accuracy Change: +0.15 percentage points
+
+OCEAN-5 Macro F1: 0.7829
+
+Hybrid Macro F1: 0.7833
+
+Macro F1 Change: +0.0004
+
+
+CLASSIFICATION REPORT
+
+
+                                 precision    recall  f1-score   support
+
+Business Management and Finance     0.7505    0.7125    0.7310      1600
+      Creative Media and Design     0.8652    0.8662    0.8657      1600
+         Education and Research     0.7376    0.6860    0.7109      1000
+   Engineering and Architecture     0.6441    0.5792    0.6099      1200
+          Environmental Science     0.7703    0.8050    0.7873       200
+         Healthcare and Medical     0.8439    0.8739    0.8586      1800
+    Law Government and Security     0.8864    0.8975    0.8919      1200
+ Social and Behavioral Sciences     0.8370    0.8475    0.8422       400
+              Technology and IT     0.7216    0.7855    0.7522      2000
+
+                       accuracy                         0.7844     11000
+                      macro avg     0.7841    0.7837    0.7833     11000
+                   weighted avg     0.7828    0.7844    0.7829     11000
+
+
+ENGINEERING / TECHNOLOGY
+
+
+OCEAN-5 E->T: 290
+
+Hybrid E->T: 323
+
+OCEAN-5 T->E: 257
+
+Hybrid T->E: 207
+
+OCEAN-5 total E/T errors: 547
+
+Hybrid total E/T errors: 530

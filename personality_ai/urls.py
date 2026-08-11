@@ -24,4 +24,5 @@ urlpatterns = [
     path("assessment/", include("assessment.urls")),
     path("recommendations/", include("recommendations.urls")),
     path("dashboard/", include("dashboard.urls")),
+     path("chatbot/", include("chatbot.urls")), 
 ]

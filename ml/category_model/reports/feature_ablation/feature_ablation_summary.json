@@ -1,0 +1,17 @@
+{
+    "dataset_rows": 55000,
+    "categories": 9,
+    "feature_sets_tested": 7,
+    "best_feature_set": "OCEAN_5",
+    "best_cv_accuracy": 0.777836,
+    "best_cv_macro_f1": 0.773577,
+    "best_test_accuracy": 0.780636,
+    "best_test_macro_f1": 0.780449,
+    "best_features": [
+        "openness",
+        "conscientiousness",
+        "extraversion",
+        "agreeableness",
+        "neuroticism"
+    ]
+}

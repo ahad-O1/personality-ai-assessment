@@ -1,0 +1,62 @@
+{% load static %}
+
+<!-- Floating Chat Button -->
+<button id="chatToggle" class="chat-toggle">
+    💬
+</button>
+
+<!-- Chat Window -->
+<div class="chat-container" id="chatContainer">
+
+    <div class="chat-header">
+        🤖 AI Career Assistant
+
+        <span id="closeChat" class="close-chat">
+            ✖
+        </span>
+
+    </div>
+
+    <div class="chat-body" id="chatBody">
+
+        <div class="message ai-message">
+
+            <div class="bubble">
+
+                👋 Hello!
+
+                <br><br>
+
+                I am your AI Career Assistant.
+
+                Ask me:
+
+                <ul>
+                    <li>Why was this career recommended?</li>
+                    <li>What skills should I learn?</li>
+                    <li>Which career suits me best?</li>
+                </ul>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="chat-input">
+
+        <input
+            id="userInput"
+            type="text"
+            placeholder="Ask about your career..."
+        >
+
+        <button id="sendBtn">
+            Send
+        </button>
+
+        {% csrf_token %}
+
+    </div>
+
+</div>

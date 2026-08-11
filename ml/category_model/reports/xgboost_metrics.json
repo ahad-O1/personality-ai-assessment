@@ -1,0 +1,36 @@
+{
+    "model": "XGBClassifier",
+    "test_accuracy": 0.769,
+    "macro_f1": 0.768083,
+    "weighted_f1": 0.768289,
+    "cv_scores": [
+        0.767536,
+        0.768559,
+        0.762232
+    ],
+    "mean_cv_accuracy": 0.766109,
+    "cv_standard_deviation": 0.002773,
+    "features": [
+        "openness",
+        "conscientiousness",
+        "extraversion",
+        "agreeableness",
+        "neuroticism",
+        "emotional_stability",
+        "analytical_index",
+        "social_index",
+        "leadership_index",
+        "creativity_index"
+    ],
+    "classes": [
+        "Business Management and Finance",
+        "Creative Media and Design",
+        "Education and Research",
+        "Engineering and Architecture",
+        "Environmental Science",
+        "Healthcare and Medical",
+        "Law Government and Security",
+        "Social and Behavioral Sciences",
+        "Technology and IT"
+    ]
+}

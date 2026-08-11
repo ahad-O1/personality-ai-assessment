@@ -1,0 +1,34 @@
+{
+    "model": "CatBoost Binary Classifier",
+    "problem": "Engineering vs Technology",
+    "features": [
+        "openness",
+        "conscientiousness",
+        "extraversion",
+        "agreeableness",
+        "neuroticism"
+    ],
+    "target_categories": [
+        "Engineering and Architecture",
+        "Technology and IT"
+    ],
+    "dataset_rows": 16000,
+    "training_rows": 12800,
+    "testing_rows": 3200,
+    "mean_cv_accuracy": 0.8119378852254382,
+    "mean_cv_macro_f1": 0.7981486957526203,
+    "test_accuracy": 0.8159375,
+    "test_macro_f1": 0.798996668322854,
+    "test_weighted_f1": 0.8135851132547343,
+    "best_iteration": 72,
+    "confusion_matrix": [
+        [
+            841,
+            359
+        ],
+        [
+            230,
+            1770
+        ]
+    ]
+}

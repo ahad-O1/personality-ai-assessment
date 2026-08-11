@@ -1,0 +1,8 @@
+rank,feature_set,feature_count,features,cv_accuracy,cv_macro_f1,cv_weighted_f1,test_accuracy,test_macro_f1,test_weighted_f1
+1,OCEAN_5,5,"openness, conscientiousness, extraversion, agreeableness, neuroticism",0.777836,0.773577,0.777247,0.780636,0.780449,0.779611
+2,OCEAN_PLUS_SELECTED_ENGINEERED,8,"openness, conscientiousness, extraversion, agreeableness, neuroticism, social_index, leadership_index, creativity_index",0.776982,0.773153,0.776254,0.778636,0.778852,0.777665
+3,NO_WEAK_ENGINEERED,8,"openness, conscientiousness, extraversion, agreeableness, neuroticism, social_index, leadership_index, creativity_index",0.776982,0.773153,0.776254,0.778636,0.778852,0.777665
+4,ALL_10_FEATURES,10,"openness, conscientiousness, extraversion, agreeableness, neuroticism, emotional_stability, analytical_index, social_index, leadership_index, creativity_index",0.776418,0.772861,0.775704,0.777364,0.777419,0.776211
+5,TOP_8_ANALYSIS,8,"agreeableness, conscientiousness, leadership_index, social_index, openness, extraversion, creativity_index, neuroticism",0.776382,0.77223,0.775726,0.777273,0.77716,0.776311
+6,TOP_6_ANALYSIS,6,"agreeableness, conscientiousness, leadership_index, social_index, openness, extraversion",0.765564,0.761763,0.764427,0.764273,0.764316,0.762831
+7,TOP_7_ANALYSIS,7,"agreeableness, conscientiousness, leadership_index, social_index, openness, extraversion, creativity_index",0.764436,0.760074,0.763415,0.764455,0.763691,0.76317

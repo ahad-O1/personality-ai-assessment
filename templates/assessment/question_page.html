@@ -176,11 +176,6 @@
             <section class="card">
                 <h2>Question {{ answered_count|add:1 }}</h2>
 
-                <p>
-                    Answered: <b>{{ answered_count }}</b> /
-                    Maximum: <b>{{ max_questions }}</b>
-                </p>
-
                 <div class="progress-bar">
                     <div class="progress-fill" data-width="{{ confidence }}"></div>
                 </div>
@@ -241,11 +236,6 @@
                 <div class="info-row">
                     <span>Answered</span>
                     <b>{{ answered_count }}</b>
-                </div>
-
-                <div class="info-row">
-                    <span>Max Questions</span>
-                    <b>{{ max_questions }}</b>
                 </div>
 
                 <div class="info-row">

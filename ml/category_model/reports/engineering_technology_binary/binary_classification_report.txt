@@ -1,0 +1,10 @@
+ENGINEERING vs TECHNOLOGY BINARY CLASSIFICATION REPORT
+
+                              precision    recall  f1-score   support
+
+Engineering and Architecture     0.7852    0.7008    0.7406      1200
+           Technology and IT     0.8314    0.8850    0.8574      2000
+
+                    accuracy                         0.8159      3200
+                   macro avg     0.8083    0.7929    0.7990      3200
+                weighted avg     0.8141    0.8159    0.8136      3200

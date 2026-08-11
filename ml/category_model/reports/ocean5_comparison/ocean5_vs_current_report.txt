@@ -1,0 +1,58 @@
+OCEAN-5 CANDIDATE VS CURRENT CATBOOST
+================================================================================
+
+Dataset rows: 55000
+Test rows: 11000
+Categories: 9
+
+CURRENT CATBOOST
+--------------------------------------------------------------------------------
+Accuracy: 0.779182
+Macro F1: 0.778561
+Weighted F1: 0.778198
+
+                                 precision    recall  f1-score   support
+
+Business Management and Finance     0.7493    0.7100    0.7291      1600
+      Creative Media and Design     0.8667    0.8694    0.8680      1600
+         Education and Research     0.7346    0.6810    0.7068      1000
+   Engineering and Architecture     0.6124    0.5925    0.6023      1200
+          Environmental Science     0.7868    0.7750    0.7809       200
+         Healthcare and Medical     0.8388    0.8700    0.8541      1800
+    Law Government and Security     0.8755    0.8967    0.8860      1200
+ Social and Behavioral Sciences     0.8342    0.8425    0.8383       400
+              Technology and IT     0.7249    0.7590    0.7416      2000
+
+                       accuracy                         0.7792     11000
+                      macro avg     0.7804    0.7773    0.7786     11000
+                   weighted avg     0.7779    0.7792    0.7782     11000
+
+
+OCEAN-5 CANDIDATE
+--------------------------------------------------------------------------------
+Accuracy: 0.782818
+Macro F1: 0.782936
+Weighted F1: 0.782006
+
+                                 precision    recall  f1-score   support
+
+Business Management and Finance     0.7505    0.7125    0.7310      1600
+      Creative Media and Design     0.8652    0.8662    0.8657      1600
+         Education and Research     0.7376    0.6860    0.7109      1000
+   Engineering and Architecture     0.6217    0.6067    0.6141      1200
+          Environmental Science     0.7703    0.8050    0.7873       200
+         Healthcare and Medical     0.8439    0.8739    0.8586      1800
+    Law Government and Security     0.8864    0.8975    0.8919      1200
+ Social and Behavioral Sciences     0.8370    0.8475    0.8422       400
+              Technology and IT     0.7295    0.7605    0.7447      2000
+
+                       accuracy                         0.7828     11000
+                      macro avg     0.7825    0.7840    0.7829     11000
+                   weighted avg     0.7818    0.7828    0.7820     11000
+
+
+COMPARISON
+--------------------------------------------------------------------------------
+Accuracy change: +0.003636
+Macro F1 change: +0.004376
+Winner: OCEAN-5 candidate

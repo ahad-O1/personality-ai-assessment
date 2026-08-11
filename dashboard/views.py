@@ -138,6 +138,11 @@ def dashboard_home(request):
             100,
         )
 
+    ai_accuracy = 0
+
+    if model_status:
+        ai_accuracy = model_status.current_accuracy
+
     context = {
         "total_assessments": total_assessments,
         "latest_result": latest_result,
@@ -146,15 +151,14 @@ def dashboard_home(request):
         "latest_career": latest_career,
         "model_status": model_status,
         "feedback_progress": round(feedback_progress, 2),
+        "ai_accuracy": ai_accuracy,
         "assessment_history": assessment_history,
-
         "chart_labels": chart_labels,
         "openness_history": openness_history,
         "conscientiousness_history": conscientiousness_history,
         "extraversion_history": extraversion_history,
         "agreeableness_history": agreeableness_history,
         "neuroticism_history": neuroticism_history,
-
         "latest_radar_scores": latest_radar_scores,
         "career_labels": career_labels,
         "career_values": career_values,
@@ -162,6 +166,6 @@ def dashboard_home(request):
 
     return render(
         request,
-        "dashboard/dashboard.html",
+        "dashboard/user_dashboard.html",
         context,
     )
