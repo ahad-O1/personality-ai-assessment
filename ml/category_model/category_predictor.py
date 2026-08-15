@@ -17,7 +17,7 @@ from django.conf import settings
 # PATHS
 # ============================================================
 
-BASE_DIR = Path(settings.BASE_DIR)
+BASE_DIR = Path(str(getattr(settings, "BASE_DIR", ".")))
 
 MODEL_DIR = (
     BASE_DIR
@@ -361,18 +361,16 @@ def predict_category(
         "category": final_category,
 
         "confidence": round(
-            float(final_confidence),
+            final_confidence,
             6,
         ),
 
         "ocean_category": ocean_category,
 
         "ocean_confidence": round(
-            float(
-                ocean_result[
-                    "confidence"
-                ]
-            ),
+            ocean_result[
+                "confidence"
+            ],
             6,
         ),
 

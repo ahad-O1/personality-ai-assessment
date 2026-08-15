@@ -29,11 +29,11 @@ from .models import Question, UserResponse
 
 TRAITS = ["O", "C", "E", "A", "N"]
 
-MIN_QUESTIONS = 15          # user must answer at least 15 questions
-MAX_QUESTIONS = 80          # safety limit, not fixed ending point
+MIN_QUESTIONS = 15                  # Minimum baseline questions for statistical validity
+MAX_QUESTIONS = 200                 # Full question pool (stopping is purely AI confidence-driven)
 
-OVERALL_CONFIDENCE_THRESHOLD = 90
-TRAIT_CONFIDENCE_THRESHOLD = 85
+OVERALL_CONFIDENCE_THRESHOLD = 80   # AI overall confidence threshold
+TRAIT_CONFIDENCE_THRESHOLD = 75     # AI trait-level confidence threshold
 
 MIN_QUESTIONS_PER_TRAIT = 3
 
@@ -172,54 +172,48 @@ def calculate_facet_coverage(trait, facet_counts):
 
 def calculate_trait_confidence(trait, values, facet_counts):
     """
-    Calculates confidence for a single trait.
+    Calculates confidence for a single trait smoothly without erratic drops.
 
-    Confidence depends on 4 things:
+    Factors:
+    1. Evidence Score (up to 40 pts):
+       Grows steadily with each answered question. 5-6 questions per trait = max points.
 
-    1. Evidence Score
-       More answered questions = more evidence.
+    2. Consistency Score (up to 25 pts):
+       Gentle penalty for standard deviation so normal human answer variation
+       doesn't plummet the score.
 
-    2. Consistency Score
-       Similar answers = higher confidence.
-       Very mixed answers = lower confidence.
+    3. Stability Score (up to 20 pts):
+       Measures overall deviation from average across all answered trait questions
+       rather than volatile last-two-answers comparison.
 
-    3. Stability Score
-       Recent answers close to average = stable personality pattern.
-
-    4. Facet Coverage Score
-       More facets covered = better confidence.
+    4. Facet Coverage Score (up to 15 pts):
+       Bonus for answering questions across different facets.
     """
 
     answered = len(values)
 
     if answered == 0:
-        return 0
+        return 0.0
 
-    # 1. Evidence score
-    evidence_score = min((answered / 6) * 35, 35)
+    # 1. Evidence score (up to 40 pts, full evidence at 6 questions)
+    evidence_score = min((answered / 6) * 40, 40)
 
-    # 2. Consistency score
+    # 2. Consistency score (up to 25 pts, gentle scale for SD)
     if answered >= 2:
         standard_deviation = pstdev(values)
-        consistency_score = max(0, 30 - (standard_deviation * 10))
+        consistency_score = max(5, 25 - (standard_deviation * 8))
     else:
-        consistency_score = 5
+        consistency_score = 15
 
-    # 3. Stability score
-    if answered >= 4:
+    # 3. Stability score (up to 20 pts based on overall deviation from trait mean)
+    if answered >= 3:
         average = sum(values) / answered
-        last_two_answers = values[-2:]
-
-        recent_difference = (
-            sum(abs(answer - average) for answer in last_two_answers)
-            / 2
-        )
-
-        stability_score = max(0, 20 - (recent_difference * 6))
+        avg_deviation = sum(abs(v - average) for v in values) / answered
+        stability_score = max(5, 20 - (avg_deviation * 6))
     else:
-        stability_score = 5
+        stability_score = 12
 
-    # 4. Facet coverage score
+    # 4. Facet coverage score (up to 15 pts)
     facet_coverage = calculate_facet_coverage(trait, facet_counts)
     coverage_score = (facet_coverage / 100) * 15
 
@@ -382,20 +376,15 @@ def should_stop_assessment(
     """
     Decides whether assessment should stop.
 
-    Assessment stops only when:
-    - minimum questions are answered
-    - all traits have minimum questions
-    - overall confidence is high
-    - each trait confidence is acceptable
-
-    MAX_QUESTIONS is only a safety limit.
+    Stopping is driven PURELY by AI confidence:
+    - Minimum 15 questions answered (for basic statistical validity).
+    - Every trait has answered at least 3 questions.
+    - AI overall confidence meets the target threshold (80%).
+    - Each individual trait confidence meets target threshold (75%).
     """
 
     if answered_count < MIN_QUESTIONS:
         return False
-
-    if answered_count >= MAX_QUESTIONS:
-        return True
 
     all_traits_have_min_questions = all(
         len(scores[trait]) >= MIN_QUESTIONS_PER_TRAIT
@@ -407,6 +396,7 @@ def should_stop_assessment(
         for confidence in trait_confidences.values()
     )
 
+    # Pure AI Confidence-driven stopping condition
     if (
         overall_confidence >= OVERALL_CONFIDENCE_THRESHOLD
         and all_traits_confident

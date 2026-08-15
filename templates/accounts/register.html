@@ -1,228 +1,277 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Register - PersonalityAI{% endblock %}
+{% block title %}Create Account - PersonalityAI{% endblock %}
 
 {% block extra_css %}
-    <style>
-        * {
-            box-sizing: border-box;
-        }
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f6f9ff;
-            color: #0f172a;
-        }
+<!-- Bootstrap Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-        .auth-wrapper {
-            min-height: 100vh;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-        }
+<!-- Custom Auth Stylesheet -->
+<link rel="stylesheet" href="{% static 'css/auth.css' %}">
 
-        .left-panel {
-            background: linear-gradient(180deg, #061b4a, #08245f);
-            color: white;
-            padding: 70px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .logo {
-            font-size: 34px;
-            font-weight: bold;
-            margin-bottom: 25px;
-        }
-
-        .logo span {
-            color: #38bdf8;
-        }
-
-        .left-panel h1 {
-            font-size: 44px;
-            margin-bottom: 18px;
-        }
-
-        .left-panel p {
-            font-size: 18px;
-            color: #dbeafe;
-            line-height: 1.7;
-        }
-
-        .feature-list {
-            margin-top: 30px;
-        }
-
-        .feature-list div {
-            background: rgba(255,255,255,0.08);
-            padding: 14px 18px;
-            border-radius: 12px;
-            margin-bottom: 12px;
-            font-weight: bold;
-        }
-
-        .right-panel {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 40px;
-        }
-
-        .auth-card {
-            width: 100%;
-            max-width: 450px;
-            background: white;
-            padding: 40px;
-            border-radius: 22px;
-            box-shadow: 0 8px 25px rgba(15, 23, 42, 0.08);
-        }
-
-        .auth-card h2 {
-            margin-top: 0;
-            color: #0f172a;
-            font-size: 30px;
-        }
-
-        .auth-card p {
-            color: #64748b;
-        }
-
-        .input-group {
-            margin-top: 16px;
-        }
-
-        .input-group label {
-            display: block;
-            margin-bottom: 8px;
-            font-weight: bold;
-            color: #334155;
-        }
-
-        .input-group input {
-            width: 100%;
-            padding: 14px;
-            border: 1px solid #d1d5db;
-            border-radius: 12px;
-            font-size: 15px;
-            outline: none;
-        }
-
-        .input-group input:focus {
-            border-color: #2563eb;
-        }
-
-        .btn {
-            width: 100%;
-            margin-top: 25px;
-            padding: 15px;
-            border: none;
-            border-radius: 12px;
-            background: #2563eb;
-            color: white;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .btn:hover {
-            background: #1e40af;
-        }
-
-        .link-text {
-            text-align: center;
-            margin-top: 20px;
-        }
-
-        .link-text a {
-            color: #2563eb;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        .message {
-            background: #eff6ff;
-            color: #1e3a8a;
-            padding: 12px;
-            border-radius: 10px;
-            margin-bottom: 12px;
-        }
-
-        @media (max-width: 900px) {
-            .auth-wrapper {
-                grid-template-columns: 1fr;
-            }
-
-            .left-panel {
-                display: none;
-            }
-        }
-    </style>
+<style>
+    /* Hide default back button on register page */
+    .global-back-btn {
+        display: none !important;
+    }
+</style>
 {% endblock %}
 
 {% block content %}
-<div class="auth-wrapper">
+<div class="auth-grid-bg"></div>
+<div class="glow-orb glow-1"></div>
+<div class="glow-orb glow-2"></div>
 
-    <div class="left-panel">
-        <div class="logo">Personality<span>AI</span></div>
+<!-- Top Navbar -->
+<header class="auth-navbar">
+    <a href="/" class="brand">
+        <img src="{% static 'images/logo.png' %}" alt="Personality AI Logo" style="width:34px; height:34px; object-fit:contain; margin-right:10px; border-radius:8px; filter: drop-shadow(0 0 8px rgba(54,169,255,0.4));">
+        <span class="brand-text">
+            Personality<span>AI</span>
+        </span>
+    </a>
 
-        <h1>Create Your Account</h1>
-        <p>
-            Start your personality assessment and receive AI-based
-            career recommendations according to your OCEAN traits.
-        </p>
+    <a href="/" class="nav-back-link">
+        <i class="bi bi-arrow-left"></i> Return Home
+    </a>
+</header>
 
-        <div class="feature-list">
-            <div>✓ Secure User Registration</div>
-            <div>✓ Dynamic Personality Test</div>
-            <div>✓ Visual Result Dashboard</div>
-            <div>✓ Career & Skill Suggestions</div>
-        </div>
-    </div>
+<!-- Main Auth Container -->
+<main class="auth-container">
+    <div class="auth-wrapper-grid">
 
-    <div class="right-panel">
-        <div class="auth-card">
-            <h2>Register</h2>
-            <p>Create an account to start your assessment.</p>
+        <!-- Left Hero Showcase -->
+        <div class="auth-hero-showcase">
+            <div class="eyebrow">
+                <span class="status-dot"></span>
+                Join PersonalityAI
+            </div>
 
-            {% for message in messages %}
-                <div class="message">{{ message }}</div>
-            {% endfor %}
+            <h1>
+                Start Your <span>Journey</span><br>
+                of Meaningful Self-Discovery.
+            </h1>
 
-            <form method="post">
-                {% csrf_token %}
+            <p class="hero-description">
+                Create your account to unlock interactive Big Five personality assessments, receive AI-driven career matches, and visualize your cognitive strengths.
+            </p>
 
-                <div class="input-group">
-                    <label>Username</label>
-                    <input type="text" name="username" placeholder="Choose username" required>
+            <!-- Dashboard Mini Card Visual -->
+            <div class="visual-card-preview">
+                <div class="preview-header">
+                    <div class="preview-title">
+                        <small>AI CAREER MATCH</small>
+                        <strong>Top Recommendations</strong>
+                    </div>
+                    <div class="live-pill">
+                        <span></span> 94% Compatibility
+                    </div>
                 </div>
 
-                <div class="input-group">
-                    <label>Email</label>
-                    <input type="email" name="email" placeholder="Enter email address" required>
+                <div class="trait-bars-mini">
+                    <div class="trait-item">
+                        <span class="trait-name">Data Analyst</span>
+                        <div class="trait-progress">
+                            <div class="trait-progress-fill" style="width: 94%;"></div>
+                        </div>
+                        <span class="trait-val">94%</span>
+                    </div>
+
+                    <div class="trait-item">
+                        <span class="trait-name">UX Strategist</span>
+                        <div class="trait-progress">
+                            <div class="trait-progress-fill" style="width: 88%;"></div>
+                        </div>
+                        <span class="trait-val">88%</span>
+                    </div>
+
+                    <div class="trait-item">
+                        <span class="trait-name">Software Engineer</span>
+                        <div class="trait-progress">
+                            <div class="trait-progress-fill" style="width: 82%;"></div>
+                        </div>
+                        <span class="trait-val">82%</span>
+                    </div>
                 </div>
+            </div>
 
-                <div class="input-group">
-                    <label>Password</label>
-                    <input type="password" name="password" placeholder="Create password" required>
+            <!-- Feature Check List -->
+            <div class="feature-checklist">
+                <div class="check-item">
+                    <div class="check-icon"><i class="bi bi-shield-check"></i></div>
+                    <span>Fast & secure account creation</span>
                 </div>
-
-                <div class="input-group">
-                    <label>Confirm Password</label>
-                    <input type="password" name="confirm_password" placeholder="Confirm password" required>
+                <div class="check-item">
+                    <div class="check-icon"><i class="bi bi-graph-up-arrow"></i></div>
+                    <span>Real-time OCEAN trait scoring & visualizations</span>
                 </div>
-
-                <button type="submit" class="btn">Create Account</button>
-            </form>
-
-            <div class="link-text">
-                Already have an account?
-                <a href="{% url 'login' %}">Login</a>
+                <div class="check-item">
+                    <div class="check-icon"><i class="bi bi-briefcase"></i></div>
+                    <span>Personalized career roadmaps & skill growth</span>
+                </div>
             </div>
         </div>
-    </div>
 
-</div>
+        <!-- Right Auth Form Card -->
+        <div class="auth-card-container">
+            <div class="auth-card">
+                <div class="auth-card-header">
+                    <h2>Create Account</h2>
+                    <p>Fill in your details below to start your assessment profile.</p>
+                </div>
+
+                <!-- Django Messages Alert -->
+                {% if messages %}
+                <div class="alert-messages-container">
+                    {% for message in messages %}
+                        <div class="auth-alert {% if message.tags == 'error' %}auth-alert-error{% else %}auth-alert-success{% endif %}">
+                            <i class="bi {% if message.tags == 'error' %}bi-exclamation-circle{% else %}bi-check-circle{% endif %}"></i>
+                            <span>{{ message }}</span>
+                        </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                <!-- Client-side Password Error Banner -->
+                <div id="clientErrorBanner" class="auth-alert auth-alert-error" style="display: none; margin-bottom: 20px;">
+                    <i class="bi bi-exclamation-triangle-fill"></i>
+                    <span id="clientErrorMessage">Passwords do not match.</span>
+                </div>
+
+                <!-- Registration Form -->
+                <form method="post" class="auth-form" id="registerForm" autocomplete="on">
+                    {% csrf_token %}
+
+                    <div class="input-field-group">
+                        <label for="id_username">Username</label>
+                        <div class="input-wrapper">
+                            <i class="bi bi-person input-icon"></i>
+                            <input 
+                                type="text" 
+                                id="id_username" 
+                                name="username" 
+                                placeholder="Choose a unique username" 
+                                required 
+                                autocomplete="username"
+                                autofocus
+                            >
+                        </div>
+                    </div>
+
+                    <div class="input-field-group">
+                        <label for="id_email">Email Address</label>
+                        <div class="input-wrapper">
+                            <i class="bi bi-envelope input-icon"></i>
+                            <input 
+                                type="email" 
+                                id="id_email" 
+                                name="email" 
+                                placeholder="Enter your email address" 
+                                required 
+                                autocomplete="email"
+                            >
+                        </div>
+                    </div>
+
+                    <div class="input-field-group">
+                        <label for="id_password">Password</label>
+                        <div class="input-wrapper">
+                            <i class="bi bi-lock input-icon"></i>
+                            <input 
+                                type="password" 
+                                id="id_password" 
+                                name="password" 
+                                placeholder="Create a strong password" 
+                                required 
+                                autocomplete="new-password"
+                            >
+                            <button type="button" class="toggle-password-btn" id="togglePasswordBtn" title="Toggle password visibility">
+                                <i class="bi bi-eye" id="togglePasswordIcon"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="input-field-group">
+                        <label for="id_confirm_password">Confirm Password</label>
+                        <div class="input-wrapper">
+                            <i class="bi bi-lock-fill input-icon"></i>
+                            <input 
+                                type="password" 
+                                id="id_confirm_password" 
+                                name="confirm_password" 
+                                placeholder="Confirm your password" 
+                                required 
+                                autocomplete="new-password"
+                            >
+                        </div>
+                    </div>
+
+                    <div class="form-options-row">
+                        <label class="checkbox-custom">
+                            <input type="checkbox" name="terms" required checked>
+                            <span>I agree to Terms & Privacy Policy</span>
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn-submit-glow">
+                        <span>Get Started</span>
+                        <i class="bi bi-arrow-right"></i>
+                    </button>
+                </form>
+
+                <!-- Switch Link -->
+                <div class="auth-switch-text">
+                    Already have an account?
+                    <a href="{% url 'login' %}">Sign In</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+<footer class="auth-footer">
+    <p>© 2026 PersonalityAI Assessment Engine. All rights reserved.</p>
+</footer>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const toggleBtn = document.getElementById("togglePasswordBtn");
+        const passwordInput = document.getElementById("id_password");
+        const confirmInput = document.getElementById("id_confirm_password");
+        const toggleIcon = document.getElementById("togglePasswordIcon");
+        const registerForm = document.getElementById("registerForm");
+        const errorBanner = document.getElementById("clientErrorBanner");
+        const errorMessage = document.getElementById("clientErrorMessage");
+
+        if (toggleBtn && passwordInput && toggleIcon) {
+            toggleBtn.addEventListener("click", function () {
+                const isPassword = passwordInput.getAttribute("type") === "password";
+                passwordInput.setAttribute("type", isPassword ? "text" : "password");
+                toggleIcon.className = isPassword ? "bi bi-eye-slash" : "bi bi-eye";
+            });
+        }
+
+        if (registerForm) {
+            registerForm.addEventListener("submit", function (e) {
+                if (passwordInput.value !== confirmInput.value) {
+                    e.preventDefault();
+                    errorBanner.style.display = "flex";
+                    errorMessage.textContent = "Passwords do not match. Please re-enter.";
+                    confirmInput.focus();
+                } else {
+                    errorBanner.style.display = "none";
+                }
+            });
+        }
+    });
+</script>
 {% endblock %}

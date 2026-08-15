@@ -1,493 +1,1015 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Career Recommendations{% endblock %}
+{% block title %}Personality & Career Report{% endblock %}
 
 {% block extra_css %}
-
 <link rel="stylesheet" href="{% static 'css/chatbot.css' %}">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f4f7fb;
-            margin: 0;
-            padding: 0;
+<style>
+    :root {
+        --primary: #2563eb;
+        --primary-dark: #1e3a8a;
+        --primary-light: #eff6ff;
+        --bg: #f5f7fb;
+        --card: #ffffff;
+        --text: #172033;
+        --muted: #64748b;
+        --border: #e5e7eb;
+        --success: #16a34a;
+        --warning: #d97706;
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+
+    .report-wrapper {
+        width: min(1180px, calc(100% - 32px));
+        margin: 30px auto 60px;
+    }
+
+    /* HERO SECTION */
+    .report-hero {
+        background: linear-gradient(135deg, #172554, #2563eb);
+        color: white;
+        border-radius: 24px;
+        padding: 42px;
+        margin-bottom: 24px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .report-hero::after {
+        content: "";
+        position: absolute;
+        width: 280px;
+        height: 280px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, .08);
+        right: -80px;
+        top: -100px;
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 2;
+        max-width: 720px;
+    }
+
+    .hero-label {
+        font-size: 12px;
+        font-weight: 800;
+        letter-spacing: 1.5px;
+        text-transform: uppercase;
+        opacity: .8;
+        margin-bottom: 10px;
+    }
+
+    .report-hero h1 {
+        margin: 0 0 12px;
+        font-size: clamp(28px, 4vw, 42px);
+        font-weight: 800;
+    }
+
+    .report-hero p {
+        margin: 0;
+        color: #dbeafe;
+        line-height: 1.7;
+        font-size: 15px;
+    }
+
+    .hero-actions {
+        margin-top: 24px;
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+    }
+
+    .hero-btn {
+        display: inline-flex;
+        align-items: center;
+        padding: 11px 20px;
+        border-radius: 10px;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 14px;
+        transition: all 0.2s ease;
+    }
+
+    .hero-btn.primary {
+        background: white;
+        color: var(--primary-dark);
+    }
+
+    .hero-btn.primary:hover {
+        background: #f8fafc;
+        transform: translateY(-1px);
+    }
+
+    .hero-btn.secondary {
+        border: 1px solid rgba(255, 255, 255, .3);
+        color: white;
+        background: rgba(255, 255, 255, .08);
+    }
+
+    .hero-btn.secondary:hover {
+        background: rgba(255, 255, 255, .15);
+        transform: translateY(-1px);
+    }
+
+    /* COMMON STRUCTURE */
+    .section {
+        margin-bottom: 24px;
+    }
+
+    .section-title {
+        margin-bottom: 14px;
+    }
+
+    .section-title h2 {
+        margin: 0;
+        font-size: 21px;
+        font-weight: 800;
+        color: #0f172a;
+    }
+
+    .section-title p {
+        margin: 5px 0 0;
+        color: var(--muted);
+        font-size: 14px;
+    }
+
+    .card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        box-shadow: 0 8px 30px rgba(15, 23, 42, .05);
+    }
+
+    /* OCEAN SCORE AREA */
+    .score-layout {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        align-items: stretch;
+    }
+
+    .score-card,
+    .chart-card {
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .score-item {
+        margin-bottom: 18px;
+    }
+
+    .score-item:last-child {
+        margin-bottom: 0;
+    }
+
+    .score-head {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        margin-bottom: 7px;
+        font-size: 14px;
+        font-weight: 700;
+    }
+
+    .score-value {
+        color: var(--primary);
+    }
+
+    .score-bar {
+        height: 9px;
+        background: #e8edf5;
+        border-radius: 99px;
+        overflow: hidden;
+    }
+
+    .score-fill {
+        height: 100%;
+        width: 0;
+        background: linear-gradient(90deg, #2563eb, #60a5fa);
+        border-radius: inherit;
+        transition: width 0.8s ease;
+    }
+
+    .chart-container {
+        height: 300px;
+        position: relative;
+        width: 100%;
+    }
+
+    /* PERSONALITY PROFILE INTERPRETATION */
+    .profile-card {
+        padding: 26px;
+    }
+
+    .personality-type {
+        display: inline-flex;
+        padding: 7px 13px;
+        border-radius: 999px;
+        background: var(--primary-light);
+        color: var(--primary);
+        font-size: 13px;
+        font-weight: 800;
+        margin-bottom: 12px;
+    }
+
+    .profile-card h2 {
+        margin: 0 0 10px;
+        font-size: 27px;
+        color: #1e3a8a;
+    }
+
+    .profile-summary {
+        color: var(--muted);
+        line-height: 1.7;
+        max-width: 850px;
+        font-size: 15px;
+    }
+
+    .profile-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        margin-top: 22px;
+    }
+
+    .info-box {
+        background: #f8fafc;
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 18px;
+    }
+
+    .info-box.full {
+        grid-column: 1 / -1;
+    }
+
+    .info-box h3 {
+        margin: 0 0 12px;
+        font-size: 15px;
+        color: var(--primary-dark);
+        font-weight: 700;
+    }
+
+    .info-box ul {
+        margin: 0;
+        padding-left: 20px;
+        color: #475569;
+        line-height: 1.8;
+    }
+
+    /* STRENGTHS & DEVELOPMENT AREAS */
+    .strength-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 18px;
+        align-items: stretch;
+    }
+
+    .strength-card {
+        padding: 22px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .strength-card h3 {
+        margin: 0 0 14px;
+        font-size: 16px;
+        font-weight: 700;
+    }
+
+    .strength-card.strengths {
+        border-top: 4px solid #16a34a;
+    }
+
+    .strength-card.improvements {
+        border-top: 4px solid #f59e0b;
+    }
+
+    .strength-list {
+        margin: 0;
+        padding-left: 20px;
+        color: #475569;
+        line-height: 1.8;
+    }
+
+    /* TRAIT ANALYSIS GRID */
+    .analysis-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 16px;
+    }
+
+    .analysis-card {
+        padding: 20px;
+    }
+
+    .analysis-card h3 {
+        margin: 0 0 8px;
+        color: var(--primary-dark);
+        font-size: 16px;
+        font-weight: 700;
+    }
+
+    .level {
+        display: inline-block;
+        background: var(--primary-light);
+        color: var(--primary);
+        padding: 5px 10px;
+        border-radius: 999px;
+        font-size: 12px;
+        font-weight: 800;
+        margin-bottom: 10px;
+    }
+
+    .analysis-card p {
+        color: var(--muted);
+        line-height: 1.65;
+        font-size: 14px;
+        margin: 0 0 8px;
+    }
+
+    .analysis-card p:last-child {
+        margin-bottom: 0;
+    }
+
+    /* CAREER RECOMMENDATIONS */
+    .career-card {
+        padding: 24px;
+        margin-bottom: 20px;
+        border: 1px solid #dbeafe;
+        border-radius: 18px;
+        background: white;
+        box-shadow: 0 7px 24px rgba(37, 99, 235, .06);
+    }
+
+    .career-top {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        align-items: flex-start;
+    }
+
+    .career-rank {
+        color: var(--primary);
+        font-size: 12px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: .8px;
+    }
+
+    .career-card h3 {
+        margin: 4px 0 8px;
+        font-size: 21px;
+        color: #172554;
+        font-weight: 800;
+    }
+
+    .match-badge {
+        flex-shrink: 0;
+        background: #eff6ff;
+        color: #1d4ed8;
+        padding: 8px 14px;
+        border-radius: 10px;
+        font-size: 13px;
+        font-weight: 800;
+        border: 1px solid #bfdbfe;
+    }
+
+    .career-description {
+        color: var(--muted);
+        line-height: 1.65;
+        margin-bottom: 18px;
+        font-size: 14px;
+    }
+
+    .career-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 18px;
+    }
+
+    .meta-pill {
+        background: #f8fafc;
+        border: 1px solid var(--border);
+        padding: 7px 12px;
+        border-radius: 8px;
+        font-size: 12px;
+        color: #475569;
+    }
+
+    .career-columns {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+    }
+
+    .career-section {
+        background: #f8fafc;
+        border: 1px solid var(--border);
+        border-radius: 13px;
+        padding: 18px;
+    }
+
+    .career-section h4 {
+        margin: 0 0 12px;
+        font-size: 14px;
+        color: #1e3a8a;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .career-section ul,
+    .career-section ol {
+        margin: 0;
+        padding-left: 20px;
+        color: #475569;
+        font-size: 13px;
+        line-height: 1.7;
+    }
+
+    .career-details {
+        margin-top: 16px;
+        border-top: 1px solid var(--border);
+        padding-top: 15px;
+    }
+
+    .career-details summary {
+        cursor: pointer;
+        color: var(--primary);
+        font-size: 14px;
+        font-weight: 700;
+        user-select: none;
+    }
+
+    .career-details summary:hover {
+        text-decoration: underline;
+    }
+
+    /* FEEDBACK FORM */
+    .feedback-box {
+        margin-top: 14px;
+        background: #f8fafc;
+        border: 1px solid var(--border);
+        border-radius: 13px;
+        padding: 18px;
+    }
+
+    .feedback-box h4 {
+        margin: 0 0 12px;
+        font-size: 14px;
+        font-weight: 700;
+        color: #1e293b;
+    }
+
+    .feedback-box label {
+        font-size: 13px;
+        color: #475569;
+        font-weight: 500;
+    }
+
+    .feedback-box select,
+    .feedback-box textarea {
+        width: 100%;
+        padding: 10px 12px;
+        border: 1px solid #cbd5e1;
+        border-radius: 9px;
+        background: white;
+        margin-top: 7px;
+        font-family: inherit;
+        font-size: 13px;
+    }
+
+    .feedback-box textarea {
+        resize: vertical;
+        min-height: 75px;
+    }
+
+    .feedback-btn {
+        margin-top: 12px;
+        background: var(--primary);
+        color: white;
+        border: 0;
+        padding: 10px 18px;
+        border-radius: 9px;
+        font-weight: 700;
+        font-size: 13px;
+        cursor: pointer;
+        transition: background 0.2s ease;
+    }
+
+    .feedback-btn:hover {
+        background: #1d4ed8;
+    }
+
+    .model-scores {
+        display: flex;
+        gap: 20px;
+        flex-wrap: wrap;
+        margin-top: 18px;
+        padding-top: 14px;
+        border-top: 1px dashed var(--border);
+        color: var(--muted);
+        font-size: 13px;
+    }
+
+    /* RESPONSIVE LAYOUT */
+    @media (max-width: 850px) {
+        .score-layout,
+        .strength-grid,
+        .career-columns,
+        .profile-grid {
+            grid-template-columns: 1fr;
         }
 
-        .container {
-            width: 90%;
-            margin: 30px auto;
+        .info-box.full {
+            grid-column: auto;
         }
 
-        .header {
-            background: #1e3a8a;
-            color: white;
-            padding: 25px;
-            border-radius: 12px;
-            text-align: center;
-        }
-
-        .grid,
-        .analysis-grid {
-            display: grid;
-            gap: 25px;
-            margin-top: 25px;
-        }
-
-        .grid {
-            grid-template-columns: 1fr 1fr;
-        }
-
-        .analysis-grid {
-            grid-template-columns: repeat(2, 1fr);
-        }
-
-        .card {
-            background: white;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-        }
-
-        .score-item {
-            margin-bottom: 18px;
-        }
-
-        .bar {
-            background: #e5e7eb;
-            border-radius: 20px;
-            overflow: hidden;
-            height: 18px;
-            margin-top: 6px;
-        }
-
-        .bar-fill {
-            background: #2563eb;
-            height: 100%;
-            color: white;
-            font-size: 12px;
-            text-align: right;
-            padding-right: 8px;
-            line-height: 18px;
-            width: 0;
-        }
-
-        .analysis-card {
-            background: #f8fafc;
-            padding: 18px;
-            border-radius: 12px;
-            border: 1px solid #e5e7eb;
-        }
-
-        .analysis-card h3,
-        .career-card h3 {
-            color: #1e3a8a;
-            margin-top: 0;
-        }
-
-        .badge {
-            display: inline-block;
-            background: #2563eb;
-            color: white;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 13px;
-            margin-bottom: 10px;
-        }
-
-        .career-card {
-            background: #eef4ff;
-            padding: 18px;
-            border-left: 5px solid #2563eb;
-            border-radius: 10px;
-            margin-bottom: 15px;
+        .career-top {
+            flex-direction: column;
         }
 
         .match-badge {
-            float: right;
-            background: #2563eb;
-            color: white;
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 14px;
+            align-self: flex-start;
         }
 
-        @media (max-width: 768px) {
-
-            .grid,
-            .analysis-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .match-badge {
-                float: none;
-                display: inline-block;
-                margin-top: 8px;
-            }
+        .report-hero {
+            padding: 28px 22px;
         }
-    </style>
+
+        .report-wrapper {
+            width: min(100% - 20px, 1180px);
+        }
+    }
+</style>
 {% endblock %}
 
+
 {% block content %}
-    <div class="container">
-        {% if messages %}
-        <div style="margin-bottom: 20px;">
-            {% for message in messages %}
-            <div style="
-                padding: 14px 18px;
-                margin-bottom: 10px;
-                background: #dcfce7;
-                color: #166534;
-                border: 1px solid #86efac;
-                border-radius: 10px;
-                font-weight: bold;
-            ">
-                ✅ {{ message }}
-            </div>
-            {% endfor %}
-        </div>
-        {% endif %}
-        <div class="header">
-            <h1>AI Personality Assessment Report</h1>
-            <p>Your OCEAN scores and recommended career paths</p>
+<div class="report-wrapper">
 
-            <a href="{% url 'download_report' result.id %}"
-                style="display:inline-block; margin-top:15px; background:white; color:#1e3a8a; padding:12px 18px; border-radius:8px; text-decoration:none; font-weight:bold;">
-                Download PDF Report
-            </a>
-        </div>
-
-        <div class="grid">
-
-            <div class="card">
-                <h2>OCEAN Personality Scores</h2>
-
-                <div class="score-item">
-                    <b>Openness: {{ result.openness }}%</b>
-                    <div class="bar">
-                        <div class="bar-fill" data-width="{{ result.openness }}">{{ result.openness }}%</div>
-                    </div>
-                </div>
-
-                <div class="score-item">
-                    <b>Conscientiousness: {{ result.conscientiousness }}%</b>
-                    <div class="bar">
-                        <div class="bar-fill" data-width="{{ result.conscientiousness }}">{{ result.conscientiousness
-                            }}%</div>
-                    </div>
-                </div>
-
-                <div class="score-item">
-                    <b>Extraversion: {{ result.extraversion }}%</b>
-                    <div class="bar">
-                        <div class="bar-fill" data-width="{{ result.extraversion }}">{{ result.extraversion }}%</div>
-                    </div>
-                </div>
-
-                <div class="score-item">
-                    <b>Agreeableness: {{ result.agreeableness }}%</b>
-                    <div class="bar">
-                        <div class="bar-fill" data-width="{{ result.agreeableness }}">{{ result.agreeableness }}%</div>
-                    </div>
-                </div>
-
-                <div class="score-item">
-                    <b>Neuroticism: {{ result.neuroticism }}%</b>
-                    <div class="bar">
-                        <div class="bar-fill" data-width="{{ result.neuroticism }}">{{ result.neuroticism }}%</div>
-                    </div>
-                </div>
+    <!-- HERO HEADER -->
+    <section class="report-hero">
+        <div class="hero-content">
+            <div class="hero-label">
+                PERSONALITY ASSESSMENT REPORT
             </div>
 
-            <div class="card">
-                <h2>Personality Radar Chart</h2>
-                <canvas id="oceanChart"></canvas>
+            <h1>Your Personality & Career Profile</h1>
+
+            <p>
+                Your OCEAN personality assessment has been analyzed using
+                adaptive scoring to identify your personality characteristics,
+                strengths and suitable career directions.
+            </p>
+
+            <div class="hero-actions">
+                <a href="{% url 'download_report' result.id %}" class="hero-btn primary">
+                    Download PDF Report
+                </a>
+
+                <a href="{% url 'dashboard_home' %}" class="hero-btn secondary">
+                    Back to Dashboard
+                </a>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- OCEAN SCORES & RADAR CHART -->
+    <section class="section">
+        <div class="section-title">
+            <h2>OCEAN Personality Profile</h2>
+            <p>Your measured personality dimensions</p>
+        </div>
+
+        <div class="score-layout">
+            <!-- LEFT: 5 SCORE BARS -->
+            <div class="card score-card">
+                <div class="score-item">
+                    <div class="score-head">
+                        <span>Openness</span>
+                        <span class="score-value">{{ result.openness }}%</span>
+                    </div>
+                    <div class="score-bar">
+                        <div class="score-fill" data-width="{{ result.openness }}"></div>
+                    </div>
+                </div>
+
+                <div class="score-item">
+                    <div class="score-head">
+                        <span>Conscientiousness</span>
+                        <span class="score-value">{{ result.conscientiousness }}%</span>
+                    </div>
+                    <div class="score-bar">
+                        <div class="score-fill" data-width="{{ result.conscientiousness }}"></div>
+                    </div>
+                </div>
+
+                <div class="score-item">
+                    <div class="score-head">
+                        <span>Extraversion</span>
+                        <span class="score-value">{{ result.extraversion }}%</span>
+                    </div>
+                    <div class="score-bar">
+                        <div class="score-fill" data-width="{{ result.extraversion }}"></div>
+                    </div>
+                </div>
+
+                <div class="score-item">
+                    <div class="score-head">
+                        <span>Agreeableness</span>
+                        <span class="score-value">{{ result.agreeableness }}%</span>
+                    </div>
+                    <div class="score-bar">
+                        <div class="score-fill" data-width="{{ result.agreeableness }}"></div>
+                    </div>
+                </div>
+
+                <div class="score-item">
+                    <div class="score-head">
+                        <span>Neuroticism</span>
+                        <span class="score-value">{{ result.neuroticism }}%</span>
+                    </div>
+                    <div class="score-bar">
+                        <div class="score-fill" data-width="{{ result.neuroticism }}"></div>
+                    </div>
+                </div>
             </div>
 
+            <!-- RIGHT: RADAR CHART -->
+            <div class="card chart-card">
+                <div class="section-title">
+                    <h2 style="font-size: 18px;">Personality Radar</h2>
+                    <p>Visual representation of your OCEAN profile</p>
+                </div>
+
+                <div class="chart-container">
+                    <canvas id="oceanChart"></canvas>
+                </div>
+            </div>
         </div>
-        <div class="card" style="margin-top:25px;">
+    </section>
 
-            <h2>🧠 AI Personality Type</h2>
 
-            <h3 style="color:#2563eb; margin-bottom:10px;">
-                {{ personality_type }}
-            </h3>
+    <!-- AI PERSONALITY INTERPRETATION -->
+    <section class="section">
+        <div class="section-title">
+            <h2>AI Personality Interpretation</h2>
+            <p>How the assessment interprets your overall profile</p>
+        </div>
 
-            <p style="margin-bottom:25px;">
+        <div class="card profile-card">
+            <span class="personality-type">
+                AI Personality Type
+            </span>
+
+            <h2>{{ personality_type }}</h2>
+
+            <p class="profile-summary">
                 {{ personality_summary }}
             </p>
 
-            <div class="analysis-grid">
-
-                <!-- Personality Characteristics -->
-
-                <div class="analysis-card">
-
-                    <h3>⭐ Key Characteristics</h3>
-
-                    <ul>
-                        {% for item in personality_details.strengths %}
-                        <li>{{ item }}</li>
-                        {% endfor %}
-                    </ul>
-
-                </div>
-
-                <!-- Best Work Environment -->
-
-                <div class="analysis-card">
-
-                    <h3>🏢 Best Work Environment</h3>
-
+            <div class="profile-grid">
+                <div class="info-box">
+                    <h3>Best Work Environment</h3>
                     <ul>
                         {% for item in personality_details.environments %}
                         <li>{{ item }}</li>
                         {% endfor %}
                     </ul>
-
                 </div>
 
+                <div class="info-box">
+                    <h3>Recommended Career Domains</h3>
+                    <ul>
+                        {% for domain in personality_details.domains %}
+                        <li>{{ domain }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+                <div class="info-box full">
+                    <h3>AI Overall Summary</h3>
+                    <p style="margin:0;color:#64748b;line-height:1.7;">
+                        {{ personality_details.summary }}
+                    </p>
+                </div>
             </div>
+        </div>
+    </section>
 
-            <div class="analysis-card" style="margin-top:20px;">
 
-                <h3>🎯 Recommended Career Domains</h3>
+    <!-- STRENGTHS & DEVELOPMENT AREAS -->
+    <section class="section">
+        <div class="section-title">
+            <h2>Strengths & Development Areas</h2>
+            <p>Key areas identified from your personality profile</p>
+        </div>
 
-                <ul>
-                    {% for domain in personality_details.domains %}
-                    <li>{{ domain }}</li>
+        <div class="strength-grid">
+            <div class="card strength-card strengths">
+                <h3>Your Top Strengths</h3>
+                <ul class="strength-list">
+                    {% for strength in strengths %}
+                    <li>{{ strength }}</li>
+                    {% empty %}
+                    <li>No strength data available.</li>
                     {% endfor %}
                 </ul>
-
             </div>
 
-            <div class="analysis-card" style="margin-top:20px; background:#eef4ff;">
+            <div class="card strength-card improvements">
+                <h3>Areas to Improve</h3>
+                <ul class="strength-list">
+                    {% for item in improvements %}
+                    <li>{{ item }}</li>
+                    {% empty %}
+                    <li>No improvement areas available.</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </section>
 
-                <h3>📋 AI Overall Summary</h3>
 
-                <p style="margin-bottom:0;">
-                    {{ personality_details.summary }}
+    <!-- PERSONALITY TRAIT ANALYSIS -->
+    <section class="section">
+        <div class="section-title">
+            <h2>Personality Trait Analysis</h2>
+            <p>Detailed interpretation of each OCEAN dimension</p>
+        </div>
+
+        <div class="analysis-grid">
+            {% for item in personality_analysis %}
+            <div class="card analysis-card">
+                <h3>{{ item.trait }}</h3>
+
+                <span class="level">
+                    {{ item.level }}
+                </span>
+
+                <p>
+                    <strong>Score:</strong> {{ item.score }}%
                 </p>
 
+                <p>
+                    {{ item.description }}
+                </p>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+
+    <!-- TOP 5 AI CAREER MATCHES -->
+    <section class="section">
+        <div class="section-title">
+            <h2>Top 5 AI Career Matches</h2>
+            <p>
+                Career paths ranked according to personality compatibility,
+                skills and AI model scoring.
+            </p>
+        </div>
+
+        {% for career in careers %}
+        <article class="career-card">
+            <div class="career-top">
+                <div>
+                    <div class="career-rank">
+                        MATCH #{{ forloop.counter }}
+                    </div>
+                    <h3>
+                        {{ career.title }}
+                    </h3>
+                </div>
+
+                <div class="match-badge">
+                    {{ career.final_score }}% Match
+                </div>
             </div>
 
-        </div>
-        <div class="card" style="margin-top:25px;">
-            <h2>✅ Strengths & Growth Areas</h2>
+            <p class="career-description">
+                {{ career.description }}
+            </p>
 
-            <div class="analysis-grid">
-                <div class="analysis-card">
-                    <h3>🟢 Your Top Strengths</h3>
+            <div class="career-meta">
+                <span class="meta-pill">
+                    Category: {{ career.category }}
+                </span>
+
+                <span class="meta-pill">
+                    Required Traits: {{ career.required_traits }}
+                </span>
+
+                <span class="meta-pill">
+                    Skills: {{ career.skills }}
+                </span>
+            </div>
+
+            <div class="career-columns">
+                <div class="career-section">
+                    <h4>WHY THIS CAREER FITS YOU</h4>
                     <ul>
-                        {% for strength in strengths %}
-                        <li>{{ strength }}</li>
+                        {% for reason in career.reasons %}
+                        <li>{{ reason }}</li>
                         {% endfor %}
                     </ul>
                 </div>
 
-                <div class="analysis-card">
-                    <h3>🟠 Areas to Improve</h3>
-                    <ul>
-                        {% for item in improvements %}
-                        <li>{{ item }}</li>
-                        {% endfor %}
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <div class="card" style="margin-top: 25px;">
-            <h2>Personality Analysis</h2>
-
-            <div class="analysis-grid">
-                {% for item in personality_analysis %}
-                <div class="analysis-card">
-                    <h3>{{ item.trait }}</h3>
-                    <span class="badge">{{ item.level }}</span>
-                    <p><b>Score:</b> {{ item.score }}%</p>
-                    <p>{{ item.description }}</p>
-                </div>
-                {% endfor %}
-            </div>
-        </div>
-
-        <div class="card" style="margin-top: 25px;">
-            <h2>🏆 Top 5 AI Career Matches</h2>
-
-            {% for career in careers %}
-            <div class="career-card">
-                <h3>
-                    #{{ forloop.counter }} {{ career.title }}
-                    <span class="match-badge">{{ career.final_score }}% — {{ career.match_label }}</span>
-                </h3>
-
-                <p><b>📂 Category:</b> {{ career.category }}</p>
-                <p>{{ career.description }}</p>
-                <p><b>🎯 Required Traits:</b> {{ career.required_traits }}</p>
-                <p><b>🛠 Skills:</b> {{ career.skills }}</p>
-
-                <p><b>🧠 Why this career suits you:</b></p>
-                <ul>
-                    {% for reason in career.reasons %}
-                    <li>{{ reason }}</li>
-                    {% endfor %}
-                </ul>
-                {% if career.warnings %}
-                <p><b>⚠ Areas to Improve:</b></p>
-                <ul>
-                    {% for warning in career.warnings %}
-                    <li>{{ warning }}</li>
-                    {% endfor %}
-                </ul>
-                {% endif %}
-                <div style="
-margin-top:20px;
-padding:15px;
-background:#ffffff;
-border-radius:10px;
-border:1px solid #dbeafe;">
-
-                    <h4 style="margin-top:0;color:#1e3a8a;">
-                        📚 AI Learning Roadmap
-                    </h4>
-
-                    <ol style="padding-left:20px;">
-
+                <div class="career-section">
+                    <h4>RECOMMENDED LEARNING ROADMAP</h4>
+                    <ol>
                         {% for step in career.roadmap %}
-
-                        <li style="margin-bottom:8px;">
-                            {{ step }}
-                        </li>
-
+                        <li>{{ step }}</li>
                         {% endfor %}
-
                     </ol>
-
                 </div>
-                <div style="
-    margin-top: 18px;
-    padding: 16px;
-    background: #ffffff;
-    border: 1px solid #dbeafe;
-    border-radius: 10px;
-">
-                    <h4 style="margin-top: 0; color: #1e3a8a;">
-                        🤖 Help Improve the AI Model
+            </div>
+
+            {% if career.warnings %}
+            <details class="career-details">
+                <summary>
+                    View potential development areas
+                </summary>
+                <div style="margin-top:12px;">
+                    <ul class="strength-list">
+                        {% for warning in career.warnings %}
+                        <li>{{ warning }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </details>
+            {% endif %}
+
+            <!-- FEEDBACK ACCORDION -->
+            <details class="career-details">
+                <summary>
+                    Help improve the AI recommendation
+                </summary>
+
+                <div class="feedback-box">
+                    <h4>
+                        Is this career relevant for you?
                     </h4>
 
                     <form method="post" action="{% url 'submit_career_feedback' result.id %}">
-
                         {% csrf_token %}
 
                         <input type="hidden" name="career_id" value="{{ career.id }}">
-
-                        <p>
-                            <b>Is this career relevant for you?</b>
-                        </p>
 
                         <label>
                             <input type="radio" name="is_relevant" value="yes" required>
                             Yes
                         </label>
 
-                        <label style="margin-left: 15px;">
+                        <label style="margin-left:15px;">
                             <input type="radio" name="is_relevant" value="no">
                             No
                         </label>
 
-                        <p>
-                            <b>Rating:</b>
-                        </p>
+                        <div style="margin-top:14px;">
+                            <label>
+                                Rating
+                            </label>
+                            <select name="rating" required>
+                                <option value="">
+                                    Select rating
+                                </option>
+                                <option value="1">
+                                    1 - Very Poor
+                                </option>
+                                <option value="2">
+                                    2 - Poor
+                                </option>
+                                <option value="3">
+                                    3 - Average
+                                </option>
+                                <option value="4">
+                                    4 - Good
+                                </option>
+                                <option value="5">
+                                    5 - Excellent
+                                </option>
+                            </select>
+                        </div>
 
-                        <select name="rating" required style="padding: 8px; border-radius: 6px;">
-                            <option value="">Select rating</option>
-                            <option value="1">1 - Very Poor</option>
-                            <option value="2">2 - Poor</option>
-                            <option value="3">3 - Average</option>
-                            <option value="4">4 - Good</option>
-                            <option value="5">5 - Excellent</option>
-                        </select>
+                        <div style="margin-top:12px;">
+                            <textarea name="comments" placeholder="Optional feedback..."></textarea>
+                        </div>
 
-                        <p>
-                            <textarea name="comments" rows="3" placeholder="Optional feedback..." style="
-                    width: 100%;
-                    padding: 10px;
-                    border: 1px solid #cbd5e1;
-                    border-radius: 8px;
-                "></textarea>
-                        </p>
-
-                        <button type="submit" style="
-                    background: #2563eb;
-                    color: white;
-                    border: none;
-                    padding: 10px 16px;
-                    border-radius: 8px;
-                    cursor: pointer;
-                    font-weight: bold;
-                ">
+                        <button type="submit" class="feedback-btn">
                             Submit Feedback
                         </button>
                     </form>
                 </div>
+            </details>
 
-                <hr>
+            <div class="model-scores">
+                <span>
+                    AI Model Score: <strong>{{ career.ml_score }}%</strong>
+                </span>
 
-                <p>🤖 <b>AI Model Score:</b> {{ career.ml_score }}%</p>
-                <p>📊 <b>Personality Match:</b> {{ career.rule_score }}%</p>
+                <span>
+                    Personality Match: <strong>{{ career.rule_score }}%</strong>
+                </span>
             </div>
-            {% empty %}
-            <p>No AI Career Recommendation Found.</p>
-            {% endfor %}
-        </div>
+        </article>
 
-    </div>
-    {% include "chatbot/chatbot.html" %}
+        {% empty %}
+        <div class="card" style="padding:30px;text-align:center;">
+            No AI career recommendations are available yet.
+        </div>
+        {% endfor %}
+    </section>
+
+</div>
+
+{% include "chatbot/chatbot.html" %}
 
 {% endblock %}
 
+
 {% block extra_js %}
-    <script>
-        document.querySelectorAll('.bar-fill').forEach(function (bar) {
-            bar.style.width = bar.dataset.width + '%';
-        });
+<script>
+    /* Initialize Score Bar Widths */
+    document.querySelectorAll(".score-fill").forEach(function (bar) {
+        const width = Number(bar.dataset.width || 0);
+        bar.style.width = Math.min(Math.max(width, 0), 100) + "%";
+    });
 
-        const oceanScores = [
-            Number("{{ result.openness }}"),
-            Number("{{ result.conscientiousness }}"),
-            Number("{{ result.extraversion }}"),
-            Number("{{ result.agreeableness }}"),
-            Number("{{ result.neuroticism }}")
-        ];
+    /* Radar Chart Initialization */
+    const oceanScores = [
+        Number("{{ result.openness }}"),
+        Number("{{ result.conscientiousness }}"),
+        Number("{{ result.extraversion }}"),
+        Number("{{ result.agreeableness }}"),
+        Number("{{ result.neuroticism }}")
+    ];
 
-        const ctx = document.getElementById('oceanChart');
+    const chartElement = document.getElementById("oceanChart");
 
-        new Chart(ctx, {
-            type: 'radar',
+    if (chartElement && typeof Chart !== "undefined") {
+        new Chart(chartElement, {
+            type: "radar",
             data: {
                 labels: [
-                    'Openness',
-                    'Conscientiousness',
-                    'Extraversion',
-                    'Agreeableness',
-                    'Neuroticism'
+                    "Openness",
+                    "Conscientiousness",
+                    "Extraversion",
+                    "Agreeableness",
+                    "Neuroticism"
                 ],
                 datasets: [{
-                    label: 'Personality Score',
+                    label: "Personality Score",
                     data: oceanScores,
-                    borderWidth: 2
+                    borderWidth: 2,
+                    backgroundColor: "rgba(37, 99, 235, 0.18)",
+                    borderColor: "#2563eb",
+                    pointBackgroundColor: "#2563eb",
+                    pointBorderColor: "#ffffff",
+                    pointBorderWidth: 2
                 }]
             },
             options: {
+                responsive: true,
+                maintainAspectRatio: false,
                 scales: {
                     r: {
                         min: 0,
-                        max: 100
+                        max: 100,
+                        ticks: {
+                            stepSize: 20
+                        },
+                        beginAtZero: true
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
                     }
                 }
             }
         });
-    </script>
+    }
+</script>
+
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <script src="{% static 'js/chatbot.js' %}"></script>
+<script src="{% static 'js/chatbot.js' %}"></script>
 {% endblock %}

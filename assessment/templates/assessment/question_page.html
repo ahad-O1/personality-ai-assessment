@@ -1,4 +1,4 @@
-{% load static %}
+﻿{% load static %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -27,9 +27,9 @@
             Back to Dashboard
         </a>
 
-        <div class="brand" style="display: flex; align-items: center;">
-            <img src="{% static 'images/logo.png' %}" alt="Personality AI Logo" style="width: 28px; height: 28px; object-fit: contain; border-radius: 6px; margin-right: 10px; filter: drop-shadow(0 0 6px rgba(54, 169, 255, 0.4));">
-            <span>Personality<span>AI</span></span>
+        <div class="brand">
+            <span class="brand-dot"></span>
+            Personality<span>AI</span>
         </div>
 
         <div class="secure-badge">
@@ -72,14 +72,14 @@
             <div class="progress-top">
 
                 <div>
-                    <span class="progress-label">AI ADAPTIVE ASSESSMENT</span>
+                    <span class="progress-label">Assessment progress</span>
                     <strong>
                         Question {{ answered_count|add:"1" }}
                     </strong>
                 </div>
 
                 <span class="progress-count">
-                    {{ confidence|floatformat:0 }}%
+                    {{ answered_count }} / {{ max_questions }}
                 </span>
 
             </div>
@@ -87,7 +87,7 @@
             <div class="progress-track">
                 <div
                     class="progress-fill"
-                    style="width: {{ confidence }}%;">
+                    style="width: {% widthratio answered_count max_questions 100 %}%;">
                 </div>
             </div>
 

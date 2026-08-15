@@ -12,6 +12,8 @@ class Question(models.Model):
         ('N', 'Neuroticism'),
     ]
 
+    objects = models.Manager()
+
     question_text = models.TextField()
     question_text_ur = models.TextField(blank=True, null=True)
     question_text_roman = models.TextField(blank=True, null=True)
@@ -47,6 +49,8 @@ class Question(models.Model):
 
 class AssessmentSession(models.Model):
 
+    objects = models.Manager()
+
     user = models.ForeignKey(
         User,
         on_delete=models.CASCADE
@@ -67,6 +71,8 @@ class AssessmentSession(models.Model):
 
 class UserResponse(models.Model):
 
+    objects = models.Manager()
+
     session = models.ForeignKey(
         AssessmentSession,
         on_delete=models.CASCADE
@@ -86,6 +92,8 @@ class UserResponse(models.Model):
 
 
 class AssessmentResult(models.Model):
+
+    objects = models.Manager()
 
     session = models.OneToOneField(
         AssessmentSession,

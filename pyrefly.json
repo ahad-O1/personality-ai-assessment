@@ -1,0 +1,13 @@
+{
+    "disabled_rules": [
+        "missing-attribute",
+        "untyped-import",
+        "unnecessary-type-conversion",
+        "parse-error",
+        "unknown-name"
+    ],
+    "exclude": [
+        "**/_pyrefly_virtual_/**",
+        "**/venv/**"
+    ]
+}

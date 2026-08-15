@@ -1,0 +1,19 @@
+{
+    "typeCheckingMode": "off",
+    "extraPaths": [
+        ".",
+        ".."
+    ],
+    "exclude": [
+        "**/_pyrefly_virtual_/**",
+        "**/venv/**"
+    ],
+    "reportMissingAttributeActive": false,
+    "reportAttributeAccessIssue": false,
+    "reportUntypedImport": false,
+    "reportMissingImports": false,
+    "reportGeneralTypeIssues": false,
+    "reportOptionalMemberAccess": false,
+    "reportOptionalSubscript": false,
+    "reportPrivateImportUsage": false
+}

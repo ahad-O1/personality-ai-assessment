@@ -33,12 +33,24 @@
         }
 
         .logo {
-            font-size: 26px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 22px;
             font-weight: bold;
             margin-bottom: 40px;
+            color: white;
         }
 
-        .logo span {
+        .sidebar-logo-img {
+            width: 36px;
+            height: 36px;
+            object-fit: contain;
+            border-radius: 8px;
+            filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.5));
+        }
+
+        .logo span.ai-text {
             color: #38bdf8;
         }
 
@@ -75,7 +87,7 @@
             height: 82px;
             background: white;
             display: flex;
-            justify-content: space-between;
+            justify-content: flex-end;
             align-items: center;
             padding: 0 45px;
             border-bottom: 1px solid #e5e7eb;
@@ -232,7 +244,10 @@
     <div class="app">
 
         <aside class="sidebar">
-            <div class="logo">Personality<span>AI</span></div>
+            <div class="logo">
+                <img src="{% static 'images/logo.png' %}" alt="Personality AI Logo" class="sidebar-logo-img">
+                <span>Personality<span class="ai-text">AI</span></span>
+            </div>
 
 
             <div class="menu">
@@ -263,8 +278,6 @@
         <main class="main">
 
             <div class="topbar">
-                <input class="search" type="text" placeholder="Search anything...">
-
                 <div class="user-box">
                     {% if user.is_authenticated %}
                     Welcome, {{ user.username }}

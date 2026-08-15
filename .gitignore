@@ -15,9 +15,10 @@ __pycache__/
 # Django static files
 staticfiles/
 
-# Backup folders
+# Backup folders & files
 ml_backup/
 personality_ai_backup/
+*_backup.html
 
 # IDE
 .vscode/

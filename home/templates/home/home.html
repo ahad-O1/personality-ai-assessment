@@ -1,0 +1,895 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>PersonalityAI | Discover Your Personality</title>
+
+    <meta
+        name="description"
+        content="Understand your personality, discover your strengths and explore career paths with PersonalityAI."
+    >
+
+    <link rel="stylesheet" href="{% static 'home/home.css' %}">
+</head>
+
+<body>
+
+<!-- =========================================================
+     NAVBAR
+========================================================= -->
+
+<header class="navbar" id="navbar">
+
+    <div class="container nav-inner">
+
+        <a href="/" class="brand">
+            <img src="{% static 'images/logo.png' %}" alt="Personality AI Logo" style="width:34px; height:34px; object-fit:contain; margin-right:10px; border-radius:8px; filter: drop-shadow(0 0 8px rgba(54,169,255,0.5));">
+            <span class="brand-text">
+                Personality<span>AI</span>
+            </span>
+        </a>
+
+        <nav class="nav-links">
+
+            <a href="#features">Features</a>
+            <a href="#personality">Personality</a>
+            <a href="#process">How It Works</a>
+            <a href="#careers">Careers</a>
+
+        </nav>
+
+        <div class="nav-actions">
+
+            {% if user.is_authenticated %}
+
+                <a href="{% url 'dashboard_home' %}" class="nav-login">
+                    Dashboard
+                </a>
+
+                <a href="{% url 'assessment:start_assessment' %}" class="btn btn-small">
+                    Take Assessment
+                </a>
+
+            {% else %}
+
+                <a href="{% url 'login' %}" class="nav-login">
+                    Sign in
+                </a>
+
+                <a href="{% url 'assessment:start_assessment' %}" class="btn btn-small">
+                    Get Started
+                </a>
+
+            {% endif %}
+
+        </div>
+
+        <button class="mobile-menu" id="mobileMenu" aria-label="Open menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+    </div>
+
+</header>
+
+
+<!-- =========================================================
+     HERO
+========================================================= -->
+
+<main>
+
+<section class="hero">
+
+    <div class="hero-grid"></div>
+
+    <div class="hero-glow glow-one"></div>
+    <div class="hero-glow glow-two"></div>
+
+    <div class="container hero-container">
+
+        <div class="hero-content reveal">
+
+            <div class="eyebrow">
+                <span class="status-dot"></span>
+                AI-powered personality assessment
+            </div>
+
+            <h1>
+                Understand
+                <span>who you are.</span>
+                <br>
+
+                Discover
+                <span>where you belong.</span>
+            </h1>
+
+            <p class="hero-description">
+                PersonalityAI uses scientifically inspired personality analysis
+                to uncover your strengths, preferences and career possibilities
+                through your unique personality profile.
+            </p>
+
+            <div class="hero-actions">
+
+                <a href="{% url 'assessment:start_assessment' %}"
+                   class="btn btn-primary">
+
+                    Start Assessment
+
+                    <span class="arrow">?</span>
+
+                </a>
+
+                <a href="#features" class="btn btn-secondary">
+                    Explore Platform
+                </a>
+
+            </div>
+
+            <div class="hero-trust">
+
+                <div class="avatar-stack">
+                    <span>U</span>
+                    <span>P</span>
+                    <span>A</span>
+                    <span>+</span>
+                </div>
+
+                <div>
+                    <strong>Built for meaningful self-discovery</strong>
+                    <small>
+                        Personality insights designed to help you understand yourself.
+                    </small>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- HERO VISUAL -->
+
+        <div class="hero-visual reveal">
+
+            <div class="orbit orbit-one"></div>
+            <div class="orbit orbit-two"></div>
+
+            <div class="dashboard-window">
+
+                <div class="window-top">
+
+                    <div class="window-title">
+                        <small>YOUR PROFILE</small>
+                        <strong>Personality Overview</strong>
+                    </div>
+
+                    <div class="online-pill">
+                        <span></span>
+                        Analysis
+                    </div>
+
+                </div>
+
+                <div class="personality-visual">
+
+                    <div class="radar-placeholder">
+
+                        <div class="radar-ring ring-1"></div>
+                        <div class="radar-ring ring-2"></div>
+                        <div class="radar-ring ring-3"></div>
+
+                        <div class="radar-shape"></div>
+
+                        <span class="axis axis-o">O</span>
+                        <span class="axis axis-c">C</span>
+                        <span class="axis axis-e">E</span>
+                        <span class="axis axis-a">A</span>
+                        <span class="axis axis-n">N</span>
+
+                    </div>
+
+                </div>
+
+                <div class="trait-bars">
+
+                    <div class="trait-row">
+                        <div>
+                            <span>Openness</span>
+                            <small>Creativity & curiosity</small>
+                        </div>
+                        <div class="bar">
+                            <i style="width: 82%"></i>
+                        </div>
+                        <strong>82%</strong>
+                    </div>
+
+                    <div class="trait-row">
+                        <div>
+                            <span>Conscientiousness</span>
+                            <small>Structure & discipline</small>
+                        </div>
+                        <div class="bar">
+                            <i style="width: 91%"></i>
+                        </div>
+                        <strong>91%</strong>
+                    </div>
+
+                    <div class="trait-row">
+                        <div>
+                            <span>Extraversion</span>
+                            <small>Energy & communication</small>
+                        </div>
+                        <div class="bar">
+                            <i style="width: 68%"></i>
+                        </div>
+                        <strong>68%</strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="floating-card score-card">
+
+                <small>PERSONALITY SCORE</small>
+
+                <strong>86.4</strong>
+
+                <span>Strong profile match</span>
+
+            </div>
+
+
+            <div class="floating-card career-card">
+
+                <div class="career-icon"></div>
+
+                <div>
+                    <small>TOP CAREER</small>
+                    <strong>Data Analyst</strong>
+                </div>
+
+                <b>94%</b>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="hero-scroll">
+        <span></span>
+        Scroll to explore
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     STATS
+========================================================= -->
+
+<section class="stats-section">
+
+    <div class="container stats-grid">
+
+        <div class="stat reveal">
+            <strong data-count="5">0</strong>
+            <span>Core Personality Traits</span>
+        </div>
+
+        <div class="stat reveal">
+            <strong data-count="9">0</strong>
+            <span>Career Categories</span>
+        </div>
+
+        <div class="stat reveal">
+            <strong data-count="25">0</strong>
+            <span>Assessment Questions</span>
+        </div>
+
+        <div class="stat reveal">
+            <strong data-count="100" data-suffix="%">0</strong>
+            <span>Personalized Results</span>
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     FEATURES
+========================================================= -->
+
+<section class="section features-section" id="features">
+
+    <div class="container">
+
+        <div class="section-heading reveal">
+
+            <span class="section-label">
+                WHY PERSONALITYAI
+            </span>
+
+            <h2>
+                More than a test.
+                <span>A complete self-discovery experience.</span>
+            </h2>
+
+            <p>
+                Turn your personality assessment into meaningful insights
+                that help you understand yourself and make better decisions.
+            </p>
+
+        </div>
+
+
+        <div class="feature-grid">
+
+            <article class="feature-card reveal">
+
+                <div class="feature-number">01</div>
+
+                <div class="feature-icon">
+                    ?
+                </div>
+
+                <h3>Personality Analysis</h3>
+
+                <p>
+                    Explore your personality traits and understand the
+                    characteristics that shape your preferences and behavior.
+                </p>
+
+                <a href="#personality">
+                    Learn more <span>?</span>
+                </a>
+
+            </article>
+
+
+            <article class="feature-card reveal">
+
+                <div class="feature-number">02</div>
+
+                <div class="feature-icon">
+                    ?
+                </div>
+
+                <h3>Career Intelligence</h3>
+
+                <p>
+                    Connect your personality profile with career categories
+                    and discover opportunities aligned with your strengths.
+                </p>
+
+                <a href="#careers">
+                    Explore careers <span>?</span>
+                </a>
+
+            </article>
+
+
+            <article class="feature-card reveal">
+
+                <div class="feature-number">03</div>
+
+                <div class="feature-icon">
+                    ?
+                </div>
+
+                <h3>Personalized Reports</h3>
+
+                <p>
+                    Get a detailed assessment report with personality insights,
+                    recommended careers and practical development guidance.
+                </p>
+
+                <a href="{% url 'assessment:start_assessment' %}">
+                    Get your report <span>?</span>
+                </a>
+
+            </article>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     PERSONALITY / OCEAN
+========================================================= -->
+
+<section class="section personality-section" id="personality">
+
+    <div class="container personality-grid">
+
+        <div class="personality-copy reveal">
+
+            <span class="section-label">
+                THE BIG FIVE
+            </span>
+
+            <h2>
+                Five traits.
+                <span>One unique personality.</span>
+            </h2>
+
+            <p>
+                PersonalityAI evaluates five major dimensions of personality.
+                Together, they create a richer picture of how you think,
+                communicate and respond to the world.
+            </p>
+
+            <a href="{% url 'assessment:start_assessment' %}"
+               class="btn btn-primary">
+
+                Discover Your Profile
+                <span class="arrow">?</span>
+
+            </a>
+
+        </div>
+
+
+        <div class="ocean-panel reveal">
+
+            <div class="ocean-header">
+                <span>PERSONALITY PROFILE</span>
+                <strong>OCEAN analysis</strong>
+            </div>
+
+
+            <div class="ocean-row">
+
+                <div class="trait-letter">O</div>
+
+                <div class="ocean-info">
+                    <strong>Openness</strong>
+                    <small>Curiosity & creativity</small>
+
+                    <div class="ocean-bar">
+                        <span style="width: 82%"></span>
+                    </div>
+                </div>
+
+                <b>82</b>
+
+            </div>
+
+
+            <div class="ocean-row">
+
+                <div class="trait-letter">C</div>
+
+                <div class="ocean-info">
+                    <strong>Conscientiousness</strong>
+                    <small>Discipline & organization</small>
+
+                    <div class="ocean-bar">
+                        <span style="width: 91%"></span>
+                    </div>
+                </div>
+
+                <b>91</b>
+
+            </div>
+
+
+            <div class="ocean-row">
+
+                <div class="trait-letter">E</div>
+
+                <div class="ocean-info">
+                    <strong>Extraversion</strong>
+                    <small>Energy & communication</small>
+
+                    <div class="ocean-bar">
+                        <span style="width: 68%"></span>
+                    </div>
+                </div>
+
+                <b>68</b>
+
+            </div>
+
+
+            <div class="ocean-row">
+
+                <div class="trait-letter">A</div>
+
+                <div class="ocean-info">
+                    <strong>Agreeableness</strong>
+                    <small>Cooperation & empathy</small>
+
+                    <div class="ocean-bar">
+                        <span style="width: 75%"></span>
+                    </div>
+                </div>
+
+                <b>75</b>
+
+            </div>
+
+
+            <div class="ocean-row">
+
+                <div class="trait-letter">N</div>
+
+                <div class="ocean-info">
+                    <strong>Neuroticism</strong>
+                    <small>Emotional sensitivity</small>
+
+                    <div class="ocean-bar">
+                        <span style="width: 42%"></span>
+                    </div>
+                </div>
+
+                <b>42</b>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     PROCESS
+========================================================= -->
+
+<section class="section process-section" id="process">
+
+    <div class="container">
+
+        <div class="section-heading centered reveal">
+
+            <span class="section-label">
+                SIMPLE PROCESS
+            </span>
+
+            <h2>
+                From <span>questions</span> to clarity.
+            </h2>
+
+            <p>
+                A simple assessment experience designed to turn your
+                responses into useful personality and career insights.
+            </p>
+
+        </div>
+
+
+        <div class="process-line">
+
+            <div class="process-step reveal">
+
+                <div class="step-circle">
+                    01
+                </div>
+
+                <span class="step-dot"></span>
+
+                <h3>Answer</h3>
+
+                <p>
+                    Complete the personality assessment with honest responses.
+                </p>
+
+            </div>
+
+
+            <div class="process-step reveal">
+
+                <div class="step-circle">
+                    02
+                </div>
+
+                <span class="step-dot"></span>
+
+                <h3>Analyze</h3>
+
+                <p>
+                    Your responses are evaluated across the five OCEAN traits.
+                </p>
+
+            </div>
+
+
+            <div class="process-step reveal">
+
+                <div class="step-circle">
+                    03
+                </div>
+
+                <span class="step-dot"></span>
+
+                <h3>Discover</h3>
+
+                <p>
+                    Receive your personality profile and career recommendations.
+                </p>
+
+            </div>
+
+
+            <div class="process-step reveal">
+
+                <div class="step-circle">
+                    04
+                </div>
+
+                <span class="step-dot"></span>
+
+                <h3>Grow</h3>
+
+                <p>
+                    Use your insights to plan your personal and career growth.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     CAREER DISCOVERY
+========================================================= -->
+
+<section class="section career-section" id="careers">
+
+    <div class="container career-grid">
+
+        <div class="career-map reveal">
+
+            <div class="map-grid"></div>
+
+            <div class="map-center">
+
+                <span></span>
+
+                <strong>PERSONALITY</strong>
+
+            </div>
+
+            <div class="map-node node-tech">
+                Technology
+            </div>
+
+            <div class="map-node node-business">
+                Business
+            </div>
+
+            <div class="map-node node-creative">
+                Creative
+            </div>
+
+            <div class="map-node node-education">
+                Education
+            </div>
+
+            <div class="connection connection-one"></div>
+            <div class="connection connection-two"></div>
+            <div class="connection connection-three"></div>
+            <div class="connection connection-four"></div>
+
+        </div>
+
+
+        <div class="career-copy reveal">
+
+            <span class="section-label">
+                CAREER DISCOVERY
+            </span>
+
+            <h2>
+                Your personality can
+                <span>guide your direction.</span>
+            </h2>
+
+            <p>
+                PersonalityAI connects your personality profile with career
+                categories and individual career paths to help identify
+                possibilities that fit your natural strengths.
+            </p>
+
+            <ul class="check-list">
+
+                <li>
+                    <span></span>
+                    Personality-based career matching
+                </li>
+
+                <li>
+                    <span></span>
+                    Career compatibility scoring
+                </li>
+
+                <li>
+                    <span></span>
+                    Personalized career recommendations
+                </li>
+
+                <li>
+                    <span></span>
+                    Career learning roadmaps
+                </li>
+
+            </ul>
+
+            <a href="{% url 'assessment:start_assessment' %}"
+               class="btn btn-primary">
+
+                Find Your Career Direction
+                <span class="arrow">?</span>
+
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     CTA
+========================================================= -->
+
+<section class="cta-section">
+
+    <div class="cta-glow"></div>
+
+    <div class="container">
+
+        <div class="cta-box reveal">
+
+            <span class="section-label">
+                START YOUR JOURNEY
+            </span>
+
+            <h2>
+                The next step starts
+                <span>with understanding yourself.</span>
+            </h2>
+
+            <p>
+                Take the PersonalityAI assessment and discover what your
+                personality can tell you about your strengths and future.
+            </p>
+
+            <a href="{% url 'assessment:start_assessment' %}"
+               class="btn btn-primary btn-large">
+
+                Start Your Assessment
+                <span class="arrow">?</span>
+
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+</main>
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer class="footer">
+
+    <div class="container footer-grid">
+
+        <div class="footer-brand">
+
+            <a href="/" class="brand">
+                <img src="{% static 'images/logo.png' %}" alt="Personality AI Logo" style="width:34px; height:34px; object-fit:contain; margin-right:10px; border-radius:8px; filter: drop-shadow(0 0 8px rgba(54,169,255,0.5));">
+                <span class="brand-text">
+                    Personality<span>AI</span>
+                </span>
+            </a>
+
+            <p>
+                An intelligent personality assessment platform for
+                self-discovery and career exploration.
+            </p>
+
+        </div>
+
+
+        <div class="footer-column">
+
+            <h4>Platform</h4>
+
+            <a href="{% url 'assessment:start_assessment' %}">
+                Assessment
+            </a>
+
+            <a href="{% url 'dashboard_home' %}">
+                Dashboard
+            </a>
+
+            <a href="#personality">
+                Personality
+            </a>
+
+            <a href="#careers">
+                Careers
+            </a>
+
+        </div>
+
+
+        <div class="footer-column">
+
+            <h4>Explore</h4>
+
+            <a href="#features">
+                Features
+            </a>
+
+            <a href="#process">
+                How It Works
+            </a>
+
+            <a href="{% url 'login' %}">
+                Sign In
+            </a>
+
+        </div>
+
+
+        <div class="footer-column">
+
+            <h4>Personality</h4>
+
+            <a href="#personality">Openness</a>
+            <a href="#personality">Conscientiousness</a>
+            <a href="#personality">Extraversion</a>
+            <a href="#personality">Agreeableness</a>
+
+        </div>
+
+    </div>
+
+
+    <div class="container footer-bottom">
+
+        <span>
+            � 2026 PersonalityAI. All rights reserved.
+        </span>
+
+        <span>
+            Built for meaningful self-discovery.
+        </span>
+
+    </div>
+
+</footer>
+
+
+<script src="{% static 'home/home.js' %}"></script>
+
+</body>
+</html>

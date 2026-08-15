@@ -16,6 +16,8 @@ class Career(models.Model):
         ("Public Service", "Public Service"),
     ]
 
+    objects = models.Manager()
+
     title = models.CharField(max_length=100)
     category = models.CharField(
         max_length=50,
@@ -48,6 +50,8 @@ class CareerFeedback(models.Model):
         (4, "Good"),
         (5, "Excellent"),
     ]
+
+    objects = models.Manager()
 
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
@@ -110,6 +114,8 @@ class AIModelStatus(models.Model):
     Stores the current AI model information.
     Only one record should exist.
     """
+
+    objects = models.Manager()
 
     model_version = models.CharField(
         max_length=20,

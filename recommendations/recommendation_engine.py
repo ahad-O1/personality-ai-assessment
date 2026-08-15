@@ -28,7 +28,7 @@ from ml.category_model.category_predictor import predict_category
 # ============================================================
 
 CAREER_MODEL_PATH = (
-    Path(settings.BASE_DIR)
+    Path(str(getattr(settings, "BASE_DIR", ".")))
     / "ml"
     / "models"
     / "career_model.pkl"
@@ -269,8 +269,10 @@ def get_predicted_category(user_scores):
 
         confidence = 0.0
 
-    django_category = CATEGORY_MAPPING.get(
-        ml_category
+    django_category = (
+        CATEGORY_MAPPING.get(ml_category)
+        if ml_category
+        else None
     )
 
     return {
@@ -280,11 +282,9 @@ def get_predicted_category(user_scores):
             confidence,
             6,
         ),
-        "hybrid_used": bool(
-            prediction.get(
-                "hybrid_used",
-                False,
-            )
+        "hybrid_used": prediction.get(
+            "hybrid_used",
+            False,
         ),
         "engineering_probability": prediction.get(
             "engineering_probability"
@@ -625,11 +625,10 @@ def get_recommended_careers(
         # ----------------------------------------------------
 
         category_match = (
-            predicted_django_category
-            is not None
-            and career.category
-            and career.category.strip().lower()
-            == predicted_django_category.strip().lower()
+            predicted_django_category is not None
+            and bool(career.category)
+            and str(career.category).strip().lower()
+            == str(predicted_django_category).strip().lower()
         )
 
         # ----------------------------------------------------

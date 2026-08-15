@@ -1,62 +1,55 @@
 {% load static %}
 
-<!-- Floating Chat Button -->
-<button id="chatToggle" class="chat-toggle">
-    💬
+<link rel="stylesheet" href="{% static 'css/chatbot.css' %}">
+
+<!-- Floating Chat Toggle Button -->
+<button id="chatToggle" class="chat-toggle" title="Chat with AI Assistant" aria-label="Open Chat">
+    <i class="bi bi-chat-dots-fill"></i>
 </button>
 
-<!-- Chat Window -->
+<!-- Chat Window Container -->
 <div class="chat-container" id="chatContainer">
 
     <div class="chat-header">
-        🤖 AI Career Assistant
+        <div class="chat-header-title">
+            <div>
+                <h3>AI Career Assistant</h3>
+                <p>Personality & Career Guidance</p>
+            </div>
+        </div>
 
-        <span id="closeChat" class="close-chat">
-            ✖
-        </span>
-
+        <button id="closeChat" class="close-chat" title="Close Chat" aria-label="Close Chat">
+            &times;
+        </button>
     </div>
 
     <div class="chat-body" id="chatBody">
-
         <div class="message ai-message">
-
             <div class="bubble">
-
-                👋 Hello!
-
-                <br><br>
-
-                I am your AI Career Assistant.
-
-                Ask me:
-
+                <p>Hello! I am your AI Career Assistant.</p>
+                <p>Ask me questions such as:</p>
                 <ul>
                     <li>Why was this career recommended?</li>
-                    <li>What skills should I learn?</li>
-                    <li>Which career suits me best?</li>
+                    <li>What skills should I learn next?</li>
+                    <li>Which career suits my personality best?</li>
                 </ul>
-
             </div>
-
         </div>
-
     </div>
 
     <div class="chat-input">
-
         <input
             id="userInput"
             type="text"
             placeholder="Ask about your career..."
+            autocomplete="off"
         >
 
-        <button id="sendBtn">
+        <button id="sendBtn" type="button">
             Send
         </button>
 
         {% csrf_token %}
-
     </div>
 
 </div>
