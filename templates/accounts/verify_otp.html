@@ -1,0 +1,277 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Verify Email - PersonalityAI{% endblock %}
+
+{% block extra_css %}
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+
+<!-- Bootstrap Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+<!-- Custom Auth Stylesheet -->
+<link rel="stylesheet" href="{% static 'css/auth.css' %}">
+
+<style>
+    /* Hide default back button */
+    .global-back-btn {
+        display: none !important;
+    }
+
+    /* OTP Inputs Custom Styling */
+    .otp-input-container {
+        display: flex;
+        justify-content: space-between;
+        gap: 10px;
+        margin: 28px 0;
+    }
+
+    .otp-box {
+        width: 52px;
+        height: 60px;
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 24px;
+        font-weight: 700;
+        text-align: center;
+        color: #ffffff;
+        background: rgba(9, 25, 48, 0.85);
+        border: 1px solid rgba(80, 145, 220, 0.25);
+        border-radius: 12px;
+        outline: none;
+        transition: all 0.25s ease;
+        box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .otp-box:focus {
+        border-color: #36a9ff;
+        background: rgba(13, 35, 66, 0.95);
+        box-shadow: 0 0 15px rgba(54, 169, 255, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        transform: translateY(-2px);
+    }
+
+    .otp-box.filled {
+        border-color: #2563eb;
+        color: #36a9ff;
+    }
+
+    .email-highlight {
+        color: #36a9ff;
+        font-weight: 600;
+        word-break: break-all;
+    }
+
+    .resend-box {
+        margin-top: 22px;
+        text-align: center;
+        font-size: 14px;
+        color: #9aacc5;
+    }
+
+    .resend-link {
+        color: #36a9ff;
+        text-decoration: none;
+        font-weight: 600;
+        transition: color 0.2s;
+    }
+
+    .resend-link:hover {
+        color: #ffffff;
+        text-decoration: underline;
+    }
+
+    .resend-link.disabled {
+        color: #647895;
+        pointer-events: none;
+        text-decoration: none;
+    }
+
+    .timer-text {
+        color: #647895;
+        font-size: 13px;
+        margin-left: 5px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="auth-grid-bg"></div>
+<div class="glow-orb glow-1"></div>
+<div class="glow-orb glow-2"></div>
+
+<!-- Top Navbar -->
+<header class="auth-navbar">
+    <a href="/" class="brand">
+        <img src="{% static 'images/logo.png' %}" alt="Personality AI Logo" style="width:34px; height:34px; object-fit:contain; margin-right:10px; border-radius:8px; filter: drop-shadow(0 0 8px rgba(54,169,255,0.4));">
+        <span class="brand-text">
+            Personality<span>AI</span>
+        </span>
+    </a>
+
+    <a href="{% url 'register' %}" class="nav-back-link">
+        <i class="bi bi-arrow-left"></i> Change Account
+    </a>
+</header>
+
+<!-- Main Auth Container -->
+<main class="auth-container">
+    <div class="auth-wrapper-grid">
+
+        <!-- Left Hero Showcase -->
+        <div class="auth-hero-showcase">
+            <div class="eyebrow">
+                <span class="status-dot"></span>
+                Security Verification
+            </div>
+
+            <h1>
+                Verify Your <span>Email.</span><br>
+                One Step Remaining.
+            </h1>
+
+            <p class="hero-description">
+                To protect your account and personality assessment data, we have sent a 6-digit confirmation code to your email address.
+            </p>
+
+            <!-- Feature Check List -->
+            <div class="feature-checklist" style="margin-top: 35px;">
+                <div class="check-item">
+                    <div class="check-icon"><i class="bi bi-shield-lock"></i></div>
+                    <span>6-Digit Instant Security Verification</span>
+                </div>
+                <div class="check-item">
+                    <div class="check-icon"><i class="bi bi-clock-history"></i></div>
+                    <span>Code valid for 10 minutes</span>
+                </div>
+                <div class="check-item">
+                    <div class="check-icon"><i class="bi bi-check2-circle"></i></div>
+                    <span>Automatic dashboard activation upon verification</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Auth Form Card -->
+        <div class="auth-card-container">
+            <div class="auth-card">
+                <div class="auth-card-header">
+                    <h2>Enter Verification Code</h2>
+                    <p>We sent a 6-digit code to <span class="email-highlight">{{ masked_email }}</span></p>
+                </div>
+
+                <!-- Django Messages Alert -->
+                {% if messages %}
+                <div class="alert-messages-container">
+                    {% for message in messages %}
+                        <div class="auth-alert {% if message.tags == 'error' %}auth-alert-error{% elif message.tags == 'warning' %}auth-alert-error{% else %}auth-alert-success{% endif %}">
+                            <i class="bi {% if message.tags == 'error' or message.tags == 'warning' %}bi-exclamation-circle{% else %}bi-check-circle{% endif %}"></i>
+                            <span>{{ message }}</span>
+                        </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                <!-- OTP Verification Form -->
+                <form method="post" class="auth-form" id="otpForm">
+                    {% csrf_token %}
+
+                    <div class="otp-input-container">
+                        <input type="text" maxlength="1" class="otp-box" name="otp_1" id="otp_1" autofocus autocomplete="off">
+                        <input type="text" maxlength="1" class="otp-box" name="otp_2" id="otp_2" autocomplete="off">
+                        <input type="text" maxlength="1" class="otp-box" name="otp_3" id="otp_3" autocomplete="off">
+                        <input type="text" maxlength="1" class="otp-box" name="otp_4" id="otp_4" autocomplete="off">
+                        <input type="text" maxlength="1" class="otp-box" name="otp_5" id="otp_5" autocomplete="off">
+                        <input type="text" maxlength="1" class="otp-box" name="otp_6" id="otp_6" autocomplete="off">
+                    </div>
+
+                    <button type="submit" class="btn-submit-glow" id="submitBtn">
+                        <span>Verify & Activate</span>
+                        <i class="bi bi-arrow-right"></i>
+                    </button>
+                </form>
+
+                <!-- Resend Link -->
+                <div class="resend-box">
+                    Didn't receive the code? 
+                    <a href="{% url 'resend_otp' %}" class="resend-link" id="resendBtn">Resend Code</a>
+                    <span id="timerText" class="timer-text"></span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</main>
+
+<footer class="auth-footer">
+    <p>© 2026 PersonalityAI Assessment Engine. All rights reserved.</p>
+</footer>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const otpBoxes = document.querySelectorAll(".otp-box");
+        const otpForm = document.getElementById("otpForm");
+
+        otpBoxes.forEach((box, index) => {
+            // Auto-advance focus to next box
+            box.addEventListener("input", function (e) {
+                const value = e.target.value;
+
+                if (value.length >= 1) {
+                    box.classList.add("filled");
+                    if (index < otpBoxes.length - 1) {
+                        otpBoxes[index + 1].focus();
+                    }
+                } else {
+                    box.classList.remove("filled");
+                }
+            });
+
+            // Handle backspace to focus previous box
+            box.addEventListener("keydown", function (e) {
+                if (e.key === "Backspace" && !box.value && index > 0) {
+                    otpBoxes[index - 1].focus();
+                }
+            });
+
+            // Handle paste of 6 digits
+            box.addEventListener("paste", function (e) {
+                e.preventDefault();
+                const pastedData = (e.clipboardData || window.clipboardData).getData("text").trim();
+                if (/^\d{6}$/.test(pastedData)) {
+                    pastedData.split("").forEach((char, i) => {
+                        if (otpBoxes[i]) {
+                            otpBoxes[i].value = char;
+                            otpBoxes[i].classList.add("filled");
+                        }
+                    });
+                    otpBoxes[5].focus();
+                }
+            });
+        });
+
+        // Resend Timer Countdown (60 seconds)
+        const resendBtn = document.getElementById("resendBtn");
+        const timerText = document.getElementById("timerText");
+        let timeLeft = 60;
+
+        function startTimer() {
+            resendBtn.classList.add("disabled");
+            const interval = setInterval(() => {
+                if (timeLeft <= 0) {
+                    clearInterval(interval);
+                    resendBtn.classList.remove("disabled");
+                    timerText.textContent = "";
+                } else {
+                    timerText.textContent = `(Wait ${timeLeft}s)`;
+                    timeLeft--;
+                }
+            }, 1000);
+        }
+
+        startTimer();
+    });
+</script>
+{% endblock %}
