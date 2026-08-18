@@ -1,43 +1,40 @@
-﻿document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", () => {
 
-    const options = document.querySelectorAll(".answer-option");
-    const continueBtn = document.getElementById("continueBtn");
     const form = document.getElementById("assessmentForm");
+    const continueBtn = document.getElementById("continueBtn");
+    const options = document.querySelectorAll(".answer-option");
 
-    if (!options.length || !continueBtn || !form) {
+    if (!form || !continueBtn || !options.length) {
         return;
     }
 
+    // Disable continue button until an answer option is selected
     continueBtn.disabled = true;
 
     options.forEach(option => {
-
-        const input = option.querySelector("input");
+        const input = option.querySelector("input[type='radio']");
 
         option.addEventListener("click", () => {
-
             options.forEach(item => {
                 item.classList.remove("selected");
             });
 
             option.classList.add("selected");
-            input.checked = true;
+            if (input) {
+                input.checked = true;
+            }
 
             continueBtn.disabled = false;
         });
-
     });
 
+    // Show loading state on standard form submit
     form.addEventListener("submit", () => {
-
         continueBtn.disabled = true;
-
         const text = continueBtn.querySelector("span");
-
         if (text) {
             text.textContent = "Analyzing response...";
         }
-
     });
 
 });

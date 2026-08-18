@@ -1,102 +1,60 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}User Dashboard{% endblock %}
+{% block title %}User Dashboard - PersonalityAI{% endblock %}
 
 {% block extra_css %}
 <style>
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
 
 * {
     box-sizing: border-box;
 }
 
-:root {
-    --bg: #050d1b;
-    --bg-soft: #071224;
-    --panel: rgba(9, 25, 48, 0.72);
-    --panel-solid: #091a31;
-    --panel-light: #0d2342;
-
-    --border: rgba(80, 145, 220, 0.16);
-    --border-hover: rgba(54, 169, 255, 0.42);
-
-    --blue: #2f7cff;
-    --blue-bright: #36a9ff;
-    --cyan: #16d9ff;
-
-    --text: #f4f8ff;
-    --text-soft: #9aacc5;
-    --text-muted: #647895;
-
-    --success: #35d6a3;
-}
-
-html {
-    scroll-behavior: smooth;
-}
-
 body {
     margin: 0;
     min-height: 100vh;
-    font-family: "DM Sans", "Segoe UI", Arial, sans-serif;
-    background:
-        radial-gradient(
-            circle at 75% 10%,
-            rgba(47, 124, 255, 0.13),
-            transparent 28%
-        ),
-        radial-gradient(
-            circle at 20% 80%,
-            rgba(22, 217, 255, 0.06),
-            transparent 25%
-        ),
-        var(--bg);
-    color: var(--text);
-    overflow-x: hidden;
+    font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: var(--bg-main) !important;
+    color: var(--text-primary) !important;
+    line-height: 1.5;
+    transition: background-color 0.25s ease, color 0.25s ease;
 }
 
-/* =========================
-   APP LAYOUT
-========================= */
+/* =========================================================
+   APP LAYOUT & SIDEBAR (THEME SYSTEM BOUND)
+========================================================= */
 
 .app {
     display: flex;
     min-height: 100vh;
 }
 
-/* =========================
-   SIDEBAR
-========================= */
-
 .sidebar {
-    width: 255px;
-    background:
-        linear-gradient(
-            180deg,
-            rgba(5, 18, 38, 0.98),
-            rgba(4, 13, 29, 0.98)
-        );
-    border-right: 1px solid var(--border);
-    color: var(--text);
+    width: 260px;
+    background: var(--sidebar-bg) !important;
+    border-right: 1px solid var(--border) !important;
     padding: 28px 20px;
     position: fixed;
     top: 0;
     bottom: 0;
     left: 0;
     z-index: 20;
-    box-shadow: 15px 0 40px rgba(0, 0, 0, 0.18);
+    box-shadow: 4px 0 25px rgba(0, 0, 0, 0.04);
+    display: flex;
+    flex-direction: column;
+    transition: background 0.25s ease, border 0.25s ease;
 }
 
 .logo {
     display: flex;
     align-items: center;
     gap: 12px;
-    font-family: "Space Grotesk", sans-serif;
+    font-weight: 800;
     font-size: 22px;
-    font-weight: 700;
-    margin-bottom: 42px;
-    color: #ffffff;
+    color: var(--text-primary) !important;
+    margin-bottom: 36px;
+    text-decoration: none;
 }
 
 .sidebar-logo-img {
@@ -104,117 +62,79 @@ body {
     height: 36px;
     object-fit: contain;
     border-radius: 8px;
-    filter: drop-shadow(0 0 8px rgba(54, 169, 255, 0.5));
 }
 
 .logo span.ai-text {
-    background: linear-gradient(
-        90deg,
-        var(--blue-bright),
-        var(--cyan)
-    );
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+    color: var(--primary-orange) !important;
 }
 
 .menu {
     display: flex;
     flex-direction: column;
     gap: 8px;
+    flex: 1;
 }
 
 .menu a {
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding: 12px 14px;
-    border-radius: 10px;
-    color: var(--text-soft);
+    gap: 12px;
+    padding: 12px 16px;
+    border-radius: 12px;
+    color: var(--text-secondary) !important;
     text-decoration: none;
     font-size: 14px;
     font-weight: 600;
-    transition: 0.25s ease;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .menu a:hover {
-    color: white;
-    background: rgba(47, 124, 255, 0.10);
-    transform: translateX(3px);
+    color: var(--primary-orange) !important;
+    background: var(--surface-hover) !important;
+    transform: translateX(4px);
 }
 
 .menu a.active {
-    color: white;
-    background: linear-gradient(
-        135deg,
-        rgba(47, 124, 255, 0.95),
-        rgba(54, 169, 255, 0.78)
-    );
-    box-shadow:
-        0 8px 25px rgba(47, 124, 255, 0.25),
-        inset 0 1px 0 rgba(255,255,255,0.15);
+    color: #ffffff !important;
+    background: var(--primary-orange) !important;
+    box-shadow: 0 4px 16px rgba(245, 121, 58, 0.35) !important;
 }
 
-/* =========================
-   MAIN
-========================= */
+/* =========================================================
+   MAIN CONTENT & TOPBAR WITH SUN/MOON THEME TOGGLE
+========================================================= */
 
 .main {
-    margin-left: 255px;
-    width: calc(100% - 255px);
+    margin-left: 260px;
+    width: calc(100% - 260px);
     min-height: 100vh;
 }
-
-/* =========================
-   TOPBAR
-========================= */
 
 .topbar {
     height: 70px;
     display: flex;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: space-between;
     padding: 0 35px;
     border-bottom: 1px solid var(--border);
-    background: rgba(5, 13, 27, 0.78);
-    backdrop-filter: blur(18px);
+    background: var(--topbar-bg);
+    backdrop-filter: blur(16px);
     position: sticky;
     top: 0;
     z-index: 10;
-}
-
-.search {
-    width: 280px;
-    height: 40px;
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    background: rgba(9, 25, 48, 0.75);
-    color: var(--text);
-    padding: 0 18px;
-    outline: none;
-}
-
-.search::placeholder {
-    color: var(--text-muted);
-}
-
-.search:focus {
-    border-color: var(--border-hover);
-    box-shadow: 0 0 0 3px rgba(47, 124, 255, 0.08);
+    transition: background 0.25s ease, border 0.25s ease;
 }
 
 .user-box {
-    color: var(--text-soft);
+    color: var(--text-secondary);
     font-size: 14px;
     font-weight: 600;
 }
 
 .user-box strong {
-    color: var(--blue-bright);
+    color: var(--primary-orange);
+    font-weight: 800;
 }
-
-/* =========================
-   CONTENT
-========================= */
 
 .content {
     padding: 35px;
@@ -225,280 +145,402 @@ body {
 }
 
 .title h1 {
-    margin: 0 0 7px;
-    font-family: "Space Grotesk", sans-serif;
-    font-size: 32px;
-    font-weight: 700;
-    color: var(--text);
+    margin: 0 0 6px;
+    font-size: 30px;
+    font-weight: 800;
+    color: var(--text-primary);
+    letter-spacing: -0.5px;
 }
 
 .title p {
     margin: 0;
-    color: var(--text-muted);
+    color: var(--text-secondary);
     font-size: 14px;
 }
 
-/* =========================
-   STATS
-========================= */
+/* =========================================================
+   ACTIVE GOAL BANNER (LIGHT & DARK ADAPTIVE)
+========================================================= */
+
+.active-goal-card {
+    background: linear-gradient(135deg, #fff5f0 0%, #ffedd5 100%);
+    border: 1px solid #fed7aa;
+    border-radius: 20px;
+    padding: 24px 28px;
+    margin-bottom: 28px;
+    box-shadow: 0 10px 30px rgba(245, 121, 58, 0.08);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 16px;
+    transition: all 0.25s ease;
+}
+
+[data-theme="dark"] .active-goal-card {
+    background: linear-gradient(135deg, #131b2e 0%, #1e293b 100%);
+    border-color: #232d42;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.goal-label {
+    font-size: 11px;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: #ea580c;
+    letter-spacing: 1px;
+}
+
+[data-theme="dark"] .goal-label {
+    color: #f5793a;
+}
+
+.goal-title {
+    margin: 4px 0 6px 0;
+    color: var(--text-primary);
+    font-size: 24px;
+    font-weight: 800;
+}
+
+.goal-sub {
+    margin: 0;
+    color: var(--text-secondary);
+    font-size: 14px;
+}
+
+/* =========================================================
+   STAT CARDS (CLEAN 6-COLUMN / 3-COLUMN RESPONSIVE GRID)
+========================================================= */
 
 .stats {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    gap: 15px;
-    margin-bottom: 25px;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 16px;
+    margin-bottom: 28px;
 }
 
 .stat-card {
-    min-height: 105px;
+    background: var(--surface) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 18px;
     padding: 20px;
-    border-radius: 14px;
-    background:
-        linear-gradient(
-            145deg,
-            rgba(13, 35, 66, 0.82),
-            rgba(7, 20, 36, 0.78)
-        );
-    border: 1px solid var(--border);
-    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.18);
-    transition: 0.25s ease;
+    box-shadow: var(--card-shadow);
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 125px;
 }
 
 .stat-card:hover {
-    transform: translateY(-3px);
-    border-color: var(--border-hover);
-    box-shadow: 0 15px 40px rgba(47, 124, 255, 0.10);
+    transform: translateY(-4px);
+    box-shadow: 0 16px 35px rgba(245, 121, 58, 0.12);
+    border-color: var(--primary-orange) !important;
 }
 
-.stat-card h3,
-.stat-card .value {
+.stat-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.stat-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    font-size: 18px;
+}
+
+/* Light Mode Badges */
+.bg-badge-orange { background: #ffedd5; color: #ea580c; }
+.bg-badge-yellow { background: #fef3c7; color: #d97706; }
+.bg-badge-green { background: #d1fae5; color: #059669; }
+.bg-badge-blue { background: #dbeafe; color: #2563eb; }
+.bg-badge-purple { background: #f3e8ff; color: #7e22ce; }
+.bg-badge-red { background: #fee2e2; color: #dc2626; }
+
+/* Dark Mode Muted Badges */
+[data-theme="dark"] .bg-badge-orange { background: rgba(234, 88, 12, 0.25); color: #ff8c4e; }
+[data-theme="dark"] .bg-badge-yellow { background: rgba(217, 119, 6, 0.25); color: #fbbf24; }
+[data-theme="dark"] .bg-badge-green { background: rgba(5, 150, 105, 0.25); color: #34d399; }
+[data-theme="dark"] .bg-badge-blue { background: rgba(37, 99, 235, 0.25); color: #60a5fa; }
+[data-theme="dark"] .bg-badge-purple { background: rgba(124, 58, 237, 0.25); color: #a78bfa; }
+[data-theme="dark"] .bg-badge-red { background: rgba(220, 38, 38, 0.25); color: #f87171; }
+
+.stat-card h2 {
     margin: 0;
-    color: var(--blue-bright);
-    font-family: "Space Grotesk", sans-serif;
-    font-size: 25px;
-    font-weight: 700;
+    color: var(--text-primary) !important;
+    font-size: 28px;
+    font-weight: 800;
+    line-height: 1.1;
 }
 
-.stat-card p,
-.stat-card span {
-    margin-top: 7px;
-    color: var(--text-muted);
-    font-size: 12px;
+.stat-card p {
+    margin: 6px 0 0;
+    color: var(--text-secondary) !important;
+    font-size: 13px;
+    font-weight: 600;
 }
 
-/* =========================
-   GRID
-========================= */
+/* =========================================================
+   GRID & CARDS (LATEST RESULT & ASSESSMENT HISTORY)
+========================================================= */
 
 .grid {
     display: grid;
-    grid-template-columns: minmax(0, 1.45fr) minmax(320px, 0.75fr);
-    gap: 18px;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 24px;
     align-items: start;
 }
 
-/* =========================
-   CARDS
-========================= */
-
 .card {
-    background:
-        linear-gradient(
-            145deg,
-            rgba(9, 25, 48, 0.88),
-            rgba(6, 18, 35, 0.84)
-        );
+    background: var(--surface) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 20px;
+    padding: 28px;
+    box-shadow: var(--card-shadow);
+    transition: background 0.25s ease, border 0.25s ease;
+}
+
+.card-header-flex {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.card h2 {
+    margin: 0 0 20px 0;
+    color: var(--text-primary) !important;
+    font-size: 20px;
+    font-weight: 800;
+    letter-spacing: -0.3px;
+}
+
+.count-badge {
+    background: var(--bg-alt);
+    color: var(--primary-orange);
     border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 24px;
-    box-shadow:
-        0 20px 50px rgba(0, 0, 0, 0.22),
-        inset 0 1px 0 rgba(255,255,255,0.025);
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
 }
 
-.card h2,
-.card h3 {
-    margin-top: 0;
-    color: var(--text);
-    font-family: "Space Grotesk", sans-serif;
-}
-
-.card p {
-    color: var(--text-soft);
-}
-
-/* =========================
-   SCORE ITEMS
-========================= */
+/* =========================================================
+   PROGRESS BARS & SCORES
+========================================================= */
 
 .score-item {
-    margin-bottom: 18px;
+    margin-bottom: 20px;
 }
 
 .score-item:last-child {
     margin-bottom: 0;
 }
 
-.score-item > div:first-child {
+.score-label-row {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 7px;
-    color: var(--text-soft);
-    font-size: 13px;
-    font-weight: 600;
+    align-items: center;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-primary);
 }
 
-.bar {
+.score-val {
+    color: var(--primary-orange);
+    font-weight: 800;
+}
+
+.bar-track {
     width: 100%;
-    height: 7px;
-    background: rgba(100, 120, 150, 0.18);
-    border-radius: 10px;
+    height: 10px;
+    background: var(--bg-alt);
+    border-radius: 9999px;
     overflow: hidden;
 }
 
 .bar-fill {
     height: 100%;
-    border-radius: inherit;
-    background: linear-gradient(
-        90deg,
-        var(--blue),
-        var(--blue-bright),
-        var(--cyan)
-    );
-    box-shadow: 0 0 12px rgba(54, 169, 255, 0.35);
+    border-radius: 9999px;
+    background: linear-gradient(90deg, #f5793a 0%, #ea580c 100%);
+    box-shadow: 0 3px 10px rgba(245, 121, 58, 0.35);
+    transition: width 0.8s ease;
 }
 
-/* =========================
-   BUTTONS
-========================= */
+/* =========================================================
+   BUTTONS (PILL SHAPE ORANGE)
+========================================================= */
 
 .btn {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    gap: 8px;
     margin-top: 20px;
-    padding: 10px 17px;
-    border: 0;
-    border-radius: 9px;
-    background: linear-gradient(
-        135deg,
-        var(--blue),
-        var(--blue-bright)
-    );
-    color: white !important;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 9999px;
+    background: var(--primary-orange) !important;
+    color: #ffffff !important;
     text-decoration: none;
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 700;
     cursor: pointer;
-    box-shadow: 0 8px 22px rgba(47, 124, 255, 0.25);
-    transition: 0.25s ease;
+    box-shadow: var(--btn-shadow);
+    transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .btn:hover {
+    background: var(--primary-orange-hover) !important;
     transform: translateY(-2px);
-    box-shadow: 0 12px 28px rgba(47, 124, 255, 0.35);
+    box-shadow: 0 8px 24px rgba(245, 121, 58, 0.45);
 }
 
-/* =========================
-   HISTORY
-========================= */
-
-.history-item {
-    background:
-        linear-gradient(
-            145deg,
-            rgba(13, 35, 66, 0.65),
-            rgba(7, 20, 36, 0.55)
-        );
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 15px;
-    margin-bottom: 12px;
-    transition: 0.25s ease;
-}
-
-.history-item:hover {
-    border-color: var(--border-hover);
-    background: rgba(13, 35, 66, 0.78);
-    transform: translateY(-2px);
-}
-
-.history-item h4 {
-    margin: 0 0 7px;
-    color: var(--blue-bright);
-    font-family: "Space Grotesk", sans-serif;
-    font-size: 14px;
-}
-
-.history-item p {
-    margin: 4px 0;
-    color: var(--text-soft);
+.btn-sm {
+    padding: 8px 18px;
     font-size: 12px;
+    margin-top: 0;
 }
 
-.history-item strong {
-    color: var(--text);
+/* =========================================================
+   SCROLLABLE ASSESSMENT HISTORY
+========================================================= */
+
+.history-scroll-container {
+    max-height: 520px;
+    overflow-y: auto;
+    padding-right: 6px;
 }
 
-/* =========================
-   SCROLLBAR
-========================= */
-
-::-webkit-scrollbar {
-    width: 8px;
+.history-scroll-container::-webkit-scrollbar {
+    width: 6px;
 }
 
-::-webkit-scrollbar-track {
-    background: var(--bg);
-}
-
-::-webkit-scrollbar-thumb {
-    background: #16365f;
+.history-scroll-container::-webkit-scrollbar-track {
+    background: var(--bg-alt);
     border-radius: 10px;
 }
 
-::-webkit-scrollbar-thumb:hover {
-    background: var(--blue);
+.history-scroll-container::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 10px;
 }
 
-/* =========================
-   RESPONSIVE
-========================= */
+.history-scroll-container::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-orange);
+}
 
-@media (max-width: 1100px) {
+.history-item {
+    background: var(--surface) !important;
+    border: 1px solid var(--border) !important;
+    border-radius: 16px;
+    padding: 18px;
+    margin-bottom: 14px;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.02);
+}
+
+.history-item:hover {
+    border-color: var(--primary-orange) !important;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(245, 121, 58, 0.08);
+}
+
+.history-item-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.history-item-top h3 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--text-primary);
+}
+
+.date-badge {
+    background: var(--bg-alt);
+    color: #ea580c;
+    border: 1px solid var(--border);
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+[data-theme="dark"] .date-badge {
+    color: #f5793a;
+}
+
+.ocean-trait-pills {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin: 10px 0;
+}
+
+.trait-pill {
+    background: var(--bg-alt);
+    color: var(--text-secondary);
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.history-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border-subtle);
+}
+
+.tag-info {
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.tag-info strong {
+    color: var(--text-primary);
+    font-weight: 700;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 1200px) {
     .stats {
         grid-template-columns: repeat(3, 1fr);
     }
-
     .grid {
         grid-template-columns: 1fr;
     }
 }
 
-@media (max-width: 800px) {
+@media (max-width: 768px) {
     .sidebar {
         width: 210px;
     }
-
     .main {
         margin-left: 210px;
         width: calc(100% - 210px);
     }
-
     .content {
         padding: 22px;
     }
-
     .stats {
         grid-template-columns: repeat(2, 1fr);
-    }
-
-    .topbar {
-        padding: 0 22px;
-    }
-
-    .search {
-        width: 200px;
     }
 }
 
@@ -508,37 +550,19 @@ body {
         width: 100%;
         min-height: auto;
     }
-
     .main {
         margin-left: 0;
         width: 100%;
     }
-
     .app {
         flex-direction: column;
     }
-
     .menu {
         flex-direction: row;
         flex-wrap: wrap;
     }
-
     .stats {
         grid-template-columns: 1fr;
-    }
-
-    .topbar {
-        height: auto;
-        padding: 15px;
-        gap: 12px;
-    }
-
-    .search {
-        width: 100%;
-    }
-
-    .content {
-        padding: 18px;
     }
 }
 </style>
@@ -548,23 +572,28 @@ body {
 <div class="app">
 
     <aside class="sidebar">
-        <div class="logo">
+        <a href="{% url 'home' %}" class="logo">
             <img src="{% static 'images/logo.png' %}" alt="Personality AI Logo" class="sidebar-logo-img">
             <span>Personality<span class="ai-text">AI</span></span>
-        </div>
+        </a>
 
         <div class="menu">
-           <a href="{% url 'home' %}">Home</a>
-<a href="{% url 'dashboard_home' %}" class="active">Dashboard</a>
-            <a href="{% url 'assessment:start_assessment' %}">Take Assessment</a>
-            <a href="{% url 'logout' %}">Logout</a>
+           <a href="{% url 'home' %}"><i class="bi bi-house-door-fill"></i> Home</a>
+           <a href="{% url 'dashboard_home' %}" class="active"><i class="bi bi-speedometer2"></i> Dashboard</a>
+           <a href="{% url 'career_tracker_dashboard' %}"><i class="bi bi-crosshair"></i> Career Tracker</a>
+           <a href="{% url 'assessment:start_assessment' %}"><i class="bi bi-clipboard-data-fill"></i> Take Assessment</a>
+           <a href="{% url 'logout' %}"><i class="bi bi-box-arrow-right"></i> Logout</a>
         </div>
     </aside>
 
     <main class="main">
 
         <div class="topbar">
-            <div class="user-box">Welcome, {{ request.user.username }}</div>
+            <button type="button" onclick="toggleGlobalTheme()" class="theme-toggle-btn" title="Switch Light/Dark Theme" aria-label="Toggle Theme">
+                <i class="bi bi-sun-fill theme-toggle-icon" style="color: var(--primary-orange);"></i>
+            </button>
+
+            <div class="user-box">Welcome, <strong>{{ request.user.username }}</strong></div>
         </div>
 
         <div class="content">
@@ -574,124 +603,202 @@ body {
                 <p>View your latest personality result and assessment history.</p>
             </div>
 
-           <section class="stats">
+            {% if active_goal %}
+            <div class="active-goal-card">
+                <div>
+                    <span class="goal-label"><i class="bi bi-crosshair" style="margin-right: 4px; font-size: 13px;"></i> ACTIVE CAREER GOAL</span>
+                    <h2 class="goal-title">{{ active_goal.career.title }}</h2>
+                    <p class="goal-sub">
+                        {% if active_goal.streak_count > 0 %}
+                            <i class="bi bi-fire" style="color: #ea580c; margin-right: 3px;"></i>
+                        {% else %}
+                            <i class="bi bi-fire" style="color: #94a3b8; margin-right: 3px;"></i>
+                        {% endif %}
+                        Streak: <strong>{{ active_goal.streak_count }} Days</strong>
+                        {% if logged_today %}
+                            &bull; <span style="color: #059669; font-weight: 700;"><i class="bi bi-check-circle-fill" style="margin-right: 3px;"></i> Today's Goal Logged!</span>
+                        {% else %}
+                            &bull; <span style="color: #d97706; font-weight: 700;"><i class="bi bi-clock-history" style="margin-right: 3px;"></i> Today's Progress Pending</span>
+                        {% endif %}
+                    </p>
+                </div>
+                <a href="{% url 'career_tracker_dashboard' %}" class="btn" style="margin-top:0;">
+                    Open Daily Goal Tracker &rarr;
+                </a>
+            </div>
+            {% endif %}
 
-    <div class="stat-card">
-        <h2>{{ total_assessments }}</h2>
-        <p>Total Assessments</p>
-    </div>
+            <!-- 6 STAT CARDS RESPONSIVE GRID -->
+            <section class="stats">
 
-    <div class="stat-card">
-        <h2>{% if latest_result %}{{ latest_result.openness }}{% else %}0{% endif %}</h2>
-        <p>Openness</p>
-    </div>
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon bg-badge-orange">
+                            <i class="bi bi-bar-chart-line-fill"></i>
+                        </div>
+                    </div>
+                    <h2>{{ total_assessments }}</h2>
+                    <p>Total Assessments</p>
+                </div>
 
-    <div class="stat-card">
-        <h2>{% if latest_result %}{{ latest_result.conscientiousness }}{% else %}0{% endif %}</h2>
-        <p>Conscientiousness</p>
-    </div>
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon bg-badge-yellow">
+                            <i class="bi bi-lightbulb-fill"></i>
+                        </div>
+                    </div>
+                    <h2>{% if latest_result %}{{ latest_result.openness }}{% else %}0{% endif %}</h2>
+                    <p>Openness</p>
+                </div>
 
-    <div class="stat-card">
-        <h2>{% if latest_result %}{{ latest_result.extraversion }}{% else %}0{% endif %}</h2>
-        <p>Extraversion</p>
-    </div>
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon bg-badge-green">
+                            <i class="bi bi-check-circle-fill"></i>
+                        </div>
+                    </div>
+                    <h2>{% if latest_result %}{{ latest_result.conscientiousness }}{% else %}0{% endif %}</h2>
+                    <p>Conscientiousness</p>
+                </div>
 
-    <div class="stat-card">
-        <h2>{% if latest_result %}{{ latest_result.agreeableness }}{% else %}0{% endif %}</h2>
-        <p>Agreeableness</p>
-    </div>
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon bg-badge-blue">
+                            <i class="bi bi-people-fill"></i>
+                        </div>
+                    </div>
+                    <h2>{% if latest_result %}{{ latest_result.extraversion }}{% else %}0{% endif %}</h2>
+                    <p>Extraversion</p>
+                </div>
 
-    <div class="stat-card">
-        <h2>{% if latest_result %}{{ latest_result.neuroticism }}{% else %}0{% endif %}</h2>
-        <p>Neuroticism</p>
-    </div>
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon bg-badge-purple">
+                            <i class="bi bi-heart-fill"></i>
+                        </div>
+                    </div>
+                    <h2>{% if latest_result %}{{ latest_result.agreeableness }}{% else %}0{% endif %}</h2>
+                    <p>Agreeableness</p>
+                </div>
 
-</section>
+                <div class="stat-card">
+                    <div class="stat-header">
+                        <div class="stat-icon bg-badge-red">
+                            <i class="bi bi-shield-shaded"></i>
+                        </div>
+                    </div>
+                    <h2>{% if latest_result %}{{ latest_result.neuroticism }}{% else %}0{% endif %}</h2>
+                    <p>Neuroticism</p>
+                </div>
+
+            </section>
 
             <div class="grid">
 
+                <!-- LATEST OCEAN RESULT -->
                 <div class="card">
                     <h2>Latest OCEAN Result</h2>
 
                     {% if latest_result %}
                         <div class="score-item">
-                            <b>Openness: {{ latest_result.openness }}%</b>
-                            <div class="bar">
+                            <div class="score-label-row">
+                                <span>Openness</span>
+                                <span class="score-val">{{ latest_result.openness }}%</span>
+                            </div>
+                            <div class="bar-track">
                                 <div class="bar-fill" data-width="{{ latest_result.openness }}"></div>
                             </div>
                         </div>
 
                         <div class="score-item">
-                            <b>Conscientiousness: {{ latest_result.conscientiousness }}%</b>
-                            <div class="bar">
+                            <div class="score-label-row">
+                                <span>Conscientiousness</span>
+                                <span class="score-val">{{ latest_result.conscientiousness }}%</span>
+                            </div>
+                            <div class="bar-track">
                                 <div class="bar-fill" data-width="{{ latest_result.conscientiousness }}"></div>
                             </div>
                         </div>
 
                         <div class="score-item">
-                            <b>Extraversion: {{ latest_result.extraversion }}%</b>
-                            <div class="bar">
+                            <div class="score-label-row">
+                                <span>Extraversion</span>
+                                <span class="score-val">{{ latest_result.extraversion }}%</span>
+                            </div>
+                            <div class="bar-track">
                                 <div class="bar-fill" data-width="{{ latest_result.extraversion }}"></div>
                             </div>
                         </div>
 
                         <div class="score-item">
-                            <b>Agreeableness: {{ latest_result.agreeableness }}%</b>
-                            <div class="bar">
+                            <div class="score-label-row">
+                                <span>Agreeableness</span>
+                                <span class="score-val">{{ latest_result.agreeableness }}%</span>
+                            </div>
+                            <div class="bar-track">
                                 <div class="bar-fill" data-width="{{ latest_result.agreeableness }}"></div>
                             </div>
                         </div>
 
                         <div class="score-item">
-                            <b>Neuroticism: {{ latest_result.neuroticism }}%</b>
-                            <div class="bar">
+                            <div class="score-label-row">
+                                <span>Neuroticism</span>
+                                <span class="score-val">{{ latest_result.neuroticism }}%</span>
+                            </div>
+                            <div class="bar-track">
                                 <div class="bar-fill" data-width="{{ latest_result.neuroticism }}"></div>
                             </div>
                         </div>
 
                         <a class="btn" href="{% url 'recommend_careers' latest_result.id %}">
-                            View Full Report
+                            View Full Report &rarr;
                         </a>
                     {% else %}
-                        <p>No assessment completed yet.</p>
+                        <p style="color: var(--text-secondary);">No assessment completed yet.</p>
                         <a class="btn" href="{% url 'assessment:start_assessment' %}">Take Assessment</a>
                     {% endif %}
                 </div>
 
+                <!-- ASSESSMENT HISTORY -->
                 <div class="card">
-                    <h2>Assessment History</h2>
-{% for item in assessment_history %}
-    <div class="history-item">
+                    <div class="card-header-flex">
+                        <h2 style="margin-bottom:0;">Assessment History</h2>
+                        <span class="count-badge">{{ assessment_history|length }} Total</span>
+                    </div>
 
-        <h3>Assessment #{{ forloop.counter }}</h3>
+                    <div class="history-scroll-container">
+                        {% for item in assessment_history %}
+                            <div class="history-item">
+                                <div class="history-item-top">
+                                    <h3>Assessment #{{ forloop.counter }}</h3>
+                                    <span class="date-badge"><i class="bi bi-calendar-event"></i> {{ item.assessment_date }}</span>
+                                </div>
 
-        <p><b>Date:</b> {{ item.assessment_date }}</p>
+                                <div class="ocean-trait-pills">
+                                    <span class="trait-pill">O: {{ item.result.openness }}%</span>
+                                    <span class="trait-pill">C: {{ item.result.conscientiousness }}%</span>
+                                    <span class="trait-pill">E: {{ item.result.extraversion }}%</span>
+                                    <span class="trait-pill">A: {{ item.result.agreeableness }}%</span>
+                                    <span class="trait-pill">N: {{ item.result.neuroticism }}%</span>
+                                </div>
 
-        <p>
-            O: {{ item.result.openness }},
-            C: {{ item.result.conscientiousness }},
-            E: {{ item.result.extraversion }},
-            A: {{ item.result.agreeableness }},
-            N: {{ item.result.neuroticism }}
-        </p>
+                                <div class="history-footer">
+                                    <div class="tag-info">
+                                        <div>Personality: <strong>{{ item.personality_type }}</strong></div>
+                                        {% if item.career %}
+                                            <div>Top Career: <strong>{{ item.career.title }}</strong></div>
+                                        {% endif %}
+                                    </div>
 
-        <p><b>Personality:</b> {{ item.personality_type }}</p>
-
-        {% if item.career %}
-            <p><b>Top Career:</b> {{ item.career.title }}</p>
-        {% endif %}
-
-        <a class="btn" href="{% url 'recommend_careers' item.result.id %}">
-            Open Report
-        </a>
-
-    </div>
-
-{% empty %}
-
-    <p>No history found.</p>
-
-{% endfor %}
+                                    <a class="btn btn-sm" href="{% url 'recommend_careers' item.result.id %}">
+                                        Open Report
+                                    </a>
+                                </div>
+                            </div>
+                        {% empty %}
+                            <p style="color: var(--text-secondary);">No history found.</p>
+                        {% endfor %}
+                    </div>
                 </div>
 
             </div>
@@ -710,4 +817,3 @@ body {
     });
 </script>
 {% endblock %}
-

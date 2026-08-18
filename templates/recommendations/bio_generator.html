@@ -1,0 +1,272 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Resume & LinkedIn Bio Suite - PersonalityAI{% endblock %}
+
+{% block content %}
+<div style="width:min(1060px, calc(100% - 32px));margin:30px auto 60px;font-family:'Inter', sans-serif;">
+
+    <!-- HERO HEADER -->
+    <div style="background:linear-gradient(135deg, #1e1b4b, #4338ca);color:white;padding:36px;border-radius:24px;margin-bottom:24px;box-shadow:0 12px 32px rgba(67,56,202,0.18);">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:16px;">
+            <div>
+                <div style="font-size:12px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;opacity:0.85;margin-bottom:8px;">
+                    AI CAREER BRANDING & ATS OPTIMIZER
+                </div>
+                <h1 style="margin:0 0 10px;font-size:32px;font-weight:800;">Personalized Resume & LinkedIn Bio</h1>
+                <p style="margin:0;color:#e0e7ff;font-size:15px;max-width:700px;line-height:1.6;">
+                    Tailored professional branding summaries generated using your OCEAN personality profile archetype (<strong>{{ personality_type }}</strong>) and targeted for career readiness.
+                </p>
+            </div>
+            
+            <div style="background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.25);padding:12px 18px;border-radius:16px;text-align:right;">
+                <div style="font-size:11px;text-transform:uppercase;letter-spacing:1px;font-weight:800;color:#c7d2fe;">ATS Keyword Score</div>
+                <div style="font-size:26px;font-weight:800;color:#67e8f9;">96% Compatible</div>
+            </div>
+        </div>
+
+        <div style="margin-top:24px;display:flex;gap:12px;flex-wrap:wrap;align-items:center;justify-content:space-between;">
+            <div style="display:flex;gap:12px;flex-wrap:wrap;">
+                <a href="{% url 'recommend_careers' result.id %}" style="display:inline-flex;align-items:center;padding:10px 18px;background:white;color:#3730a3;border-radius:10px;text-decoration:none;font-weight:700;font-size:13px;">
+                    ← Back to Report
+                </a>
+                <a href="{% url 'compare_careers' result.id %}" style="display:inline-flex;align-items:center;padding:10px 18px;background:rgba(255,255,255,0.12);color:white;border:1px solid rgba(255,255,255,0.3);border-radius:10px;text-decoration:none;font-weight:700;font-size:13px;">
+                    ⚖️ Compare Careers
+                </a>
+            </div>
+
+            <button onclick="downloadAllSummaries()" style="display:inline-flex;align-items:center;gap:6px;padding:10px 18px;background:#10b981;color:white;border:0;border-radius:10px;font-weight:800;font-size:13px;cursor:pointer;box-shadow:0 4px 12px rgba(16,185,129,0.3);">
+                📥 Export All Summaries (.txt)
+            </button>
+        </div>
+    </div>
+
+    <!-- TARGET CAREER & TONE CONTROLS BAR -->
+    <div style="background:white;border:1px solid #cbd5e1;border-radius:20px;padding:20px;margin-bottom:24px;box-shadow:0 6px 20px rgba(0,0,0,0.04);display:grid;grid-template-columns:1fr 1fr;gap:20px;">
+        
+        <!-- TARGET ROLE SELECTOR -->
+        <div>
+            <label style="display:block;font-size:12px;font-weight:800;text-transform:uppercase;color:#475569;margin-bottom:6px;letter-spacing:0.5px;">
+                🎯 Target Career Path:
+            </label>
+            <select id="targetCareerSelect" onchange="updateBioContent()" style="width:100%;padding:10px 14px;border-radius:10px;border:1.5px solid #cbd5e1;font-size:14px;font-weight:700;color:#1e293b;background:#f8fafc;cursor:pointer;">
+                {% for c in careers %}
+                <option value="{{ c.title }}" data-skills="{{ c.skills }}">{{ c.title }} ({{ c.final_score }}% Match)</option>
+                {% empty %}
+                <option value="Professional">Professional</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- TONE SWITCHER TABS -->
+        <div>
+            <label style="display:block;font-size:12px;font-weight:800;text-transform:uppercase;color:#475569;margin-bottom:6px;letter-spacing:0.5px;">
+                🎭 Profile Branding Tone:
+            </label>
+            <div style="display:flex;background:#f1f5f9;padding:4px;border-radius:12px;gap:4px;">
+                <button type="button" class="tone-btn active-tone" onclick="switchTone('corporate', this)" style="flex:1;padding:8px 10px;border:0;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;background:#4338ca;color:white;transition:all 0.2s;">
+                    💼 Corporate
+                </button>
+                <button type="button" class="tone-btn" onclick="switchTone('startup', this)" style="flex:1;padding:8px 10px;border:0;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;background:transparent;color:#475569;transition:all 0.2s;">
+                    🚀 Energetic
+                </button>
+                <button type="button" class="tone-btn" onclick="switchTone('technical', this)" style="flex:1;padding:8px 10px;border:0;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;background:transparent;color:#475569;transition:all 0.2s;">
+                    ⚙️ Technical ATS
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- TARGET KEYWORD HIGHLIGHT PILLS -->
+    <div style="background:#eff6ff;border:1px solid #bfdbfe;border-radius:16px;padding:14px 18px;margin-bottom:24px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
+        <span style="font-size:12px;font-weight:800;color:#1e3a8a;text-transform:uppercase;">Extracted ATS Keywords:</span>
+        <span class="keyword-pill" style="background:#white;border:1px solid #93c5fd;color:#1d4ed8;padding:4px 10px;border-radius:12px;font-size:12px;font-weight:700;">🏷️ {{ personality_type }}</span>
+        <span class="keyword-pill" id="targetRolePill" style="background:#white;border:1px solid #93c5fd;color:#1d4ed8;padding:4px 10px;border-radius:12px;font-size:12px;font-weight:700;">💼 {{ top_career.title|default:"Professional" }}</span>
+        {% for strength in strengths|slice:":2" %}
+        <span class="keyword-pill" style="background:#white;border:1px solid #93c5fd;color:#1d4ed8;padding:4px 10px;border-radius:12px;font-size:12px;font-weight:700;">✨ {{ strength }}</span>
+        {% endfor %}
+    </div>
+
+    <!-- CARDS CONTAINER -->
+    <div style="display:flex;flex-direction:column;gap:24px;">
+
+        <!-- LINKEDIN ABOUT SECTION -->
+        <div style="background:white;border:1px solid #e2e8f0;border-radius:20px;padding:26px;box-shadow:0 6px 20px rgba(0,0,0,0.04);">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:10px;">
+                <div style="display:flex;align-items:center;gap:10px;">
+                    <span style="font-size:24px;">💼</span>
+                    <div>
+                        <h2 style="margin:0;font-size:18px;color:#0f172a;font-weight:800;">LinkedIn "About" Summary</h2>
+                        <p style="margin:2px 0 0;font-size:13px;color:#64748b;">Optimized for your LinkedIn profile summary section</p>
+                    </div>
+                </div>
+                <div style="display:flex;align-items:center;gap:12px;">
+                    <span id="linkedinStats" style="font-size:12px;font-weight:700;color:#94a3b8;">0 words &bull; 0 chars</span>
+                    <button onclick="copyToClipboard('linkedinBio', this)" style="padding:8px 16px;background:#eff6ff;color:#2563eb;border:1px solid #bfdbfe;border-radius:10px;font-weight:700;font-size:13px;cursor:pointer;transition:all 0.2s;">
+                        📋 Copy to Clipboard
+                    </button>
+                </div>
+            </div>
+            <div id="linkedinBio" style="background:#f8fafc;padding:18px;border-radius:14px;border:1px solid #e2e8f0;font-size:14px;color:#334155;line-height:1.7;white-space:pre-wrap;">{{ linkedin_bio }}</div>
+        </div>
+
+        <!-- RESUME PROFESSIONAL SUMMARY -->
+        <div style="background:white;border:1px solid #e2e8f0;border-radius:20px;padding:26px;box-shadow:0 6px 20px rgba(0,0,0,0.04);">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:10px;">
+                <div style="display:flex;align-items:center;gap:10px;">
+                    <span style="font-size:24px;">📄</span>
+                    <div>
+                        <h2 style="margin:0;font-size:18px;color:#0f172a;font-weight:800;">Resume Header Objective</h2>
+                        <p style="margin:2px 0 0;font-size:13px;color:#64748b;">Perfect for your CV or Resume top summary</p>
+                    </div>
+                </div>
+                <div style="display:flex;align-items:center;gap:12px;">
+                    <span id="resumeStats" style="font-size:12px;font-weight:700;color:#94a3b8;">0 words &bull; 0 chars</span>
+                    <button onclick="copyToClipboard('resumeSummary', this)" style="padding:8px 16px;background:#eff6ff;color:#2563eb;border:1px solid #bfdbfe;border-radius:10px;font-weight:700;font-size:13px;cursor:pointer;transition:all 0.2s;">
+                        📋 Copy to Clipboard
+                    </button>
+                </div>
+            </div>
+            <div id="resumeSummary" style="background:#f8fafc;padding:18px;border-radius:14px;border:1px solid #e2e8f0;font-size:14px;color:#334155;line-height:1.7;white-space:pre-wrap;">{{ resume_summary }}</div>
+        </div>
+
+        <!-- ELEVATOR PITCH -->
+        <div style="background:white;border:1px solid #e2e8f0;border-radius:20px;padding:26px;box-shadow:0 6px 20px rgba(0,0,0,0.04);">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:10px;">
+                <div style="display:flex;align-items:center;gap:10px;">
+                    <span style="font-size:24px;">🎤</span>
+                    <div>
+                        <h2 style="margin:0;font-size:18px;color:#0f172a;font-weight:800;">30-Second Elevator Pitch</h2>
+                        <p style="margin:2px 0 0;font-size:13px;color:#64748b;">Ideal for interviews, networking events, or introduction calls</p>
+                    </div>
+                </div>
+                <div style="display:flex;align-items:center;gap:12px;">
+                    <span id="pitchStats" style="font-size:12px;font-weight:700;color:#94a3b8;">0 words &bull; 0 chars</span>
+                    <button onclick="copyToClipboard('elevatorPitch', this)" style="padding:8px 16px;background:#eff6ff;color:#2563eb;border:1px solid #bfdbfe;border-radius:10px;font-weight:700;font-size:13px;cursor:pointer;transition:all 0.2s;">
+                        📋 Copy to Clipboard
+                    </button>
+                </div>
+            </div>
+            <div id="elevatorPitch" style="background:#f8fafc;padding:18px;border-radius:14px;border:1px solid #e2e8f0;font-size:14px;color:#334155;line-height:1.7;white-space:pre-wrap;">{{ elevator_pitch }}</div>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- TOAST NOTIFICATION CONTAINER -->
+<div id="toastNotification" style="position:fixed;bottom:30px;right:30px;background:#0f172a;color:white;padding:12px 20px;border-radius:12px;font-weight:700;font-size:13px;box-shadow:0 10px 25px rgba(0,0,0,0.2);display:none;align-items:center;gap:8px;z-index:9999;">
+    ✅ Copied to clipboard!
+</div>
+
+<script>
+    const personalityType = "{{ personality_type }}";
+    const strengthsList = [{% for s in strengths %}"{{ s }}",{% endfor %}];
+    let currentTone = "corporate";
+
+    function updateWordStats() {
+        ["linkedinBio", "resumeSummary", "elevatorPitch"].forEach(id => {
+            const text = document.getElementById(id).innerText.trim();
+            const words = text ? text.split(/\s+/).length : 0;
+            const chars = text.length;
+            const targetStatId = id === "linkedinBio" ? "linkedinStats" : (id === "resumeSummary" ? "resumeStats" : "pitchStats");
+            document.getElementById(targetStatId).innerText = `${words} words • ${chars} chars`;
+        });
+    }
+
+    function switchTone(tone, btnElement) {
+        currentTone = tone;
+        document.querySelectorAll(".tone-btn").forEach(b => {
+            b.style.background = "transparent";
+            b.style.color = "#475569";
+        });
+        btnElement.style.background = "#4338ca";
+        btnElement.style.color = "white";
+        updateBioContent();
+    }
+
+    function updateBioContent() {
+        const select = document.getElementById("targetCareerSelect");
+        const targetTitle = select.value;
+        const targetSkills = select.options[select.selectedIndex].dataset.skills || "Problem Solving, Data Analysis";
+        
+        document.getElementById("targetRolePill").innerText = `💼 ${targetTitle}`;
+
+        const str1 = strengthsList[0] || "analytical problem solving";
+        const str2 = strengthsList[1] || "technical execution";
+
+        if (currentTone === "corporate") {
+            document.getElementById("linkedinBio").innerText = 
+                `Results-driven ${targetTitle} candidate with a ${personalityType} personality profile. Known for high openness and analytical mindset. Specialized in ${targetSkills.slice(0,70)}. Passionate about leveraging strengths in ${str1} and ${str2} to deliver impactful real-world business solutions.`;
+            
+            document.getElementById("resumeSummary").innerText = 
+                `Detail-oriented and proactive ${targetTitle} professional (OCEAN Score profile). Demonstrates exceptional aptitude in ${str1}. Seeking opportunities to apply expertise in ${targetSkills.slice(0,50)} within high-performing team environments.`;
+
+            document.getElementById("elevatorPitch").innerText = 
+                `Hi! I'm a ${targetTitle} with a strong background in ${targetSkills.slice(0,40)}. My personality assessment reflects a ${personalityType} archetype—meaning I excel at ${str1} while bringing precision and efficiency to projects.`;
+
+        } else if (currentTone === "startup") {
+            document.getElementById("linkedinBio").innerText = 
+                `High-energy, innovative ${targetTitle} enthusiast with a ${personalityType} mindset! Passionate about rapid iteration, scaling impact, and mastering ${targetSkills.slice(0,60)}. Known for exceptional ${str1} and thriving in fast-paced startup ecosystems.`;
+
+            document.getElementById("resumeSummary").innerText = 
+                `Adaptable and growth-focused ${targetTitle} specialist. Combines strong ${personalityType} traits with hands-on skill in ${targetSkills.slice(0,50)}. Driven to build disruptive solutions and execute with speed.`;
+
+            document.getElementById("elevatorPitch").innerText = 
+                `Hey! I'm a passionate ${targetTitle} obsessed with building awesome products using ${targetSkills.slice(0,35)}. With my ${personalityType} profile, I bring creative energy and non-stop drive to any team!`;
+
+        } else if (currentTone === "technical") {
+            document.getElementById("linkedinBio").innerText = 
+                `Technical ${targetTitle} professional optimized for ${targetSkills.slice(0,80)}. Evaluated with high ${personalityType} cognitive fit. Proven execution capability in ${str1}, structured data modeling, and end-to-end system design.`;
+
+            document.getElementById("resumeSummary").innerText = 
+                `ATS-optimized ${targetTitle} candidate proficient in ${targetSkills.slice(0,70)}. Core competencies include ${str1}, ${str2}, and structured data pipelines.`;
+
+            document.getElementById("elevatorPitch").innerText = 
+                `Hello, I specialize in ${targetTitle} roles leveraging technical proficiency in ${targetSkills.slice(0,45)}. My ${personalityType} score guarantees analytical rigor and code quality.`;
+        }
+
+        updateWordStats();
+    }
+
+    function copyToClipboard(elementId, btnElement) {
+        const text = document.getElementById(elementId).innerText;
+        navigator.clipboard.writeText(text).then(() => {
+            const toast = document.getElementById("toastNotification");
+            toast.style.display = "flex";
+            setTimeout(() => { toast.style.display = "none"; }, 2500);
+
+            const originalText = btnElement.innerText;
+            btnElement.innerText = "✅ Copied!";
+            btnElement.style.background = "#dcfce7";
+            btnElement.style.color = "#15803d";
+            btnElement.style.borderColor = "#86efac";
+            setTimeout(() => {
+                btnElement.innerText = originalText;
+                btnElement.style.background = "#eff6ff";
+                btnElement.style.color = "#2563eb";
+                btnElement.style.borderColor = "#bfdbfe";
+            }, 2000);
+        });
+    }
+
+    function downloadAllSummaries() {
+        const title = document.getElementById("targetCareerSelect").value;
+        const linkedin = document.getElementById("linkedinBio").innerText;
+        const resume = document.getElementById("resumeSummary").innerText;
+        const pitch = document.getElementById("elevatorPitch").innerText;
+
+        const content = `=================================================\nAI CAREER BRANDING SUMMARY PACK - ${title.toUpperCase()}\nArchetype: ${personalityType}\n=================================================\n\n1. LINKEDIN ABOUT SUMMARY:\n${linkedin}\n\n2. RESUME OBJECTIVE:\n${resume}\n\n3. 30-SECOND ELEVATOR PITCH:\n${pitch}\n\n=================================================`;
+
+        const blob = new Blob([content], { type: "text/plain" });
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = `${title.replace(/\s+/g, "_")}_Branding_Summary.txt`;
+        link.click();
+    }
+
+    // Initialize Stats on Page Load
+    updateWordStats();
+</script>
+{% endblock %}

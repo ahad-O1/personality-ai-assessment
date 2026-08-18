@@ -1,22 +1,29 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Personality & Career Report{% endblock %}
+{% block title %}Personality & Career Profile Report{% endblock %}
 
 {% block extra_css %}
 <link rel="stylesheet" href="{% static 'css/chatbot.css' %}">
+<!-- Bootstrap Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
 <style>
+    @import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap");
+
     :root {
-        --primary: #2563eb;
-        --primary-dark: #1e3a8a;
-        --primary-light: #eff6ff;
-        --bg: #f5f7fb;
+        --primary: #f5793a;
+        --primary-dark: #e06324;
+        --primary-light: #fff7ed;
+        --bg: #fdf0e7;
         --card: #ffffff;
-        --text: #172033;
-        --muted: #64748b;
-        --border: #e5e7eb;
-        --success: #16a34a;
-        --warning: #d97706;
+        --text: #1a1a2e;
+        --muted: #6b7280;
+        --border: #fce4d6;
+        --success: #10b981;
+        --warning: #f59e0b;
+        --radius-card: 16px;
+        --radius-pill: 9999px;
     }
 
     * {
@@ -26,106 +33,104 @@
     body {
         background: var(--bg);
         color: var(--text);
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        line-height: 1.5;
     }
 
     .report-wrapper {
         width: min(1180px, calc(100% - 32px));
-        margin: 30px auto 60px;
+        margin: 28px auto 60px;
     }
 
-    /* HERO SECTION */
+    /* 1. HERO HEADER BANNER (Compact, Warm Gradient) */
     .report-hero {
-        background: linear-gradient(135deg, #172554, #2563eb);
+        background: linear-gradient(135deg, #ea580c 0%, #f5793a 50%, #ff8c4e 100%);
         color: white;
-        border-radius: 24px;
-        padding: 42px;
-        margin-bottom: 24px;
-        position: relative;
-        overflow: hidden;
-    }
-
-    .report-hero::after {
-        content: "";
-        position: absolute;
-        width: 280px;
-        height: 280px;
-        border-radius: 50%;
-        background: rgba(255, 255, 255, .08);
-        right: -80px;
-        top: -100px;
+        border-radius: var(--radius-card);
+        padding: 28px 32px;
+        margin-bottom: 28px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+        box-shadow: 0 8px 24px rgba(245, 121, 58, 0.22);
     }
 
     .hero-content {
-        position: relative;
-        z-index: 2;
-        max-width: 720px;
+        max-width: 680px;
     }
 
     .hero-label {
-        font-size: 12px;
+        font-size: 11px;
         font-weight: 800;
         letter-spacing: 1.5px;
         text-transform: uppercase;
-        opacity: .8;
-        margin-bottom: 10px;
+        opacity: 0.9;
+        margin-bottom: 6px;
+        display: flex;
+        align-items: center;
+        gap: 6px;
     }
 
     .report-hero h1 {
-        margin: 0 0 12px;
-        font-size: clamp(28px, 4vw, 42px);
+        margin: 0 0 8px;
+        font-size: clamp(24px, 3.2vw, 34px);
         font-weight: 800;
+        line-height: 1.2;
+        letter-spacing: -0.5px;
     }
 
     .report-hero p {
         margin: 0;
-        color: #dbeafe;
-        line-height: 1.7;
-        font-size: 15px;
+        color: rgba(255, 255, 255, 0.92);
+        line-height: 1.6;
+        font-size: 14px;
     }
 
     .hero-actions {
-        margin-top: 24px;
         display: flex;
-        gap: 12px;
+        gap: 10px;
         flex-wrap: wrap;
+        flex-shrink: 0;
     }
 
     .hero-btn {
         display: inline-flex;
         align-items: center;
-        padding: 11px 20px;
-        border-radius: 10px;
+        gap: 8px;
+        padding: 10px 18px;
+        border-radius: var(--radius-pill);
         text-decoration: none;
         font-weight: 700;
-        font-size: 14px;
+        font-size: 13px;
         transition: all 0.2s ease;
     }
 
     .hero-btn.primary {
-        background: white;
-        color: var(--primary-dark);
+        background: #ffffff;
+        color: #e06324;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
     }
 
     .hero-btn.primary:hover {
-        background: #f8fafc;
+        background: #fff7ed;
         transform: translateY(-1px);
     }
 
     .hero-btn.secondary {
-        border: 1px solid rgba(255, 255, 255, .3);
+        border: 1px solid rgba(255, 255, 255, 0.4);
         color: white;
-        background: rgba(255, 255, 255, .08);
+        background: rgba(255, 255, 255, 0.12);
     }
 
     .hero-btn.secondary:hover {
-        background: rgba(255, 255, 255, .15);
+        background: rgba(255, 255, 255, 0.22);
         transform: translateY(-1px);
     }
 
-    /* COMMON STRUCTURE */
+    /* COMMON SECTION STYLES */
     .section {
-        margin-bottom: 24px;
+        margin-bottom: 28px;
     }
 
     .section-title {
@@ -134,29 +139,40 @@
 
     .section-title h2 {
         margin: 0;
-        font-size: 21px;
+        font-size: 20px;
         font-weight: 800;
-        color: #0f172a;
+        color: #1a1a2e;
+        letter-spacing: -0.4px;
     }
 
     .section-title p {
-        margin: 5px 0 0;
+        margin: 4px 0 0;
         color: var(--muted);
-        font-size: 14px;
+        font-size: 13px;
     }
 
     .card {
         background: var(--card);
         border: 1px solid var(--border);
-        border-radius: 18px;
-        box-shadow: 0 8px 30px rgba(15, 23, 42, .05);
+        border-radius: var(--radius-card);
+        box-shadow: 0 4px 20px rgba(245, 121, 58, 0.05);
     }
 
-    /* OCEAN SCORE AREA */
+    .card-subtitle {
+        margin: 0 0 16px;
+        font-size: 15px;
+        font-weight: 800;
+        color: #1a1a2e;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    /* 2. OCEAN SCORE + RADAR CHART */
     .score-layout {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 20px;
+        gap: 24px;
         align-items: stretch;
     }
 
@@ -168,86 +184,101 @@
         justify-content: space-between;
     }
 
-    .score-item {
-        margin-bottom: 18px;
+    .score-items-wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        margin-top: 8px;
     }
 
-    .score-item:last-child {
-        margin-bottom: 0;
+    .score-item {
+        margin: 0;
     }
 
     .score-head {
         display: flex;
         justify-content: space-between;
-        gap: 10px;
-        margin-bottom: 7px;
-        font-size: 14px;
+        align-items: center;
+        margin-bottom: 6px;
+        font-size: 13px;
         font-weight: 700;
+        color: #1a1a2e;
     }
 
     .score-value {
         color: var(--primary);
+        font-weight: 800;
     }
 
     .score-bar {
-        height: 9px;
-        background: #e8edf5;
-        border-radius: 99px;
+        height: 8px;
+        background: var(--primary-light);
+        border-radius: var(--radius-pill);
         overflow: hidden;
+        border: 1px solid var(--border);
     }
 
     .score-fill {
         height: 100%;
         width: 0;
-        background: linear-gradient(90deg, #2563eb, #60a5fa);
+        background: linear-gradient(90deg, #f5793a, #ea580c);
         border-radius: inherit;
         transition: width 0.8s ease;
     }
 
     .chart-container {
-        height: 300px;
+        height: 280px;
         position: relative;
         width: 100%;
     }
 
-    /* PERSONALITY PROFILE INTERPRETATION */
+    /* 3. AI PERSONALITY INTERPRETATION */
     .profile-card {
         padding: 26px;
     }
 
+    .profile-header {
+        margin-bottom: 20px;
+    }
+
     .personality-type {
         display: inline-flex;
-        padding: 7px 13px;
-        border-radius: 999px;
+        align-items: center;
+        gap: 6px;
+        padding: 5px 14px;
+        border-radius: var(--radius-pill);
         background: var(--primary-light);
+        border: 1px solid #ffedd5;
         color: var(--primary);
-        font-size: 13px;
+        font-size: 12px;
         font-weight: 800;
-        margin-bottom: 12px;
+        margin-bottom: 10px;
     }
 
     .profile-card h2 {
-        margin: 0 0 10px;
-        font-size: 27px;
-        color: #1e3a8a;
+        margin: 0 0 8px;
+        font-size: 24px;
+        color: #1a1a2e;
+        font-weight: 800;
     }
 
     .profile-summary {
         color: var(--muted);
-        line-height: 1.7;
+        line-height: 1.65;
         max-width: 850px;
-        font-size: 15px;
+        font-size: 14px;
+        margin: 0;
     }
 
     .profile-grid {
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 16px;
-        margin-top: 22px;
+        margin-top: 20px;
     }
 
     .info-box {
-        background: #f8fafc;
+        background: var(--bg);
         border: 1px solid var(--border);
         border-radius: 14px;
         padding: 18px;
@@ -258,102 +289,166 @@
     }
 
     .info-box h3 {
-        margin: 0 0 12px;
-        font-size: 15px;
-        color: var(--primary-dark);
-        font-weight: 700;
+        margin: 0 0 10px;
+        font-size: 14px;
+        color: #1a1a2e;
+        font-weight: 800;
+        display: flex;
+        align-items: center;
+        gap: 8px;
     }
 
     .info-box ul {
         margin: 0;
-        padding-left: 20px;
+        padding-left: 18px;
         color: #475569;
-        line-height: 1.8;
+        font-size: 13px;
+        line-height: 1.7;
     }
 
-    /* STRENGTHS & DEVELOPMENT AREAS */
+    /* 4. STRENGTHS & DEVELOPMENT AREAS */
     .strength-grid {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 18px;
+        gap: 20px;
         align-items: stretch;
     }
 
     .strength-card {
-        padding: 22px;
+        padding: 24px;
         display: flex;
         flex-direction: column;
     }
 
     .strength-card h3 {
-        margin: 0 0 14px;
+        margin: 0 0 16px;
         font-size: 16px;
-        font-weight: 700;
+        font-weight: 800;
+        color: #1a1a2e;
+        display: flex;
+        align-items: center;
+        gap: 8px;
     }
 
     .strength-card.strengths {
-        border-top: 4px solid #16a34a;
+        border-top: 4px solid #10b981;
     }
 
     .strength-card.improvements {
-        border-top: 4px solid #f59e0b;
+        border-top: 4px solid #f5793a;
     }
 
     .strength-list {
         margin: 0;
-        padding-left: 20px;
-        color: #475569;
-        line-height: 1.8;
+        padding: 0;
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
     }
 
-    /* TRAIT ANALYSIS GRID */
+    .strength-list li {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        color: #475569;
+        font-size: 13px;
+        line-height: 1.5;
+    }
+
+    .strength-list li i {
+        flex-shrink: 0;
+        margin-top: 2px;
+        font-size: 14px;
+    }
+
+    /* 5. PERSONALITY TRAIT ANALYSIS (5 ACROSS GRID) */
     .analysis-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        grid-template-columns: repeat(5, 1fr);
         gap: 16px;
     }
 
     .analysis-card {
         padding: 20px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .analysis-head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 8px;
     }
 
     .analysis-card h3 {
-        margin: 0 0 8px;
-        color: var(--primary-dark);
-        font-size: 16px;
-        font-weight: 700;
+        margin: 0;
+        color: #1a1a2e;
+        font-size: 15px;
+        font-weight: 800;
     }
 
-    .level {
+    .level-badge {
         display: inline-block;
         background: var(--primary-light);
         color: var(--primary);
-        padding: 5px 10px;
-        border-radius: 999px;
+        border: 1px solid #ffedd5;
+        padding: 3px 8px;
+        border-radius: var(--radius-pill);
+        font-size: 11px;
+        font-weight: 800;
+    }
+
+    .score-pct {
         font-size: 12px;
         font-weight: 800;
-        margin-bottom: 10px;
+        color: var(--primary);
+        margin-bottom: 8px;
     }
 
     .analysis-card p {
         color: var(--muted);
-        line-height: 1.65;
-        font-size: 14px;
-        margin: 0 0 8px;
+        line-height: 1.55;
+        font-size: 13px;
+        margin: 0;
     }
 
-    .analysis-card p:last-child {
-        margin-bottom: 0;
-    }
-
-    /* CAREER RECOMMENDATIONS */
+    /* 6. TOP 5 CAREER MATCHES */
     .career-card {
-        padding: 24px;
-        margin-bottom: 20px;
-        border: 1px solid #dbeafe;
-        border-radius: 18px;
+        padding: 28px;
+        margin-bottom: 24px;
+        border: 1px solid var(--border);
+        border-radius: var(--radius-card);
         background: white;
-        box-shadow: 0 7px 24px rgba(37, 99, 235, .06);
+        box-shadow: 0 4px 20px rgba(245, 121, 58, 0.05);
+        position: relative;
+    }
+
+    .rank-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 4px 12px;
+        border-radius: var(--radius-pill);
+        font-size: 11px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-bottom: 10px;
+    }
+
+    .rank-badge.rank-1 {
+        background: linear-gradient(135deg, #f5793a, #ea580c);
+        color: #ffffff;
+        box-shadow: 0 2px 8px rgba(245, 121, 58, 0.3);
+    }
+
+    .rank-badge.rank-sub {
+        background: var(--primary-light);
+        color: var(--primary);
+        border: 1px solid #ffedd5;
     }
 
     .career-top {
@@ -361,180 +456,385 @@
         justify-content: space-between;
         gap: 16px;
         align-items: flex-start;
-    }
-
-    .career-rank {
-        color: var(--primary);
-        font-size: 12px;
-        font-weight: 800;
-        text-transform: uppercase;
-        letter-spacing: .8px;
+        margin-bottom: 12px;
     }
 
     .career-card h3 {
-        margin: 4px 0 8px;
-        font-size: 21px;
-        color: #172554;
+        margin: 2px 0 6px;
+        font-size: 22px;
+        color: #1a1a2e;
         font-weight: 800;
     }
 
     .match-badge {
         flex-shrink: 0;
-        background: #eff6ff;
-        color: #1d4ed8;
-        padding: 8px 14px;
-        border-radius: 10px;
+        background: #d1fae5;
+        color: #047857;
+        padding: 7px 14px;
+        border-radius: var(--radius-pill);
         font-size: 13px;
         font-weight: 800;
-        border: 1px solid #bfdbfe;
+        border: 1px solid #a7f3d0;
+    }
+
+    .goal-btn {
+        background: linear-gradient(135deg, #f5793a, #e06324);
+        color: white !important;
+        padding: 8px 16px;
+        border-radius: var(--radius-pill);
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 13px;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        box-shadow: 0 3px 10px rgba(245, 121, 58, 0.25);
+        transition: transform 0.2s ease;
+    }
+
+    .goal-btn:hover {
+        transform: translateY(-1px);
     }
 
     .career-description {
         color: var(--muted);
         line-height: 1.65;
-        margin-bottom: 18px;
+        margin: 0 0 16px;
         font-size: 14px;
     }
 
-    .career-meta {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 8px;
-        margin-bottom: 18px;
+    /* MARKET METRICS ROW */
+    .market-stats-row {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 12px;
+        margin: 16px 0 20px;
     }
 
-    .meta-pill {
-        background: #f8fafc;
+    .stat-pill-box {
+        background: var(--bg);
         border: 1px solid var(--border);
-        padding: 7px 12px;
-        border-radius: 8px;
-        font-size: 12px;
-        color: #475569;
+        border-radius: 12px;
+        padding: 12px 14px;
+    }
+
+    .stat-pill-box .label {
+        font-size: 10px;
+        text-transform: uppercase;
+        font-weight: 800;
+        color: var(--muted);
+        letter-spacing: 0.5px;
+    }
+
+    .stat-pill-box .val {
+        font-size: 14px;
+        font-weight: 800;
+        color: #1a1a2e;
+        margin-top: 3px;
     }
 
     .career-columns {
         display: grid;
         grid-template-columns: 1fr 1fr;
-        gap: 16px;
+        gap: 20px;
     }
 
     .career-section {
-        background: #f8fafc;
+        background: var(--bg);
         border: 1px solid var(--border);
-        border-radius: 13px;
-        padding: 18px;
+        border-radius: 14px;
+        padding: 20px;
     }
 
     .career-section h4 {
         margin: 0 0 12px;
-        font-size: 14px;
-        color: #1e3a8a;
-        font-weight: 700;
+        font-size: 13px;
+        color: #1a1a2e;
+        font-weight: 800;
         text-transform: uppercase;
-        letter-spacing: 0.5px;
+        letter-spacing: 0.6px;
     }
 
-    .career-section ul,
-    .career-section ol {
+    .career-section ul {
         margin: 0;
-        padding-left: 20px;
+        padding-left: 18px;
         color: #475569;
         font-size: 13px;
         line-height: 1.7;
     }
 
+    /* SKILL TAGS & READINESS */
+    .skill-tags-wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-top: 10px;
+    }
+
+    .skill-tag {
+        cursor: pointer;
+        padding: 6px 12px;
+        border-radius: var(--radius-pill);
+        font-size: 12px;
+        font-weight: 700;
+        border: 1px solid var(--border);
+        background: #ffffff;
+        color: #475569;
+        user-select: none;
+        transition: all 0.2s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .skill-tag:hover {
+        border-color: var(--primary);
+        background: var(--primary-light);
+    }
+
+    .skill-tag.active-skill {
+        background: var(--primary);
+        color: #ffffff;
+        border-color: var(--primary);
+    }
+
+    .readiness-box {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 12px 16px;
+        background: var(--primary-light);
+        border: 1px solid #ffedd5;
+        border-radius: 12px;
+        margin-top: 14px;
+    }
+
+    .readiness-info {
+        font-size: 12px;
+        color: #1a1a2e;
+        font-weight: 700;
+    }
+
+    .readiness-score {
+        font-size: 22px;
+        font-weight: 800;
+        color: var(--primary);
+    }
+
+    /* STEPPER ACCORDION FOR LEARNING PATHWAY */
+    .node-timeline {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin-top: 12px;
+    }
+
+    .node-accordion {
+        background: #ffffff;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        overflow: hidden;
+        transition: all 0.2s ease;
+    }
+
+    .node-accordion[open] {
+        border-color: var(--primary);
+        box-shadow: 0 4px 14px rgba(245, 121, 58, 0.08);
+    }
+
+    .node-summary {
+        padding: 12px 16px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        user-select: none;
+        list-style: none;
+    }
+
+    .node-summary::-webkit-details-marker {
+        display: none;
+    }
+
+    .node-summary-left {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .step-badge {
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        background: var(--primary-light);
+        border: 1px solid #ffedd5;
+        color: var(--primary);
+        font-weight: 800;
+        font-size: 12px;
+        display: grid;
+        place-items: center;
+        flex-shrink: 0;
+    }
+
+    .step-text {
+        font-size: 13px;
+        font-weight: 700;
+        color: #1a1a2e;
+    }
+
+    .node-summary-right {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .tag-pill {
+        font-size: 11px;
+        font-weight: 700;
+        padding: 3px 8px;
+        border-radius: var(--radius-pill);
+        background: #f1f5f9;
+        color: #475569;
+    }
+
+    .accordion-icon {
+        font-size: 12px;
+        color: var(--muted);
+        transition: transform 0.2s ease;
+    }
+
+    .node-accordion[open] .accordion-icon {
+        transform: rotate(180deg);
+    }
+
+    .node-content {
+        padding: 14px 16px 16px 54px;
+        border-top: 1px solid var(--border);
+        background: #fafafa;
+    }
+
+    .subtopics-box {
+        margin-bottom: 10px;
+    }
+
+    .subtopics-title {
+        font-size: 11px;
+        font-weight: 800;
+        text-transform: uppercase;
+        color: var(--muted);
+        letter-spacing: 0.5px;
+        margin-bottom: 4px;
+    }
+
+    .subtopics-list {
+        margin: 0;
+        padding-left: 18px;
+        font-size: 12px;
+        color: #475569;
+        line-height: 1.6;
+    }
+
+    .youtube-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: #ff0000;
+        color: #ffffff !important;
+        text-decoration: none;
+        font-size: 11px;
+        font-weight: 800;
+        padding: 5px 12px;
+        border-radius: var(--radius-pill);
+        transition: all 0.2s ease;
+    }
+
+    .youtube-btn:hover {
+        background: #cc0000;
+    }
+
+    /* FEEDBACK ACCORDION */
     .career-details {
         margin-top: 16px;
         border-top: 1px solid var(--border);
-        padding-top: 15px;
+        padding-top: 14px;
     }
 
     .career-details summary {
         cursor: pointer;
         color: var(--primary);
-        font-size: 14px;
+        font-size: 13px;
         font-weight: 700;
         user-select: none;
     }
 
-    .career-details summary:hover {
-        text-decoration: underline;
-    }
-
-    /* FEEDBACK FORM */
     .feedback-box {
-        margin-top: 14px;
-        background: #f8fafc;
+        margin-top: 12px;
+        background: var(--bg);
         border: 1px solid var(--border);
-        border-radius: 13px;
-        padding: 18px;
+        border-radius: 12px;
+        padding: 16px;
     }
 
     .feedback-box h4 {
-        margin: 0 0 12px;
-        font-size: 14px;
-        font-weight: 700;
-        color: #1e293b;
-    }
-
-    .feedback-box label {
+        margin: 0 0 10px;
         font-size: 13px;
-        color: #475569;
-        font-weight: 500;
+        font-weight: 700;
+        color: #1a1a2e;
     }
 
     .feedback-box select,
     .feedback-box textarea {
         width: 100%;
-        padding: 10px 12px;
-        border: 1px solid #cbd5e1;
-        border-radius: 9px;
+        padding: 8px 12px;
+        border: 1px solid var(--border);
+        border-radius: 8px;
         background: white;
-        margin-top: 7px;
+        margin-top: 6px;
         font-family: inherit;
         font-size: 13px;
     }
 
-    .feedback-box textarea {
-        resize: vertical;
-        min-height: 75px;
-    }
-
     .feedback-btn {
-        margin-top: 12px;
+        margin-top: 10px;
         background: var(--primary);
         color: white;
         border: 0;
-        padding: 10px 18px;
-        border-radius: 9px;
+        padding: 8px 16px;
+        border-radius: var(--radius-pill);
         font-weight: 700;
-        font-size: 13px;
+        font-size: 12px;
         cursor: pointer;
-        transition: background 0.2s ease;
-    }
-
-    .feedback-btn:hover {
-        background: #1d4ed8;
     }
 
     .model-scores {
         display: flex;
-        gap: 20px;
+        gap: 16px;
         flex-wrap: wrap;
-        margin-top: 18px;
-        padding-top: 14px;
+        margin-top: 16px;
+        padding-top: 12px;
         border-top: 1px dashed var(--border);
         color: var(--muted);
-        font-size: 13px;
+        font-size: 12px;
     }
 
     /* RESPONSIVE LAYOUT */
-    @media (max-width: 850px) {
+    @media (max-width: 900px) {
+        .report-hero {
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 24px;
+        }
+
         .score-layout,
         .strength-grid,
         .career-columns,
         .profile-grid {
             grid-template-columns: 1fr;
+        }
+
+        .analysis-grid {
+            grid-template-columns: repeat(2, 1fr);
         }
 
         .info-box.full {
@@ -545,16 +845,14 @@
             flex-direction: column;
         }
 
-        .match-badge {
-            align-self: flex-start;
-        }
-
-        .report-hero {
-            padding: 28px 22px;
-        }
-
         .report-wrapper {
-            width: min(100% - 20px, 1180px);
+            width: min(100% - 24px, 1180px);
+        }
+    }
+
+    @media (max-width: 600px) {
+        .analysis-grid {
+            grid-template-columns: 1fr;
         }
     }
 </style>
@@ -564,101 +862,112 @@
 {% block content %}
 <div class="report-wrapper">
 
-    <!-- HERO HEADER -->
+    <!-- 1. HERO HEADER BANNER -->
     <section class="report-hero">
         <div class="hero-content">
             <div class="hero-label">
-                PERSONALITY ASSESSMENT REPORT
+                <i class="bi bi-stars"></i> PERSONALITY ASSESSMENT REPORT
             </div>
 
             <h1>Your Personality & Career Profile</h1>
 
             <p>
                 Your OCEAN personality assessment has been analyzed using
-                adaptive scoring to identify your personality characteristics,
-                strengths and suitable career directions.
+                adaptive scoring to identify your core characteristics,
+                strengths, and optimal career directions.
             </p>
+        </div>
 
-            <div class="hero-actions">
-                <a href="{% url 'download_report' result.id %}" class="hero-btn primary">
-                    Download PDF Report
-                </a>
+        <div class="hero-actions">
+            <a href="{% url 'download_report' result.id %}" class="hero-btn primary">
+                <i class="bi bi-file-earmark-pdf-fill"></i> Download PDF
+            </a>
 
-                <a href="{% url 'dashboard_home' %}" class="hero-btn secondary">
-                    Back to Dashboard
-                </a>
-            </div>
+            <a href="{% url 'compare_careers' result.id %}" class="hero-btn secondary">
+                <i class="bi bi-arrow-left-right"></i> Compare Top Careers
+            </a>
+
+            <a href="{% url 'dashboard_home' %}" class="hero-btn secondary">
+                <i class="bi bi-house-door-fill"></i> Dashboard
+            </a>
         </div>
     </section>
 
 
-    <!-- OCEAN SCORES & RADAR CHART -->
+    <!-- 2. OCEAN PROFILE & RADAR CHART -->
     <section class="section">
         <div class="section-title">
             <h2>OCEAN Personality Profile</h2>
-            <p>Your measured personality dimensions</p>
+            <p>Your measured Big Five personality dimensions</p>
         </div>
 
         <div class="score-layout">
             <!-- LEFT: 5 SCORE BARS -->
             <div class="card score-card">
-                <div class="score-item">
-                    <div class="score-head">
-                        <span>Openness</span>
-                        <span class="score-value">{{ result.openness }}%</span>
-                    </div>
-                    <div class="score-bar">
-                        <div class="score-fill" data-width="{{ result.openness }}"></div>
-                    </div>
-                </div>
+                <h3 class="card-subtitle">
+                    <i class="bi bi-bar-chart-fill" style="color: var(--primary);"></i>
+                    Dimension Scores
+                </h3>
 
-                <div class="score-item">
-                    <div class="score-head">
-                        <span>Conscientiousness</span>
-                        <span class="score-value">{{ result.conscientiousness }}%</span>
+                <div class="score-items-wrapper">
+                    <div class="score-item">
+                        <div class="score-head">
+                            <span>Openness</span>
+                            <span class="score-value">{{ result.openness }}%</span>
+                        </div>
+                        <div class="score-bar">
+                            <div class="score-fill" data-width="{{ result.openness }}"></div>
+                        </div>
                     </div>
-                    <div class="score-bar">
-                        <div class="score-fill" data-width="{{ result.conscientiousness }}"></div>
-                    </div>
-                </div>
 
-                <div class="score-item">
-                    <div class="score-head">
-                        <span>Extraversion</span>
-                        <span class="score-value">{{ result.extraversion }}%</span>
+                    <div class="score-item">
+                        <div class="score-head">
+                            <span>Conscientiousness</span>
+                            <span class="score-value">{{ result.conscientiousness }}%</span>
+                        </div>
+                        <div class="score-bar">
+                            <div class="score-fill" data-width="{{ result.conscientiousness }}"></div>
+                        </div>
                     </div>
-                    <div class="score-bar">
-                        <div class="score-fill" data-width="{{ result.extraversion }}"></div>
-                    </div>
-                </div>
 
-                <div class="score-item">
-                    <div class="score-head">
-                        <span>Agreeableness</span>
-                        <span class="score-value">{{ result.agreeableness }}%</span>
+                    <div class="score-item">
+                        <div class="score-head">
+                            <span>Extraversion</span>
+                            <span class="score-value">{{ result.extraversion }}%</span>
+                        </div>
+                        <div class="score-bar">
+                            <div class="score-fill" data-width="{{ result.extraversion }}"></div>
+                        </div>
                     </div>
-                    <div class="score-bar">
-                        <div class="score-fill" data-width="{{ result.agreeableness }}"></div>
-                    </div>
-                </div>
 
-                <div class="score-item">
-                    <div class="score-head">
-                        <span>Neuroticism</span>
-                        <span class="score-value">{{ result.neuroticism }}%</span>
+                    <div class="score-item">
+                        <div class="score-head">
+                            <span>Agreeableness</span>
+                            <span class="score-value">{{ result.agreeableness }}%</span>
+                        </div>
+                        <div class="score-bar">
+                            <div class="score-fill" data-width="{{ result.agreeableness }}"></div>
+                        </div>
                     </div>
-                    <div class="score-bar">
-                        <div class="score-fill" data-width="{{ result.neuroticism }}"></div>
+
+                    <div class="score-item">
+                        <div class="score-head">
+                            <span>Neuroticism</span>
+                            <span class="score-value">{{ result.neuroticism }}%</span>
+                        </div>
+                        <div class="score-bar">
+                            <div class="score-fill" data-width="{{ result.neuroticism }}"></div>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <!-- RIGHT: RADAR CHART -->
             <div class="card chart-card">
-                <div class="section-title">
-                    <h2 style="font-size: 18px;">Personality Radar</h2>
-                    <p>Visual representation of your OCEAN profile</p>
-                </div>
+                <h3 class="card-subtitle">
+                    <i class="bi bi-radar" style="color: var(--primary);"></i>
+                    Personality Radar
+                </h3>
 
                 <div class="chart-container">
                     <canvas id="oceanChart"></canvas>
@@ -668,7 +977,7 @@
     </section>
 
 
-    <!-- AI PERSONALITY INTERPRETATION -->
+    <!-- 3. AI PERSONALITY INTERPRETATION -->
     <section class="section">
         <div class="section-title">
             <h2>AI Personality Interpretation</h2>
@@ -676,19 +985,21 @@
         </div>
 
         <div class="card profile-card">
-            <span class="personality-type">
-                AI Personality Type
-            </span>
+            <div class="profile-header">
+                <span class="personality-type">
+                    <i class="bi bi-cpu-fill"></i> AI Personality Archetype
+                </span>
 
-            <h2>{{ personality_type }}</h2>
+                <h2>{{ personality_type }}</h2>
 
-            <p class="profile-summary">
-                {{ personality_summary }}
-            </p>
+                <p class="profile-summary">
+                    {{ personality_summary }}
+                </p>
+            </div>
 
             <div class="profile-grid">
                 <div class="info-box">
-                    <h3>Best Work Environment</h3>
+                    <h3><i class="bi bi-building-check" style="color: var(--primary);"></i> Ideal Work Environment</h3>
                     <ul>
                         {% for item in personality_details.environments %}
                         <li>{{ item }}</li>
@@ -697,7 +1008,7 @@
                 </div>
 
                 <div class="info-box">
-                    <h3>Recommended Career Domains</h3>
+                    <h3><i class="bi bi-compass-fill" style="color: var(--primary);"></i> Recommended Career Domains</h3>
                     <ul>
                         {% for domain in personality_details.domains %}
                         <li>{{ domain }}</li>
@@ -706,7 +1017,7 @@
                 </div>
 
                 <div class="info-box full">
-                    <h3>AI Overall Summary</h3>
+                    <h3><i class="bi bi-journal-text" style="color: var(--primary);"></i> AI Overall Summary</h3>
                     <p style="margin:0;color:#64748b;line-height:1.7;">
                         {{ personality_details.summary }}
                     </p>
@@ -716,7 +1027,7 @@
     </section>
 
 
-    <!-- STRENGTHS & DEVELOPMENT AREAS -->
+    <!-- 4. STRENGTHS & DEVELOPMENT AREAS -->
     <section class="section">
         <div class="section-title">
             <h2>Strengths & Development Areas</h2>
@@ -725,10 +1036,10 @@
 
         <div class="strength-grid">
             <div class="card strength-card strengths">
-                <h3>Your Top Strengths</h3>
+                <h3><i class="bi bi-check-circle-fill" style="color: #10b981;"></i> Your Top Strengths</h3>
                 <ul class="strength-list">
                     {% for strength in strengths %}
-                    <li>{{ strength }}</li>
+                    <li><i class="bi bi-check2" style="color: #10b981;"></i> <span>{{ strength }}</span></li>
                     {% empty %}
                     <li>No strength data available.</li>
                     {% endfor %}
@@ -736,10 +1047,10 @@
             </div>
 
             <div class="card strength-card improvements">
-                <h3>Areas to Improve</h3>
+                <h3><i class="bi bi-bullseye" style="color: #f5793a;"></i> Areas to Develop</h3>
                 <ul class="strength-list">
                     {% for item in improvements %}
-                    <li>{{ item }}</li>
+                    <li><i class="bi bi-arrow-up-right" style="color: #f5793a;"></i> <span>{{ item }}</span></li>
                     {% empty %}
                     <li>No improvement areas available.</li>
                     {% endfor %}
@@ -749,7 +1060,7 @@
     </section>
 
 
-    <!-- PERSONALITY TRAIT ANALYSIS -->
+    <!-- 5. PERSONALITY TRAIT ANALYSIS (5 ACROSS GRID) -->
     <section class="section">
         <div class="section-title">
             <h2>Personality Trait Analysis</h2>
@@ -759,49 +1070,51 @@
         <div class="analysis-grid">
             {% for item in personality_analysis %}
             <div class="card analysis-card">
-                <h3>{{ item.trait }}</h3>
+                <div>
+                    <div class="analysis-head">
+                        <h3>{{ item.trait }}</h3>
+                        <span class="level-badge">{{ item.level }}</span>
+                    </div>
 
-                <span class="level">
-                    {{ item.level }}
-                </span>
+                    <div class="score-pct">{{ item.score }}% Score</div>
 
-                <p>
-                    <strong>Score:</strong> {{ item.score }}%
-                </p>
-
-                <p>
-                    {{ item.description }}
-                </p>
+                    <p>{{ item.description }}</p>
+                </div>
             </div>
             {% endfor %}
         </div>
     </section>
 
 
-    <!-- TOP 5 AI CAREER MATCHES -->
+    <!-- 6. TOP 5 AI CAREER MATCHES -->
     <section class="section">
         <div class="section-title">
             <h2>Top 5 AI Career Matches</h2>
             <p>
                 Career paths ranked according to personality compatibility,
-                skills and AI model scoring.
+                skills, and AI model scoring.
             </p>
         </div>
 
         {% for career in careers %}
         <article class="career-card">
+            <!-- Rank Badge -->
+            <div class="rank-badge {% if forloop.first %}rank-1{% else %}rank-sub{% endif %}">
+                <i class="bi bi-trophy-fill"></i> Rank #{{ forloop.counter }} &bull; {{ career.match_label }}
+            </div>
+
             <div class="career-top">
                 <div>
-                    <div class="career-rank">
-                        MATCH #{{ forloop.counter }}
-                    </div>
-                    <h3>
-                        {{ career.title }}
-                    </h3>
+                    <h3>{{ career.title }}</h3>
                 </div>
 
-                <div class="match-badge">
-                    {{ career.final_score }}% Match
+                <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;">
+                    <a href="{% url 'select_career_goal' career.id %}" class="goal-btn">
+                        <i class="bi bi-crosshair"></i> Set as Active Goal
+                    </a>
+                    <div class="match-badge">
+                        {{ career.final_score }}% Match
+                    </div>
                 </div>
             </div>
 
@@ -809,49 +1122,177 @@
                 {{ career.description }}
             </p>
 
-            <div class="career-meta">
-                <span class="meta-pill">
-                    Category: {{ career.category }}
-                </span>
-
-                <span class="meta-pill">
-                    Required Traits: {{ career.required_traits }}
-                </span>
-
-                <span class="meta-pill">
-                    Skills: {{ career.skills }}
-                </span>
+            <!-- MARKET METRICS ROW -->
+            <div class="market-stats-row">
+                <div class="stat-pill-box">
+                    <div class="label">Est. Salary Range</div>
+                    <div class="val">{{ career.salary_range }}</div>
+                </div>
+                <div class="stat-pill-box">
+                    <div class="label">Market Growth</div>
+                    <div class="val" style="color:#10b981;">{{ career.market_growth }}</div>
+                </div>
+                <div class="stat-pill-box">
+                    <div class="label">Work Environment</div>
+                    <div class="val">{{ career.stress_level }}</div>
+                </div>
             </div>
 
             <div class="career-columns">
+                <!-- LEFT COLUMN: FIT REASONS & SKILL GAP ANALYZER -->
                 <div class="career-section">
-                    <h4>WHY THIS CAREER FITS YOU</h4>
+                    <h4><i class="bi bi-star-fill" style="color: var(--primary);"></i> WHY THIS CAREER FITS YOU</h4>
                     <ul>
                         {% for reason in career.reasons %}
                         <li>{{ reason }}</li>
                         {% endfor %}
                     </ul>
+
+                    <h4 style="margin-top:20px;"><i class="bi bi-lightning-charge-fill" style="color: var(--primary);"></i> SKILL GAP ANALYZER</h4>
+                    <p style="font-size:12px;color:var(--muted);margin:2px 0 8px;">Select skills you master to update readiness:</p>
+                    <div class="skill-tags-wrapper" data-career-id="{{ career.id }}">
+                        {% for skill_item in career.parsed_skills %}
+                        <span class="skill-tag" onclick="toggleSkillTag(this, '{{ career.id }}')">
+                            <span>✓</span> {{ skill_item }}
+                        </span>
+                        {% empty %}
+                        <span style="font-size:12px;color:var(--muted);">Skill data loading...</span>
+                        {% endfor %}
+                    </div>
+
+                    <div class="readiness-box" id="readiness-box-{{ career.id }}">
+                        <div class="readiness-info">
+                            <div>Career Readiness Index</div>
+                            <small style="color:var(--muted);" id="readiness-sub-{{ career.id }}">Select mastered skills above</small>
+                        </div>
+                        <div class="readiness-score" id="readiness-score-{{ career.id }}">35%</div>
+                    </div>
+
+                    <!-- GOAL ESTIMATOR & TRACKER -->
+                    <div style="margin-top:20px;background:var(--card);padding:16px;border-radius:12px;border:1px solid var(--border);">
+                        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+                            <h4 style="margin:0;font-size:11px;font-weight:800;color:#1a1a2e;letter-spacing:0.4px;text-transform:uppercase;">
+                                GOAL ESTIMATOR & TRACKER
+                            </h4>
+                            <span id="progress-text-{{ career.id }}" style="font-size:11px;font-weight:800;background:var(--primary-light);color:var(--primary);padding:3px 10px;border-radius:var(--radius-pill);">
+                                0% Mastered
+                            </span>
+                        </div>
+
+                        <!-- PROGRESS BAR -->
+                        <div style="height:7px;background:var(--bg);border-radius:99px;overflow:hidden;margin-bottom:12px;border:1px solid var(--border);">
+                            <div id="progress-bar-{{ career.id }}" style="height:100%;width:0%;background:linear-gradient(90deg, #f5793a, #10b981);border-radius:inherit;transition:width 0.4s ease;"></div>
+                        </div>
+
+                        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+                            <label for="hours-slider-{{ career.id }}" style="font-size:12px;font-weight:700;color:#1a1a2e;white-space:nowrap;">
+                                Study Hours/Wk:
+                            </label>
+                            <input type="range" 
+                                   id="hours-slider-{{ career.id }}" 
+                                   min="2" 
+                                   max="30" 
+                                   step="1" 
+                                   value="10" 
+                                   oninput="updateGoalEstimate('{{ career.id }}', this.value)"
+                                   style="flex:1;accent-color:var(--primary);cursor:pointer;">
+                            <span id="hours-display-{{ career.id }}" style="font-size:12px;font-weight:800;color:var(--primary);min-width:65px;">
+                                10 Hrs/wk
+                            </span>
+                        </div>
+
+                        <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;background:var(--bg);padding:10px;border-radius:10px;border:1px solid var(--border);text-align:center;">
+                            <div>
+                                <div style="font-size:10px;color:var(--muted);font-weight:700;text-transform:uppercase;">Remaining</div>
+                                <div id="remaining-hours-{{ career.id }}" style="font-size:12px;font-weight:800;color:#1a1a2e;margin-top:2px;">~120 Hours</div>
+                            </div>
+                            <div style="border-left:1px solid var(--border);border-right:1px solid var(--border);">
+                                <div style="font-size:10px;color:var(--muted);font-weight:700;text-transform:uppercase;">Est. Duration</div>
+                                <div id="duration-estimate-{{ career.id }}" style="font-size:12px;font-weight:800;color:var(--primary);margin-top:2px;">12 Weeks</div>
+                            </div>
+                            <div>
+                                <div style="font-size:10px;color:var(--muted);font-weight:700;text-transform:uppercase;">Target Date</div>
+                                <div id="target-date-{{ career.id }}" style="font-size:12px;font-weight:800;color:#10b981;margin-top:2px;">Nov 10, 2026</div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
+                <!-- RIGHT COLUMN: ACCORDION STEPPER ROADMAP -->
                 <div class="career-section">
-                    <h4>RECOMMENDED LEARNING ROADMAP</h4>
-                    <ol>
+                    <h4><i class="bi bi-diagram-3-fill" style="color: var(--primary);"></i> LEARNING PATHWAY (MILESTONES)</h4>
+                    <div class="node-timeline">
+                        {% for step in career.enriched_roadmap %}
+                        <details class="node-accordion" {% if forloop.first %}open{% endif %}>
+                            <summary class="node-summary">
+                                <div class="node-summary-left">
+                                    <div class="step-badge">{{ forloop.counter }}</div>
+                                    <label style="cursor:pointer;display:flex;align-items:center;gap:8px;" onclick="event.stopPropagation();">
+                                        <input type="checkbox"
+                                               class="roadmap-checkbox"
+                                               data-career-id="{{ career.id }}"
+                                               data-step-index="{{ step.index }}"
+                                               style="width:16px;height:16px;accent-color:var(--primary);cursor:pointer;"
+                                               {% if step.completed %}checked{% endif %}>
+                                        <span class="step-text" style="{% if step.completed %}text-decoration:line-through;color:var(--muted);{% endif %}">
+                                            {{ step.text }}
+                                        </span>
+                                    </label>
+                                </div>
+
+                                <div class="node-summary-right">
+                                    <span class="tag-pill"><i class="bi bi-clock"></i> {{ step.duration }}</span>
+                                    <i class="bi bi-chevron-down accordion-icon"></i>
+                                </div>
+                            </summary>
+
+                            <div class="node-content">
+                                {% if step.subtopics %}
+                                <div class="subtopics-box">
+                                    <div class="subtopics-title">Curriculum Topics:</div>
+                                    <ul class="subtopics-list">
+                                        {% for sub in step.subtopics %}
+                                        <li>{{ sub }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                                {% endif %}
+
+                                <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-top:8px;">
+                                    <span class="tag-pill"><i class="bi bi-journal-bookmark"></i> {{ step.resource }}</span>
+                                    {% if step.youtube_url %}
+                                    <a href="{{ step.youtube_url }}" target="_blank" rel="noopener" class="youtube-btn" title="Recommended: {{ step.youtube_channel }}">
+                                        <i class="bi bi-play-circle-fill"></i> {{ step.youtube_channel|default:"YouTube Tutorial" }}
+                                    </a>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </details>
+                        {% empty %}
                         {% for step in career.roadmap %}
-                        <li>{{ step }}</li>
+                        <div class="node-accordion">
+                            <div class="node-summary">
+                                <div class="node-summary-left">
+                                    <div class="step-badge">{{ forloop.counter }}</div>
+                                    <span class="step-text">{{ step }}</span>
+                                </div>
+                            </div>
+                        </div>
                         {% endfor %}
-                    </ol>
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
 
             {% if career.warnings %}
             <details class="career-details">
                 <summary>
-                    View potential development areas
+                    <i class="bi bi-exclamation-triangle"></i> View potential development areas
                 </summary>
-                <div style="margin-top:12px;">
+                <div style="margin-top:10px;">
                     <ul class="strength-list">
                         {% for warning in career.warnings %}
-                        <li>{{ warning }}</li>
+                        <li><i class="bi bi-info-circle" style="color: #f59e0b;"></i> {{ warning }}</li>
                         {% endfor %}
                     </ul>
                 </div>
@@ -861,13 +1302,11 @@
             <!-- FEEDBACK ACCORDION -->
             <details class="career-details">
                 <summary>
-                    Help improve the AI recommendation
+                    <i class="bi bi-chat-left-dots"></i> Help improve this AI recommendation
                 </summary>
 
                 <div class="feedback-box">
-                    <h4>
-                        Is this career relevant for you?
-                    </h4>
+                    <h4>Is this career recommendation relevant for you?</h4>
 
                     <form method="post" action="{% url 'submit_career_feedback' result.id %}">
                         {% csrf_token %}
@@ -884,33 +1323,19 @@
                             No
                         </label>
 
-                        <div style="margin-top:14px;">
-                            <label>
-                                Rating
-                            </label>
+                        <div style="margin-top:12px;">
+                            <label>Rating</label>
                             <select name="rating" required>
-                                <option value="">
-                                    Select rating
-                                </option>
-                                <option value="1">
-                                    1 - Very Poor
-                                </option>
-                                <option value="2">
-                                    2 - Poor
-                                </option>
-                                <option value="3">
-                                    3 - Average
-                                </option>
-                                <option value="4">
-                                    4 - Good
-                                </option>
-                                <option value="5">
-                                    5 - Excellent
-                                </option>
+                                <option value="">Select rating</option>
+                                <option value="1">1 - Very Poor</option>
+                                <option value="2">2 - Poor</option>
+                                <option value="3">3 - Average</option>
+                                <option value="4">4 - Good</option>
+                                <option value="5">5 - Excellent</option>
                             </select>
                         </div>
 
-                        <div style="margin-top:12px;">
+                        <div style="margin-top:10px;">
                             <textarea name="comments" placeholder="Optional feedback..."></textarea>
                         </div>
 
@@ -922,13 +1347,9 @@
             </details>
 
             <div class="model-scores">
-                <span>
-                    AI Model Score: <strong>{{ career.ml_score }}%</strong>
-                </span>
-
-                <span>
-                    Personality Match: <strong>{{ career.rule_score }}%</strong>
-                </span>
+                <span>AI Model Score: <strong>{{ career.ml_score }}%</strong></span>
+                <span>Personality Match: <strong>{{ career.rule_score }}%</strong></span>
+                <span>Category Match: <strong>{{ career.category_score }}%</strong></span>
             </div>
         </article>
 
@@ -937,6 +1358,7 @@
             No AI career recommendations are available yet.
         </div>
         {% endfor %}
+
     </section>
 
 </div>
@@ -954,7 +1376,7 @@
         bar.style.width = Math.min(Math.max(width, 0), 100) + "%";
     });
 
-    /* Radar Chart Initialization */
+    /* Radar Chart Initialization with Orange Theme */
     const oceanScores = [
         Number("{{ result.openness }}"),
         Number("{{ result.conscientiousness }}"),
@@ -980,9 +1402,9 @@
                     label: "Personality Score",
                     data: oceanScores,
                     borderWidth: 2,
-                    backgroundColor: "rgba(37, 99, 235, 0.18)",
-                    borderColor: "#2563eb",
-                    pointBackgroundColor: "#2563eb",
+                    backgroundColor: "rgba(245, 121, 58, 0.18)",
+                    borderColor: "#f5793a",
+                    pointBackgroundColor: "#f5793a",
                     pointBorderColor: "#ffffff",
                     pointBorderWidth: 2
                 }]
@@ -1008,8 +1430,130 @@
             }
         });
     }
+
+    /* Interactive Roadmap Checkbox Listener */
+    document.querySelectorAll(".roadmap-checkbox").forEach(function(cb) {
+        cb.addEventListener("change", function(e) {
+            const careerId = this.dataset.careerId;
+            const stepIndex = this.dataset.stepIndex;
+            const labelSpan = this.closest("label").querySelector(".step-text");
+
+            fetch("{% url 'toggle_roadmap_step' %}", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": "{{ csrf_token }}"
+                },
+                body: JSON.stringify({
+                    career_id: careerId,
+                    step_index: stepIndex
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    if (data.completed) {
+                        labelSpan.style.textDecoration = "line-through";
+                        labelSpan.style.color = "var(--muted)";
+                    } else {
+                        labelSpan.style.textDecoration = "none";
+                        labelSpan.style.color = "#1a1a2e";
+                    }
+
+                    // Live update goal tracker when checkbox is toggled
+                    const slider = document.getElementById(`hours-slider-${careerId}`);
+                    const hoursVal = slider ? slider.value : 10;
+                    updateGoalEstimate(careerId, hoursVal);
+                }
+            })
+            .catch(err => console.error("Roadmap toggle failed", err));
+        });
+    });
+
+    /* Interactive Skill Gap Calculator Function */
+    function toggleSkillTag(tagElement, careerId) {
+        tagElement.classList.toggle("active-skill");
+        const container = document.querySelector(`.skill-tags-wrapper[data-career-id="${careerId}"]`);
+        if (!container) return;
+
+        const totalSkills = container.querySelectorAll(".skill-tag").length;
+        const activeSkills = container.querySelectorAll(".skill-tag.active-skill").length;
+
+        if (totalSkills === 0) return;
+
+        const baseScore = 35;
+        const remainingPercentage = 65;
+        const userReadiness = Math.round(baseScore + ((activeSkills / totalSkills) * remainingPercentage));
+
+        const scoreElem = document.getElementById(`readiness-score-${careerId}`);
+        const subElem = document.getElementById(`readiness-sub-${careerId}`);
+
+        if (scoreElem) scoreElem.innerText = `${userReadiness}%`;
+        if (subElem) {
+            subElem.innerText = `${activeSkills} of ${totalSkills} core skills mastered`;
+        }
+    }
+
+    /* Weekly Goal & Completion Date Estimator Function */
+    function updateGoalEstimate(careerId, hoursPerWeek) {
+        const hoursDisplay = document.getElementById(`hours-display-${careerId}`);
+        const durationDisplay = document.getElementById(`duration-estimate-${careerId}`);
+        const targetDateDisplay = document.getElementById(`target-date-${careerId}`);
+        const remainingHoursDisplay = document.getElementById(`remaining-hours-${careerId}`);
+        const progressBar = document.getElementById(`progress-bar-${careerId}`);
+        const progressText = document.getElementById(`progress-text-${careerId}`);
+
+        if (hoursDisplay) {
+            hoursDisplay.textContent = `${hoursPerWeek} Hrs/wk`;
+        }
+
+        const checkboxes = document.querySelectorAll(`.roadmap-checkbox[data-career-id="${careerId}"]`);
+        const totalSteps = checkboxes.length || 4;
+        const checkedSteps = document.querySelectorAll(`.roadmap-checkbox[data-career-id="${careerId}"]:checked`).length;
+
+        const completedRatio = totalSteps > 0 ? (checkedSteps / totalSteps) : 0;
+        const pct = Math.round(completedRatio * 100);
+
+        if (progressBar) progressBar.style.width = `${pct}%`;
+        if (progressText) progressText.textContent = `${pct}% Mastered (${checkedSteps}/${totalSteps} Done)`;
+
+        const totalRequiredHours = 120;
+        const remainingHours = Math.max(0, Math.round(totalRequiredHours * (1 - completedRatio)));
+        if (remainingHoursDisplay) remainingHoursDisplay.textContent = `${remainingHours} Hours`;
+
+        const weeksNeeded = remainingHours > 0 ? Math.ceil(remainingHours / hoursPerWeek) : 0;
+
+        if (durationDisplay) {
+            if (weeksNeeded === 0) {
+                durationDisplay.textContent = "Completed!";
+            } else if (weeksNeeded >= 52) {
+                const years = (weeksNeeded / 52).toFixed(1);
+                durationDisplay.textContent = `${years} Years`;
+            } else {
+                durationDisplay.textContent = `${weeksNeeded} Wks`;
+            }
+        }
+
+        if (targetDateDisplay) {
+            if (weeksNeeded === 0) {
+                targetDateDisplay.textContent = "Goal Achieved!";
+            } else {
+                const targetDate = new Date();
+                targetDate.setDate(targetDate.getDate() + (weeksNeeded * 7));
+                const options = { month: 'short', day: 'numeric', year: 'numeric' };
+                targetDateDisplay.textContent = targetDate.toLocaleDateString('en-US', options);
+            }
+        }
+    }
+
+    // Auto-calculate goal estimates for all careers on load
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelectorAll("[id^='hours-slider-']").forEach(function(slider) {
+            const careerId = slider.id.replace("hours-slider-", "");
+            updateGoalEstimate(careerId, slider.value);
+        });
+    });
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-<script src="{% static 'js/chatbot.js' %}"></script>
 {% endblock %}

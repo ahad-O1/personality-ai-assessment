@@ -1,0 +1,205 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Top Career Comparison - PersonalityAI{% endblock %}
+
+{% block content %}
+<div style="width:min(1140px, calc(100% - 32px));margin:30px auto 60px;font-family:'Plus Jakarta Sans', 'Inter', sans-serif;">
+
+    <!-- 1. HEADER HERO (Warm Orange Gradient) -->
+    <div style="background:linear-gradient(135deg, #ea580c 0%, #f5793a 50%, #ff8c4e 100%);color:white;padding:36px;border-radius:20px;margin-bottom:28px;box-shadow:0 10px 30px rgba(245,121,58,0.2);">
+        <div style="font-size:12px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;opacity:0.9;margin-bottom:8px;">
+            CAREER BENCHMARK & COMPARISON
+        </div>
+        <h1 style="margin:0 0 10px;font-size:32px;font-weight:800;">Top 3 Career Paths Comparison</h1>
+        <p style="margin:0;color:rgba(255,255,255,0.92);font-size:15px;max-width:700px;line-height:1.6;">
+            Side-by-side evaluation of your top recommended career options based on personality fit, AI prediction scores, and required skillsets.
+        </p>
+        <div style="margin-top:20px;display:flex;gap:12px;flex-wrap:wrap;">
+            <a href="{% url 'recommend_careers' result.id %}" style="display:inline-flex;align-items:center;padding:10px 18px;background:white;color:#e06324;border-radius:9999px;text-decoration:none;font-weight:700;font-size:13px;box-shadow:0 4px 12px rgba(0,0,0,0.08);transition:all 0.2s ease;">
+                ← Back to Full Report
+            </a>
+        </div>
+    </div>
+
+    <!-- 2. DUAL RADAR OVERLAY CHART (Orange vs Green) -->
+    <div style="background:white;border:1px solid #fce4d6;border-radius:20px;padding:28px;margin-bottom:28px;box-shadow:0 8px 24px rgba(245,121,58,0.05);">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;margin-bottom:20px;">
+            <div>
+                <div style="font-size:12px;font-weight:800;color:#f5793a;letter-spacing:1px;text-transform:uppercase;">AI BENCHMARK RADAR OVERLAY</div>
+                <h2 style="margin:4px 0 0;font-size:22px;color:#1a1a2e;font-weight:800;">Your Personality vs Top Career Persona</h2>
+            </div>
+            <div style="display:flex;gap:16px;font-size:13px;font-weight:700;">
+                <span style="display:inline-flex;align-items:center;gap:6px;color:#f5793a;">
+                    <span style="width:12px;height:12px;border-radius:3px;background:#f5793a;display:inline-block;"></span> Your Measured Scores
+                </span>
+                <span style="display:inline-flex;align-items:center;gap:6px;color:#10b981;">
+                    <span style="width:12px;height:12px;border-radius:3px;background:#10b981;display:inline-block;"></span> Ideal Career Benchmark
+                </span>
+            </div>
+        </div>
+
+        <div style="height:320px;position:relative;width:100%;">
+            <canvas id="comparisonRadarChart"></canvas>
+        </div>
+    </div>
+
+    <!-- 3. COMPARISON GRID (Equal Height Alignment & Orange Theme) -->
+    <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(310px, 1fr));gap:20px;align-items:stretch;">
+        {% for career in careers %}
+        <div style="background:white;border:1px solid {% if forloop.first %}#f5793a{% else %}#fce4d6{% endif %};border-radius:20px;padding:26px;box-shadow:{% if forloop.first %}0 8px 25px rgba(245,121,58,0.15){% else %}0 4px 18px rgba(0,0,0,0.03){% endif %};display:flex;flex-direction:column;justify-content:space-between;position:relative;">
+
+            <!-- #1 TOP MATCH BADGE -->
+            {% if forloop.first %}
+            <div style="position:absolute;top:-12px;right:20px;background:linear-gradient(135deg, #f5793a, #ea580c);color:white;padding:4px 14px;border-radius:9999px;font-size:11px;font-weight:800;letter-spacing:0.5px;box-shadow:0 3px 10px rgba(245,121,58,0.3);">
+                ⭐ #1 TOP MATCH
+            </div>
+            {% endif %}
+
+            <div>
+                <!-- MATCH LABEL -->
+                <div style="font-size:12px;font-weight:800;color:#f5793a;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">
+                    MATCH #{{ forloop.counter }}
+                </div>
+                <h2 style="margin:0 0 12px;font-size:22px;color:#1a1a2e;font-weight:800;">
+                    {{ career.title }}
+                </h2>
+
+                <!-- OVERALL MATCH PERCENTAGE -->
+                <div style="display:flex;align-items:center;justify-content:space-between;background:#fdf0e7;padding:12px 16px;border-radius:12px;margin-bottom:18px;border:1px solid #fce4d6;">
+                    <span style="font-size:13px;color:#6b7280;font-weight:600;">Overall Match</span>
+                    <span style="font-size:20px;font-weight:800;color:#f5793a;">{{ career.final_score }}%</span>
+                </div>
+
+                <!-- MARKET STATS -->
+                <div style="background:#fdf0e7;padding:12px 16px;border-radius:12px;margin-bottom:18px;border:1px solid #fce4d6;display:flex;flex-direction:column;gap:8px;">
+                    <div style="display:flex;justify-content:space-between;font-size:12px;">
+                        <span style="color:#6b7280;">Est. Salary:</span>
+                        <strong style="color:#1a1a2e;">{{ career.salary_range }}</strong>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;font-size:12px;">
+                        <span style="color:#6b7280;">Market Growth:</span>
+                        <strong style="color:#10b981;">{{ career.market_growth }}</strong>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;font-size:12px;">
+                        <span style="color:#6b7280;">Environment:</span>
+                        <strong style="color:#1a1a2e;">{{ career.stress_level }}</strong>
+                    </div>
+                </div>
+
+                <!-- CATEGORY BADGE -->
+                <div style="margin-bottom:18px;">
+                    <div style="font-size:12px;font-weight:700;color:#475569;text-transform:uppercase;margin-bottom:6px;">Category</div>
+                    <span style="display:inline-block;background:#fff7ed;color:#f5793a;border:1px solid #ffedd5;padding:5px 12px;border-radius:9999px;font-size:12px;font-weight:800;">
+                        {{ career.category }}
+                    </span>
+                </div>
+
+                <!-- DESCRIPTION -->
+                <div style="margin-bottom:18px;">
+                    <div style="font-size:12px;font-weight:700;color:#475569;text-transform:uppercase;margin-bottom:6px;">Description</div>
+                    <p style="margin:0;font-size:13px;color:#6b7280;line-height:1.6;min-height:60px;">
+                        {{ career.description }}
+                    </p>
+                </div>
+
+                <!-- KEY REQUIRED SKILLS (Min-height aligned) -->
+                <div style="margin-bottom:18px;">
+                    <div style="font-size:12px;font-weight:700;color:#475569;text-transform:uppercase;margin-bottom:6px;">Key Required Skills</div>
+                    <div style="font-size:13px;color:#1a1a2e;background:#fdf0e7;padding:10px 14px;border-radius:10px;border:1px solid #fce4d6;line-height:1.5;min-height:54px;display:flex;align-items:center;">
+                        {{ career.skills }}
+                    </div>
+                </div>
+
+                <!-- SCORE BREAKDOWN -->
+                <div style="margin-bottom:18px;">
+                    <div style="font-size:12px;font-weight:700;color:#475569;text-transform:uppercase;margin-bottom:8px;">Score Breakdown</div>
+                    <div style="display:flex;flex-direction:column;gap:8px;font-size:13px;">
+                        <div style="display:flex;justify-content:space-between;">
+                            <span style="color:#6b7280;">Personality Match</span>
+                            <span style="font-weight:700;color:#1a1a2e;">{{ career.rule_score }}%</span>
+                        </div>
+                        <div style="display:flex;justify-content:space-between;">
+                            <span style="color:#6b7280;">AI Model Score</span>
+                            <span style="font-weight:700;color:#1a1a2e;">{{ career.ml_score }}%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ACTION BUTTON (Solid Orange) -->
+            <div style="border-top:1px solid #fce4d6;padding-top:16px;margin-top:10px;">
+                <a href="{% url 'recommend_careers' result.id %}" style="display:block;text-align:center;width:100%;padding:11px;background:linear-gradient(135deg, #f5793a, #e06324);color:white;border-radius:10px;text-decoration:none;font-weight:700;font-size:13px;box-shadow:0 3px 10px rgba(245,121,58,0.25);transition:all 0.2s ease;">
+                    View Detailed Roadmap →
+                </a>
+            </div>
+
+        </div>
+        {% empty %}
+        <div style="grid-column:1/-1;text-align:center;padding:40px;background:white;border-radius:16px;">
+            No career data available for comparison.
+        </div>
+        {% endfor %}
+    </div>
+
+</div>
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const userOcean = [
+        Number("{{ result.openness }}"),
+        Number("{{ result.conscientiousness }}"),
+        Number("{{ result.extraversion }}"),
+        Number("{{ result.agreeableness }}"),
+        Number("{{ result.neuroticism }}")
+    ];
+
+    const idealOcean = [
+        Number("{{ careers.0.ideal_ocean.openness|default:'80' }}"),
+        Number("{{ careers.0.ideal_ocean.conscientiousness|default:'85' }}"),
+        Number("{{ careers.0.ideal_ocean.extraversion|default:'60' }}"),
+        Number("{{ careers.0.ideal_ocean.agreeableness|default:'65' }}"),
+        Number("{{ careers.0.ideal_ocean.neuroticism|default:'30' }}")
+    ];
+
+    const canvas = document.getElementById("comparisonRadarChart");
+
+    if (canvas && typeof Chart !== "undefined") {
+        new Chart(canvas, {
+            type: "radar",
+            data: {
+                labels: ["Openness", "Conscientiousness", "Extraversion", "Agreeableness", "Neuroticism"],
+                datasets: [
+                    {
+                        label: "Your Score",
+                        data: userOcean,
+                        borderColor: "#f5793a",
+                        backgroundColor: "rgba(245, 121, 58, 0.2)",
+                        pointBackgroundColor: "#f5793a",
+                        borderWidth: 2
+                    },
+                    {
+                        label: "Ideal Target Benchmark",
+                        data: idealOcean,
+                        borderColor: "#10b981",
+                        backgroundColor: "rgba(16, 185, 129, 0.15)",
+                        pointBackgroundColor: "#10b981",
+                        borderWidth: 2,
+                        borderDash: [5, 5]
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    r: { min: 0, max: 100, ticks: { stepSize: 20 }, beginAtZero: true }
+                },
+                plugins: { legend: { display: false } }
+            }
+        });
+    }
+</script>
+{% endblock %}
+{% endblock %}

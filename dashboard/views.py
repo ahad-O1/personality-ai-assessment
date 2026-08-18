@@ -17,18 +17,19 @@ from recommendations.recommendation_engine import get_recommended_careers
 def dashboard_home(request):
     """Display the authenticated user's analytics dashboard."""
 
-    results = (
+    results = list(
         AssessmentResult.objects
         .filter(
             session__user=request.user,
             session__is_completed=True,
         )
         .select_related("session", "session__user")
+        .prefetch_related("session__userresponse_set")
         .order_by("-created_at")
     )
 
-    total_assessments = results.count()
-    latest_result = results.first()
+    total_assessments = len(results)
+    latest_result = results[0] if results else None
 
     latest_personality_type = "No assessment completed"
     latest_personality_summary = (
@@ -53,8 +54,8 @@ def dashboard_home(request):
     model_status = AIModelStatus.objects.filter(id=1).first()
 
     # Oldest to newest order for charts.
-    chronological_results = list(
-        results.order_by("created_at")
+    chronological_results = sorted(
+        results, key=lambda r: r.created_at
     )
 
     chart_labels = []
@@ -91,21 +92,23 @@ def dashboard_home(request):
     for result in results:
         personality_type, _ = generate_personality_type(result)
 
-        top_recommendation = get_recommended_careers(
-            result,
-            top_n=1,
-        )
-
-        top_career = (
-            top_recommendation[0]
-            if top_recommendation
-            else None
-        )
+        if latest_result and result.id == latest_result.id and latest_career:
+            top_career = latest_career
+        else:
+            top_recommendation = get_recommended_careers(
+                result,
+                top_n=1,
+            )
+            top_career = (
+                top_recommendation[0]
+                if top_recommendation
+                else None
+            )
 
         if top_career:
             career_counter[top_career["title"]] += 1
 
-        answered_questions = result.session.userresponse_set.count()
+        answered_questions = len(result.session.userresponse_set.all())
 
         assessment_history.append({
             "result": result,
@@ -143,9 +146,28 @@ def dashboard_home(request):
     if model_status:
         ai_accuracy = model_status.current_accuracy
 
+    completed_roadmap_count = 0
+    active_goal = None
+    logged_today = False
+    if request.user.is_authenticated:
+        from recommendations.models import UserRoadmapProgress, UserCareerGoal, UserDailyLog
+        from django.utils import timezone
+        completed_roadmap_count = UserRoadmapProgress.objects.filter(
+            user=request.user,
+            completed=True
+        ).count()
+        active_goal = UserCareerGoal.objects.filter(user=request.user, is_active=True).first()
+        if active_goal:
+            today = timezone.now().date()
+            logged_today = UserDailyLog.objects.filter(user=request.user, career_goal=active_goal, date=today, completed=True).exists()
+
     context = {
         "total_assessments": total_assessments,
+        "completed_roadmap_count": completed_roadmap_count,
+        "active_goal": active_goal,
+        "logged_today": logged_today,
         "latest_result": latest_result,
+
         "latest_personality_type": latest_personality_type,
         "latest_personality_summary": latest_personality_summary,
         "latest_career": latest_career,

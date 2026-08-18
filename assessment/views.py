@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.utils import timezone
+from django.http import JsonResponse
+from django.urls import reverse
 
 from .models import AssessmentSession, Question, UserResponse, AssessmentResult
 from .adaptive_engine import (
@@ -103,4 +105,4 @@ def question_page(request, session_id):
         "confidence": confidence,
         "trait_confidences": trait_confidences,
         "language": language,
-    })
+    })

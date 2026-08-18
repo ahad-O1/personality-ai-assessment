@@ -19,8 +19,13 @@ def mask_email(email):
     return f"{masked_name}@{domain}"
 
 
+import logging
+
+logger = logging.getLogger(__name__)
+
+
 def send_otp_email(user, otp_code):
-    """Send 6-digit OTP code to user email."""
+    """Send 6-digit OTP code to user email with console logging fallback."""
     subject = "Verification Code - PersonalityAI"
     message = (
         f"Hello {user.username},\n\n"
@@ -30,13 +35,18 @@ def send_otp_email(user, otp_code):
         f"Best regards,\n"
         f"PersonalityAI Team"
     )
-    send_mail(
-        subject,
-        message,
-        settings.DEFAULT_FROM_EMAIL,
-        [user.email],
-        fail_silently=False,
-    )
+    try:
+        send_mail(
+            subject,
+            message,
+            getattr(settings, "DEFAULT_FROM_EMAIL", "noreply@personalityai.com"),
+            [user.email],
+            fail_silently=False,
+        )
+    except Exception as e:
+        logger.warning(f"Could not send email to {user.email}: {e}. OTP Code: {otp_code}")
+        print(f"\n[DEV OTP FALLBACK] Verification OTP for {user.username} ({user.email}): {otp_code}\n")
+
 
 
 def register_view(request):

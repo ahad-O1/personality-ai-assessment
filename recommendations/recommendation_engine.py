@@ -18,7 +18,19 @@ from django.conf import settings
 from .ai_personality import get_match_label
 from .ai_reason import generate_ai_reason, generate_ai_warning
 from .models import Career
-from .roadmap import generate_career_roadmap
+from .roadmap import generate_career_roadmap, generate_structured_roadmap
+
+# Market metrics default lookup per category
+MARKET_METRICS = {
+    "Technology": {"salary": "$65,000 - $145,000", "growth": "+24% (Very High)", "stress": "Balanced / Moderate"},
+    "Engineering": {"salary": "$70,000 - $135,000", "growth": "+19% (High Demand)", "stress": "Moderate"},
+    "Business": {"salary": "$60,000 - $130,000", "growth": "+16% (Steady)", "stress": "Fast-Paced"},
+    "Medical": {"salary": "$75,000 - $160,000", "growth": "+22% (Critical Demand)", "stress": "High Focus"},
+    "Creative": {"salary": "$45,000 - $110,000", "growth": "+14% (Growing)", "stress": "Flexible"},
+    "Education": {"salary": "$45,000 - $85,000", "growth": "+11% (Stable)", "stress": "Balanced"},
+    "Public Service": {"salary": "$50,000 - $105,000", "growth": "+12% (Stable)", "stress": "Moderate"},
+}
+
 
 from ml.category_model.category_predictor import predict_category
 
@@ -299,6 +311,9 @@ def get_predicted_category(user_scores):
 # CAREER ML SCORES
 # ============================================================
 
+_career_model = None
+
+
 def get_ml_scores(user_scores):
     """
     Get Random Forest probability for every career.
@@ -312,11 +327,20 @@ def get_ml_scores(user_scores):
         neuroticism
     """
 
+    global _career_model
+
     try:
 
-        model = joblib.load(
-            CAREER_MODEL_PATH
-        )
+        if _career_model is None:
+            if CAREER_MODEL_PATH.exists():
+                _career_model = joblib.load(
+                    CAREER_MODEL_PATH
+                )
+
+        if _career_model is None:
+            return {}
+
+        model = _career_model
 
         data = pd.DataFrame(
             [
@@ -627,83 +651,17 @@ def get_recommended_careers(
         category_match = (
             predicted_django_category is not None
             and bool(career.category)
-            and str(career.category).strip().lower()
-            == str(predicted_django_category).strip().lower()
+            and career.category.strip().lower()
+            == predicted_django_category.strip().lower()
         )
 
         # ----------------------------------------------------
-        # 6. AI REASONS
-        # ----------------------------------------------------
-
-        try:
-
-            reasons = generate_ai_reason(
-                result,
-                career,
-            )
-
-        except Exception:
-
-            reasons = []
-
-        # ----------------------------------------------------
-        # 7. AI WARNINGS
-        # ----------------------------------------------------
-
-        try:
-
-            warnings = generate_ai_warning(
-                result,
-                career,
-            )
-
-        except Exception:
-
-            warnings = []
-
-        # ----------------------------------------------------
-        # 8. MATCH LABEL
-        # ----------------------------------------------------
-
-        try:
-
-            match_label = get_match_label(
-                final_score
-            )
-
-        except Exception:
-
-            if final_score >= 75:
-                match_label = "Strong Match"
-
-            elif final_score >= 60:
-                match_label = "Good Match"
-
-            else:
-                match_label = "Possible Match"
-
-        # ----------------------------------------------------
-        # 9. ROADMAP
-        # ----------------------------------------------------
-
-        try:
-
-            roadmap = (
-                generate_career_roadmap(
-                    career
-                )
-            )
-
-        except Exception:
-
-            roadmap = []
-
-        # ----------------------------------------------------
-        # 10. RESULT OBJECT
+        # 6. CANDIDATE OBJECT
         # ----------------------------------------------------
 
         recommendations.append(
             {
+                "_career_obj": career,
                 "id": career.id,
                 "title": career.title,
                 "category": career.category,
@@ -744,14 +702,6 @@ def get_recommended_careers(
                 ),
 
                 "final_score": final_score,
-
-                "reasons": reasons,
-
-                "warnings": warnings,
-
-                "match_label": match_label,
-
-                "roadmap": roadmap,
             }
         )
 
@@ -768,4 +718,85 @@ def get_recommended_careers(
         reverse=True,
     )
 
-    return recommendations[:top_n]
+    top_recs = recommendations[:top_n]
+
+    # ========================================================
+    # GENERATE AI DETAILS ONLY FOR TOP CAREERS
+    # ========================================================
+
+    for rec in top_recs:
+        career = rec.pop("_career_obj")
+        final_score = rec["final_score"]
+
+        # AI Reasons
+        try:
+            reasons = generate_ai_reason(
+                result,
+                career,
+            )
+        except Exception:
+            reasons = []
+
+        # AI Warnings
+        try:
+            warnings = generate_ai_warning(
+                result,
+                career,
+            )
+        except Exception:
+            warnings = []
+
+        # Match Label
+        try:
+            match_label = get_match_label(
+                final_score
+            )
+        except Exception:
+            if final_score >= 75:
+                match_label = "Strong Match"
+            elif final_score >= 60:
+                match_label = "Good Match"
+            else:
+                match_label = "Possible Match"
+
+        # Roadmap & Structured Roadmap
+        try:
+            roadmap = generate_career_roadmap(career)
+            structured_roadmap = generate_structured_roadmap(career)
+        except Exception:
+            roadmap = []
+            structured_roadmap = []
+
+        # Parse skills into list
+        raw_skills = rec.get("skills", "")
+        parsed_skills = [
+            s.strip() for s in raw_skills.split(",") if s.strip()
+        ]
+
+        # Ideal OCEAN target benchmarks for career
+        ideal_ocean = {
+            "openness": max(50, career.min_openness),
+            "conscientiousness": max(50, career.min_conscientiousness),
+            "extraversion": max(40, career.min_extraversion),
+            "agreeableness": max(40, career.min_agreeableness),
+            "neuroticism": max(20, 100 - career.max_neuroticism),
+        }
+
+        # Market metrics
+        metrics = MARKET_METRICS.get(
+            career.category,
+            {"salary": "$55,000 - $120,000", "growth": "+15% (Growing)", "stress": "Moderate"}
+        )
+
+        rec["reasons"] = reasons
+        rec["warnings"] = warnings
+        rec["match_label"] = match_label
+        rec["roadmap"] = roadmap
+        rec["structured_roadmap"] = structured_roadmap
+        rec["parsed_skills"] = parsed_skills
+        rec["ideal_ocean"] = ideal_ocean
+        rec["salary_range"] = metrics["salary"]
+        rec["market_growth"] = metrics["growth"]
+        rec["stress_level"] = metrics["stress"]
+
+    return top_recs

@@ -1,4 +1,4 @@
-﻿{% load static %}
+{% load static %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -6,13 +6,842 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>PersonalityAI | Assessment</title>
+    <title>PersonalityAI | Psychometric Assessment</title>
 
+    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet" href="{% static 'assessment/assessment.css' %}">
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- Anti-flicker Theme Persistence Script -->
+    <script>
+        (function() {
+            var savedTheme = localStorage.getItem("app_theme") || "light";
+            document.documentElement.setAttribute("data-theme", savedTheme);
+        })();
+
+        function toggleGlobalTheme() {
+            var currentTheme = document.documentElement.getAttribute("data-theme") || "light";
+            var newTheme = currentTheme === "dark" ? "light" : "dark";
+            document.documentElement.setAttribute("data-theme", newTheme);
+            localStorage.setItem("app_theme", newTheme);
+            updateThemeToggleUI(newTheme);
+        }
+
+        function updateThemeToggleUI(theme) {
+            var iconEls = document.querySelectorAll(".theme-toggle-icon");
+            iconEls.forEach(function(icon) {
+                if (theme === "dark") {
+                    icon.className = "bi bi-moon-stars-fill theme-toggle-icon";
+                } else {
+                    icon.className = "bi bi-sun-fill theme-toggle-icon";
+                }
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            var currentTheme = document.documentElement.getAttribute("data-theme") || "light";
+            updateThemeToggleUI(currentTheme);
+        });
+    </script>
+
+    <style>
+    @import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap");
+
+    :root {
+        --bg-main: #fdf0e7;
+        --bg-alt: #fff7ed;
+        --surface: #ffffff;
+        --surface-hover: #fff7ed;
+
+        --border: #fce4d6;
+        --border-subtle: #fee2e2;
+
+        --primary-orange: #f5793a;
+        --primary-orange-hover: #e06324;
+        --primary-orange-light: rgba(245, 121, 58, 0.10);
+
+        --text-primary: #1a1a2e;
+        --text-secondary: #475569;
+        --text-muted: #6b7280;
+
+        --card-shadow: 0 4px 20px rgba(245, 121, 58, 0.05);
+        --btn-shadow: 0 4px 18px rgba(245, 121, 58, 0.35);
+
+        --radius-card: 16px;
+        --radius-pill: 9999px;
+        --transition-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    [data-theme="dark"] {
+        --bg-main: #0a0e1a;
+        --bg-alt: #131b2e;
+        --surface: #131b2e;
+        --surface-hover: #1e293b;
+
+        --border: #232d42;
+        --border-subtle: #1e293b;
+
+        --primary-orange: #f5793a;
+        --primary-orange-hover: #ff8c4e;
+        --primary-orange-light: rgba(245, 121, 58, 0.20);
+
+        --text-primary: #f8fafc;
+        --text-secondary: #cbd5e1;
+        --text-muted: #94a3b8;
+
+        --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        --btn-shadow: 0 4px 18px rgba(245, 121, 58, 0.4);
+    }
+
+    * {
+        box-sizing: border-box;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        color: var(--text-primary) !important;
+        background-color: var(--bg-main) !important;
+        line-height: 1.5;
+        transition: background-color 0.25s ease, color 0.25s ease;
+    }
+
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    /* TOPBAR */
+    .topbar {
+        width: min(1180px, calc(100% - 40px));
+        margin: 22px auto 0;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        position: relative;
+        padding: 14px 24px;
+        background: var(--surface) !important;
+        border: 1px solid var(--border) !important;
+        border-radius: var(--radius-card);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+    }
+
+    .back-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 18px;
+        border: 1px solid #e5e7eb !important;
+        border-radius: var(--radius-pill);
+        background: transparent !important;
+        color: var(--text-secondary) !important;
+        font-size: 13px;
+        font-weight: 600;
+        transition: all 0.25s var(--transition-smooth);
+    }
+
+    .back-btn:hover {
+        color: var(--primary-orange) !important;
+        border-color: var(--primary-orange) !important;
+        background: var(--bg-alt) !important;
+        transform: translateY(-1px);
+    }
+
+    .private-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 14px;
+        border-radius: var(--radius-pill);
+        background: var(--bg-alt) !important;
+        border: 1px solid var(--border) !important;
+        color: var(--primary-orange) !important;
+        font-size: 12px;
+        font-weight: 700;
+    }
+
+    .brand {
+        font-size: 22px;
+        font-weight: 800;
+        letter-spacing: -0.5px;
+        color: var(--text-primary) !important;
+    }
+
+    .brand .ai-text {
+        color: var(--primary-orange) !important;
+    }
+
+    .topbar-actions {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+    }
+
+    .lang-picker {
+        display: flex;
+        gap: 4px;
+        background: var(--bg-alt);
+        padding: 4px;
+        border-radius: var(--radius-pill);
+        border: 1px solid var(--border);
+    }
+
+    .lang-btn {
+        padding: 5px 12px;
+        border-radius: var(--radius-pill);
+        font-size: 12px;
+        font-weight: 700;
+        color: var(--text-secondary) !important;
+        transition: all 0.2s ease;
+    }
+
+    .lang-btn.active {
+        background: var(--primary-orange) !important;
+        color: #ffffff !important;
+        box-shadow: 0 2px 8px rgba(245, 121, 58, 0.3);
+    }
+
+    .theme-toggle-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        border: 1px solid var(--border);
+        background: var(--surface);
+        color: var(--text-primary);
+        cursor: pointer;
+        font-size: 16px;
+        transition: all 0.2s ease;
+    }
+
+    .theme-toggle-btn:hover {
+        border-color: var(--primary-orange);
+        transform: scale(1.05);
+    }
+
+    /* ASSESSMENT CONTAINER */
+    .assessment-container {
+        width: min(1180px, calc(100% - 40px));
+        margin: 30px auto 60px;
+    }
+
+    /* INTRO HERO CARD */
+    .intro-card {
+        display: flex;
+        align-items: center;
+        gap: 24px;
+        padding: 28px 32px;
+        border: 1px solid var(--border) !important;
+        border-radius: var(--radius-card);
+        background: var(--surface) !important;
+        box-shadow: var(--card-shadow);
+        margin-bottom: 24px;
+    }
+
+    .intro-icon-box {
+        width: 52px;
+        height: 52px;
+        flex-shrink: 0;
+        display: grid;
+        place-items: center;
+        border-radius: 14px;
+        background: linear-gradient(135deg, #f5793a 0%, #ea580c 100%) !important;
+        color: #ffffff !important;
+        font-size: 24px;
+        border: none !important;
+        box-shadow: 0 6px 16px rgba(245, 121, 58, 0.3);
+    }
+
+    .eyebrow {
+        margin: 0 0 6px;
+        color: var(--primary-orange);
+        font-size: 11px;
+        font-weight: 800;
+        letter-spacing: 1.5px;
+    }
+
+    .intro-card h1 {
+        margin: 0;
+        font-size: clamp(24px, 3.2vw, 32px);
+        font-weight: 800;
+        line-height: 1.2;
+        letter-spacing: -0.5px;
+        color: var(--text-primary) !important;
+    }
+
+    .intro-card h1 span {
+        color: var(--primary-orange) !important;
+    }
+
+    .intro-text {
+        margin: 8px 0 0;
+        color: var(--text-muted) !important;
+        font-size: 14px;
+        line-height: 1.6;
+        max-width: 680px;
+    }
+
+    /* PROGRESS SECTION */
+    .progress-section {
+        padding: 20px 24px;
+        border: 1px solid var(--border) !important;
+        border-radius: var(--radius-card);
+        background: var(--surface) !important;
+        box-shadow: var(--card-shadow);
+        margin-bottom: 24px;
+    }
+
+    .progress-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .progress-label {
+        display: block;
+        font-size: 11px;
+        font-weight: 800;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        letter-spacing: 1px;
+        margin-bottom: 2px;
+    }
+
+    .progress-top strong {
+        font-size: 16px;
+        font-weight: 800;
+        color: var(--text-primary) !important;
+    }
+
+    .progress-count {
+        color: var(--primary-orange) !important;
+        font-size: 14px;
+        font-weight: 800;
+    }
+
+    .progress-track {
+        height: 10px;
+        border-radius: var(--radius-pill);
+        background: var(--bg-alt);
+        overflow: hidden;
+    }
+
+    .progress-fill {
+        height: 100%;
+        border-radius: var(--radius-pill);
+        background: linear-gradient(90deg, #f5793a 0%, #ea580c 100%);
+        box-shadow: 0 3px 10px rgba(245, 121, 58, 0.35);
+        transition: width 0.4s ease;
+    }
+
+    /* ASSESSMENT 2-COLUMN GRID (NO OVERLAP: 65% / 35%) */
+    .assessment-grid {
+        display: grid;
+        grid-template-columns: 65% calc(35% - 24px);
+        gap: 24px;
+        align-items: stretch;
+    }
+
+    /* QUESTION CARD & STATUS CARD */
+    .question-card,
+    .status-card {
+        border: 1px solid var(--border) !important;
+        border-radius: var(--radius-card);
+        background: var(--surface) !important;
+        box-shadow: var(--card-shadow);
+    }
+
+    .question-card {
+        padding: 32px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .question-meta {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 28px;
+    }
+
+    .question-number {
+        padding: 5px 14px;
+        border-radius: var(--radius-pill);
+        background: var(--bg-alt);
+        border: 1px solid var(--border);
+        color: var(--primary-orange);
+        font-size: 12px;
+        font-weight: 800;
+    }
+
+    .adaptive-label {
+        padding: 5px 14px;
+        border-radius: var(--radius-pill);
+        background: #d1fae5;
+        color: #059669;
+        font-size: 11px;
+        font-weight: 700;
+    }
+
+    [data-theme="dark"] .adaptive-label {
+        background: rgba(5, 150, 105, 0.25);
+        color: #34d399;
+    }
+
+    .question-content {
+        text-align: center;
+        margin-bottom: 32px;
+    }
+
+    .question-label {
+        margin: 0 0 10px;
+        color: var(--text-muted);
+        font-size: 11px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 1.2px;
+    }
+
+    .question-content h2 {
+        max-width: 720px;
+        margin: 0 auto;
+        font-size: clamp(20px, 2.6vw, 28px);
+        font-weight: 800;
+        line-height: 1.35;
+        color: var(--text-primary) !important;
+        letter-spacing: -0.5px;
+    }
+
+    .question-help {
+        margin: 12px 0 0;
+        color: var(--text-muted) !important;
+        font-size: 13px;
+    }
+
+    /* ANSWER OPTIONS */
+    .answer-options {
+        display: grid;
+        gap: 12px;
+    }
+
+    .answer-option {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        min-height: 60px;
+        padding: 14px 18px;
+        border: 1.5px solid #f3f4f6 !important;
+        border-radius: 14px;
+        background: var(--surface) !important;
+        cursor: pointer;
+        transition: all 0.2s var(--transition-smooth);
+    }
+
+    .answer-option:hover {
+        border-color: var(--primary-orange) !important;
+        background: var(--bg-alt) !important;
+        transform: translateY(-1px);
+    }
+
+    .answer-option input {
+        position: absolute;
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .option-circle {
+        width: 36px;
+        height: 36px;
+        flex-shrink: 0;
+        display: grid;
+        place-items: center;
+        border: 1px solid var(--border);
+        border-radius: 50%;
+        background: var(--bg-alt);
+        color: var(--primary-orange);
+        font-weight: 800;
+        font-size: 14px;
+        transition: all 0.2s ease;
+    }
+
+    .option-text {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    .option-text strong {
+        font-size: 14px;
+        font-weight: 700;
+        color: var(--text-primary) !important;
+    }
+
+    .option-text small {
+        color: var(--text-muted) !important;
+        font-size: 12px;
+    }
+
+    .answer-option.selected {
+        border-color: var(--primary-orange) !important;
+        background: var(--bg-alt) !important;
+        box-shadow: 0 4px 14px rgba(245, 121, 58, 0.12);
+    }
+
+    .answer-option.selected .option-circle {
+        border-color: var(--primary-orange);
+        background: var(--primary-orange);
+        color: #ffffff;
+    }
+
+    /* CONTINUE BUTTON */
+    .continue-btn {
+        width: 100%;
+        margin-top: 24px;
+        padding: 16px 24px;
+        border: none;
+        border-radius: var(--radius-pill);
+        background: var(--primary-orange) !important;
+        color: #ffffff !important;
+        font-size: 15px;
+        font-weight: 800;
+        cursor: pointer;
+        box-shadow: var(--btn-shadow);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        transition: all 0.25s var(--transition-smooth);
+    }
+
+    .continue-btn:hover:not(:disabled) {
+        background: var(--primary-orange-hover) !important;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 24px rgba(245, 121, 58, 0.45);
+    }
+
+    .continue-btn:disabled {
+        opacity: 0.55;
+        cursor: not-allowed;
+        transform: none;
+        box-shadow: none;
+    }
+
+    .continue-btn .arrow-icon {
+        transition: transform 0.2s ease;
+    }
+
+    .continue-btn:hover:not(:disabled) .arrow-icon {
+        transform: translateX(4px);
+    }
+
+    /* INSIGHT STATUS CARD (RIGHT COLUMN) */
+    .status-card {
+        padding: 28px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .status-header {
+        display: flex;
+        gap: 14px;
+        align-items: center;
+        margin-bottom: 20px;
+    }
+
+    .status-icon-box {
+        width: 44px;
+        height: 44px;
+        display: grid;
+        place-items: center;
+        border-radius: 12px;
+        background: var(--bg-alt);
+        color: var(--primary-orange);
+        font-size: 20px;
+        border: 1px solid var(--border);
+    }
+
+    .status-label {
+        color: var(--primary-orange);
+        font-size: 10px;
+        font-weight: 800;
+        letter-spacing: 1.2px;
+    }
+
+    .status-header h3 {
+        margin: 2px 0 0;
+        font-size: 18px;
+        font-weight: 800;
+        color: var(--text-primary) !important;
+    }
+
+    .status-message {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 22px;
+        padding: 12px 14px;
+        border-radius: 12px;
+        background: #d1fae5;
+        border: 1px solid #a7f3d0;
+    }
+
+    [data-theme="dark"] .status-message {
+        background: rgba(5, 150, 105, 0.2);
+        border-color: rgba(5, 150, 105, 0.3);
+    }
+
+    .status-message p {
+        margin: 0;
+        color: #047857;
+        font-size: 12px;
+        font-weight: 600;
+        line-height: 1.4;
+    }
+
+    [data-theme="dark"] .status-message p {
+        color: #34d399;
+    }
+
+    .pulse-indicator {
+        width: 8px;
+        height: 8px;
+        flex-shrink: 0;
+        border-radius: 50%;
+        background: #10b981;
+        box-shadow: 0 0 0 5px rgba(16, 185, 129, 0.2);
+        animation: pulse 1.8s infinite;
+    }
+
+    @keyframes pulse {
+        50% {
+            box-shadow: 0 0 0 9px rgba(16, 185, 129, 0);
+        }
+    }
+
+    .confidence-box {
+        padding: 16px;
+        border-radius: 14px;
+        background: var(--bg-alt);
+        border: 1px solid var(--border);
+        margin-bottom: 24px;
+    }
+
+    .confidence-top {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 8px;
+        color: var(--text-secondary);
+        font-size: 13px;
+        font-weight: 700;
+    }
+
+    .confidence-top strong {
+        color: var(--primary-orange);
+        font-weight: 800;
+    }
+
+    .mini-progress-track {
+        height: 8px;
+        border-radius: var(--radius-pill);
+        background: var(--surface);
+        overflow: hidden;
+        border: 1px solid var(--border);
+    }
+
+    .mini-progress-fill {
+        height: 100%;
+        border-radius: var(--radius-pill);
+        background: linear-gradient(90deg, #f5793a, #ea580c);
+    }
+
+    /* PERSONALITY DIMENSIONS (FIXED LAYOUT & NO OVERLAP) */
+    .traits {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+    }
+
+    .traits-title {
+        margin: 0 0 4px;
+        color: var(--text-muted);
+        font-size: 12px;
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.8px;
+    }
+
+    .trait-row {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .trait-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+    }
+
+    .trait-badge-info {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .trait-badge {
+        width: 26px;
+        height: 26px;
+        border-radius: 8px;
+        display: grid;
+        place-items: center;
+        font-size: 12px;
+        font-weight: 800;
+        flex-shrink: 0;
+    }
+
+    .badge-orange { background: #ffedd5; color: #ea580c; }
+    .badge-yellow { background: #fef3c7; color: #d97706; }
+    .badge-green { background: #d1fae5; color: #059669; }
+    .badge-blue { background: #dbeafe; color: #2563eb; }
+    .badge-purple { background: #f3e8ff; color: #7e22ce; }
+    .badge-red { background: #fee2e2; color: #dc2626; }
+
+    [data-theme="dark"] .badge-orange { background: rgba(234, 88, 12, 0.25); color: #ff8c4e; }
+    [data-theme="dark"] .badge-yellow { background: rgba(217, 119, 6, 0.25); color: #fbbf24; }
+    [data-theme="dark"] .badge-green { background: rgba(5, 150, 105, 0.25); color: #34d399; }
+    [data-theme="dark"] .badge-blue { background: rgba(37, 99, 235, 0.25); color: #60a5fa; }
+    [data-theme="dark"] .badge-purple { background: rgba(124, 58, 237, 0.25); color: #a78bfa; }
+    [data-theme="dark"] .badge-red { background: rgba(220, 38, 38, 0.25); color: #f87171; }
+
+    .trait-name {
+        font-size: 13px;
+        font-weight: 700;
+        color: var(--text-primary) !important;
+    }
+
+    .trait-val {
+        font-size: 13px;
+        font-weight: 800;
+        color: var(--primary-orange) !important;
+    }
+
+    .trait-bar-track {
+        width: 100%;
+        height: 7px;
+        border-radius: var(--radius-pill);
+        background: var(--bg-alt);
+        overflow: hidden;
+        border: 1px solid var(--border);
+    }
+
+    .trait-bar-fill {
+        height: 100%;
+        border-radius: var(--radius-pill);
+        background: linear-gradient(90deg, #f5793a, #ea580c);
+    }
+
+    .privacy-note {
+        display: flex;
+        gap: 12px;
+        margin-top: 24px;
+        padding-top: 20px;
+        border-top: 1px solid var(--border-subtle);
+        align-items: flex-start;
+    }
+
+    .privacy-note p {
+        margin: 0;
+        color: var(--text-muted);
+        font-size: 12px;
+        line-height: 1.5;
+    }
+
+    /* BOTTOM TIP */
+    .bottom-tip {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-top: 28px;
+        padding: 20px 24px;
+        border: 1px solid var(--border) !important;
+        border-radius: var(--radius-card);
+        background: var(--surface) !important;
+        box-shadow: var(--card-shadow);
+    }
+
+    .tip-icon {
+        width: 42px;
+        height: 42px;
+        display: grid;
+        place-items: center;
+        flex-shrink: 0;
+        border-radius: 12px;
+        background: var(--bg-alt);
+        color: var(--primary-orange);
+        font-size: 20px;
+        border: 1px solid var(--border);
+    }
+
+    .bottom-tip strong {
+        font-size: 14px;
+        color: var(--text-primary) !important;
+    }
+
+    .bottom-tip p {
+        margin: 3px 0 0;
+        color: var(--text-muted) !important;
+        font-size: 12px;
+        line-height: 1.5;
+    }
+
+    /* RESPONSIVE STACK ON MOBILE */
+    @media (max-width: 900px) {
+        .assessment-grid {
+            grid-template-columns: 1fr;
+        }
+        .status-card {
+            order: 2;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .topbar,
+        .assessment-container {
+            width: min(100% - 24px, 1180px);
+        }
+        .intro-card {
+            padding: 24px;
+            flex-direction: column;
+            text-align: center;
+        }
+        .question-card {
+            padding: 24px 18px;
+        }
+        .answer-option {
+            min-height: 60px;
+            padding: 12px 14px;
+        }
+    }
+    </style>
+
+    <link rel="stylesheet" href="{% static 'assessment/assessment.css' %}?v=4">
 </head>
 
 <body>
@@ -23,34 +852,45 @@
     <header class="topbar">
 
         <a href="{% url 'dashboard_home' %}" class="back-btn">
-            <span>←</span>
+            <i class="bi bi-arrow-left"></i>
             Back to Dashboard
         </a>
 
-        <div class="brand">
-            <span class="brand-dot"></span>
-            Personality<span>AI</span>
-        </div>
+        <a href="/" class="brand">
+            Personality<span class="ai-text">AI</span>
+        </a>
 
-        <div class="secure-badge">
-            <span>●</span> Private Assessment
+        <div class="topbar-actions">
+            <span class="private-badge">
+                <i class="bi bi-shield-lock-fill"></i> Private Assessment
+            </span>
+
+            <div class="lang-picker">
+                <a href="?lang=en" class="lang-btn {% if language == 'en' or not language %}active{% endif %}">English</a>
+                <a href="?lang=ur" class="lang-btn {% if language == 'ur' %}active{% endif %}">اردو</a>
+                <a href="?lang=roman" class="lang-btn {% if language == 'roman' %}active{% endif %}">Roman</a>
+            </div>
+
+            <button type="button" onclick="toggleGlobalTheme()" class="theme-toggle-btn" title="Switch Light/Dark Theme">
+                <i class="bi bi-sun-fill theme-toggle-icon" style="color: var(--primary-orange);"></i>
+            </button>
         </div>
 
     </header>
 
 
-    <!-- Main -->
+    <!-- Main Container -->
     <main class="assessment-container">
 
-        <!-- Header -->
+        <!-- Intro Hero Card -->
         <section class="intro-card">
 
-            <div class="intro-icon">
-                ✦
+            <div class="intro-icon-box">
+                <i class="bi bi-cpu-fill"></i>
             </div>
 
             <div>
-                <p class="eyebrow">ADAPTIVE PERSONALITY ASSESSMENT</p>
+                <p class="eyebrow"><i class="bi bi-stars" style="margin-right: 4px;"></i> ADAPTIVE PERSONALITY ASSESSMENT</p>
 
                 <h1>
                     Let's understand
@@ -58,28 +898,27 @@
                 </h1>
 
                 <p class="intro-text">
-                    Each question is selected intelligently based on your previous
-                    responses to create a more meaningful personality profile.
+                    Each question is selected intelligently based on your previous responses to create a more meaningful personality profile.
                 </p>
             </div>
 
         </section>
 
 
-        <!-- Progress -->
+        <!-- Progress Section -->
         <section class="progress-section">
 
             <div class="progress-top">
 
                 <div>
-                    <span class="progress-label">Assessment progress</span>
+                    <span class="progress-label">Assessment Progress</span>
                     <strong>
-                        Question {{ answered_count|add:"1" }}
+                        Question {{ answered_count|add:"1" }} of {{ max_questions }}
                     </strong>
                 </div>
 
                 <span class="progress-count">
-                    {{ answered_count }} / {{ max_questions }}
+                    {% widthratio answered_count max_questions 100 %}% Completed
                 </span>
 
             </div>
@@ -94,19 +933,19 @@
         </section>
 
 
-        <!-- Assessment Grid -->
+        <!-- Assessment 2-Column Grid -->
         <div class="assessment-grid">
 
-            <!-- Question -->
+            <!-- Question Card (Left Column) -->
             <section class="question-card">
 
                 <div class="question-meta">
                     <span class="question-number">
-                        Q{{ answered_count|add:"1" }}
+                        Question {{ answered_count|add:"1" }}
                     </span>
 
                     <span class="adaptive-label">
-                        ✦ AI Selected
+                        <i class="bi bi-stars" style="margin-right: 4px;"></i> AI Selected Question
                     </span>
                 </div>
 
@@ -118,11 +957,17 @@
                     </p>
 
                     <h2>
-                        {{ question.question_text }}
+                        {% if language == 'ur' and question.question_text_ur %}
+                            {{ question.question_text_ur }}
+                        {% elif language == 'roman' and question.question_text_roman %}
+                            {{ question.question_text_roman }}
+                        {% else %}
+                            {{ question.question_text }}
+                        {% endif %}
                     </h2>
 
                     <p class="question-help">
-                        Choose the option that best represents you.
+                        <i class="bi bi-info-circle" style="margin-right: 4px;"></i> Choose the option that best represents you.
                     </p>
 
                 </div>
@@ -203,7 +1048,7 @@
 
                         <span>Continue to next question</span>
 
-                        <span class="arrow">→</span>
+                        <i class="bi bi-arrow-right arrow-icon"></i>
 
                     </button>
 
@@ -212,13 +1057,13 @@
             </section>
 
 
-            <!-- AI Status -->
+            <!-- Assessment Insight Panel (Right Column - Fixed Overlap) -->
             <aside class="status-card">
 
                 <div class="status-header">
 
-                    <div class="status-icon">
-                        ✦
+                    <div class="status-icon-box">
+                        <i class="bi bi-cpu-fill"></i>
                     </div>
 
                     <div>
@@ -231,7 +1076,7 @@
 
                 <div class="status-message">
 
-                    <div class="pulse"></div>
+                    <div class="pulse-indicator"></div>
 
                     <p>
                         Your answers are being analyzed in real time.
@@ -247,8 +1092,9 @@
                         <strong>{{ confidence|floatformat:0 }}%</strong>
                     </div>
 
-                    <div class="mini-progress">
+                    <div class="mini-progress-track">
                         <div
+                            class="mini-progress-fill"
                             style="width: {{ confidence }}%;">
                         </div>
                     </div>
@@ -256,79 +1102,80 @@
                 </div>
 
 
+                <!-- Personality Dimensions (Fixed Layout & No Overlap) -->
                 <div class="traits">
 
                     <p class="traits-title">
-                        Personality dimensions
+                        Personality Dimensions
                     </p>
 
 
-                    <div class="trait">
-                        <div>
-                            <span>O</span>
-                            <small>Openness</small>
+                    <div class="trait-row">
+                        <div class="trait-header">
+                            <div class="trait-badge-info">
+                                <span class="trait-badge badge-orange">O</span>
+                                <span class="trait-name">Openness</span>
+                            </div>
+                            <strong class="trait-val">{{ trait_confidences.O|floatformat:0 }}%</strong>
                         </div>
-
-                        <strong>{{ trait_confidences.O|floatformat:0 }}%</strong>
-
-                        <div class="trait-bar">
-                            <i style="width: {{ trait_confidences.O }}%;"></i>
-                        </div>
-                    </div>
-
-
-                    <div class="trait">
-                        <div>
-                            <span>C</span>
-                            <small>Conscientiousness</small>
-                        </div>
-
-                        <strong>{{ trait_confidences.C|floatformat:0 }}%</strong>
-
-                        <div class="trait-bar">
-                            <i style="width: {{ trait_confidences.C }}%;"></i>
+                        <div class="trait-bar-track">
+                            <div class="trait-bar-fill" style="width: {{ trait_confidences.O }}%;"></div>
                         </div>
                     </div>
 
 
-                    <div class="trait">
-                        <div>
-                            <span>E</span>
-                            <small>Extraversion</small>
+                    <div class="trait-row">
+                        <div class="trait-header">
+                            <div class="trait-badge-info">
+                                <span class="trait-badge badge-yellow">C</span>
+                                <span class="trait-name">Conscientiousness</span>
+                            </div>
+                            <strong class="trait-val">{{ trait_confidences.C|floatformat:0 }}%</strong>
                         </div>
-
-                        <strong>{{ trait_confidences.E|floatformat:0 }}%</strong>
-
-                        <div class="trait-bar">
-                            <i style="width: {{ trait_confidences.E }}%;"></i>
-                        </div>
-                    </div>
-
-
-                    <div class="trait">
-                        <div>
-                            <span>A</span>
-                            <small>Agreeableness</small>
-                        </div>
-
-                        <strong>{{ trait_confidences.A|floatformat:0 }}%</strong>
-
-                        <div class="trait-bar">
-                            <i style="width: {{ trait_confidences.A }}%;"></i>
+                        <div class="trait-bar-track">
+                            <div class="trait-bar-fill" style="width: {{ trait_confidences.C }}%;"></div>
                         </div>
                     </div>
 
 
-                    <div class="trait">
-                        <div>
-                            <span>N</span>
-                            <small>Neuroticism</small>
+                    <div class="trait-row">
+                        <div class="trait-header">
+                            <div class="trait-badge-info">
+                                <span class="trait-badge badge-blue">E</span>
+                                <span class="trait-name">Extraversion</span>
+                            </div>
+                            <strong class="trait-val">{{ trait_confidences.E|floatformat:0 }}%</strong>
                         </div>
+                        <div class="trait-bar-track">
+                            <div class="trait-bar-fill" style="width: {{ trait_confidences.E }}%;"></div>
+                        </div>
+                    </div>
 
-                        <strong>{{ trait_confidences.N|floatformat:0 }}%</strong>
 
-                        <div class="trait-bar">
-                            <i style="width: {{ trait_confidences.N }}%;"></i>
+                    <div class="trait-row">
+                        <div class="trait-header">
+                            <div class="trait-badge-info">
+                                <span class="trait-badge badge-purple">A</span>
+                                <span class="trait-name">Agreeableness</span>
+                            </div>
+                            <strong class="trait-val">{{ trait_confidences.A|floatformat:0 }}%</strong>
+                        </div>
+                        <div class="trait-bar-track">
+                            <div class="trait-bar-fill" style="width: {{ trait_confidences.A }}%;"></div>
+                        </div>
+                    </div>
+
+
+                    <div class="trait-row">
+                        <div class="trait-header">
+                            <div class="trait-badge-info">
+                                <span class="trait-badge badge-red">N</span>
+                                <span class="trait-name">Neuroticism</span>
+                            </div>
+                            <strong class="trait-val">{{ trait_confidences.N|floatformat:0 }}%</strong>
+                        </div>
+                        <div class="trait-bar-track">
+                            <div class="trait-bar-fill" style="width: {{ trait_confidences.N }}%;"></div>
                         </div>
                     </div>
 
@@ -337,7 +1184,7 @@
 
                 <div class="privacy-note">
 
-                    <span>✓</span>
+                    <i class="bi bi-shield-check" style="color: #059669; font-size: 18px; flex-shrink: 0;"></i>
 
                     <p>
                         There are no right or wrong answers.
@@ -351,10 +1198,12 @@
         </div>
 
 
-        <!-- Bottom Tip -->
+        <!-- Bottom Tip Box -->
         <div class="bottom-tip">
 
-            <span class="tip-icon">✦</span>
+            <div class="tip-icon">
+                <i class="bi bi-lightbulb-fill"></i>
+            </div>
 
             <div>
                 <strong>How it works</strong>

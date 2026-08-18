@@ -8,6 +8,8 @@
     ],
     "exclude": [
         "**/_pyrefly_virtual_/**",
+        "**/__pyrefly_virtual__/**",
+        "**/*pyrefly_virtual*/**",
         "**/venv/**"
     ]
 }

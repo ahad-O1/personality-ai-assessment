@@ -6,299 +6,242 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>PersonalityAI | Discover Your Personality</title>
+    <title>PersonalityAI | Psychometric Career & Personality Intelligence Platform</title>
 
-    <meta
-        name="description"
-        content="Understand your personality, discover your strengths and explore career paths with PersonalityAI."
-    >
+    <meta name="description" content="Enterprise-grade psychometric personality assessment platform. Discover Big Five OCEAN traits, match with career pathways, and execute guided learning roadmaps.">
 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
     <link rel="stylesheet" href="{% static 'home/home.css' %}">
+
+    <script>
+        (function() {
+            var savedTheme = localStorage.getItem("app_theme") || "light";
+            document.documentElement.setAttribute("data-theme", savedTheme);
+        })();
+
+        function toggleAppTheme() {
+            var currentTheme = document.documentElement.getAttribute("data-theme") || "light";
+            var newTheme = currentTheme === "light" ? "dark" : "light";
+            document.documentElement.setAttribute("data-theme", newTheme);
+            localStorage.setItem("app_theme", newTheme);
+            updateThemeIcon(newTheme);
+        }
+
+        function updateThemeIcon(theme) {
+            var themeNavIcon = document.getElementById("themeNavIcon");
+            if (themeNavIcon) {
+                if (theme === "dark") {
+                    themeNavIcon.className = "bi bi-moon-stars-fill";
+                } else {
+                    themeNavIcon.className = "bi bi-sun-fill";
+                }
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            var savedTheme = localStorage.getItem("app_theme") || "light";
+            updateThemeIcon(savedTheme);
+        });
+    </script>
 </head>
 
 <body>
 
 <!-- =========================================================
-     NAVBAR
+     NAVBAR WITH ON/OFF SLIDER THEME SWITCH
 ========================================================= -->
 
 <header class="navbar" id="navbar">
-
     <div class="container nav-inner">
 
         <a href="/" class="brand">
-            <img src="{% static 'images/logo.png' %}" alt="Personality AI Logo" style="width:34px; height:34px; object-fit:contain; margin-right:10px; border-radius:8px; filter: drop-shadow(0 0 8px rgba(54,169,255,0.5));">
+            <img src="{% static 'images/logo.png' %}" alt="PersonalityAI Logo" style="width:34px; height:34px; object-fit:contain; border-radius:6px;">
             <span class="brand-text">
                 Personality<span>AI</span>
             </span>
         </a>
 
         <nav class="nav-links">
-
-            <a href="#features">Features</a>
-            <a href="#personality">Personality</a>
-            <a href="#process">How It Works</a>
-            <a href="#careers">Careers</a>
-
+            <a href="#capabilities">Platform Overview</a>
+            <a href="#assessment">Psychometric Model</a>
+            <a href="#workflow">Methodology</a>
+            <a href="#matching">Career Analytics</a>
         </nav>
 
         <div class="nav-actions">
+            <!-- Compact SVG Theme Toggle Button -->
+            <button type="button" class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleAppTheme()" title="Switch Light/Dark Theme" aria-label="Toggle Theme">
+                <i class="bi bi-sun-fill" id="themeNavIcon"></i>
+            </button>
 
             {% if user.is_authenticated %}
-
-                <a href="{% url 'dashboard_home' %}" class="nav-login">
+                <a href="{% url 'dashboard_home' %}" class="btn btn-primary">
                     Dashboard
                 </a>
-
-                <a href="{% url 'assessment:start_assessment' %}" class="btn btn-small">
-                    Take Assessment
-                </a>
-
             {% else %}
-
-                <a href="{% url 'login' %}" class="nav-login">
-                    Sign in
-                </a>
-
-                <a href="{% url 'assessment:start_assessment' %}" class="btn btn-small">
+                <a href="{% url 'assessment:start_assessment' %}" class="btn btn-primary">
                     Get Started
                 </a>
-
             {% endif %}
-
         </div>
 
-        <button class="mobile-menu" id="mobileMenu" aria-label="Open menu">
-            <span></span>
-            <span></span>
-            <span></span>
-        </button>
-
     </div>
-
 </header>
 
 
 <!-- =========================================================
-     HERO
+     HERO SECTION (ORIGINAL CONTENT + REFERENCE TERRACOTTA COLOR)
 ========================================================= -->
 
 <main>
 
 <section class="hero">
-
-    <div class="hero-grid"></div>
-
-    <div class="hero-glow glow-one"></div>
-    <div class="hero-glow glow-two"></div>
-
     <div class="container hero-container">
 
-        <div class="hero-content reveal">
+        <div class="hero-content">
 
             <div class="eyebrow">
                 <span class="status-dot"></span>
-                AI-powered personality assessment
+                Scientific Big Five (OCEAN) AI Assessment Engine
             </div>
 
             <h1>
-                Understand
-                <span>who you are.</span>
-                <br>
-
-                Discover
-                <span>where you belong.</span>
+                Understand <span>who you are.</span><br>
+                Discover <span>where you belong.</span>
             </h1>
 
             <p class="hero-description">
-                PersonalityAI uses scientifically inspired personality analysis
-                to uncover your strengths, preferences and career possibilities
-                through your unique personality profile.
+                PersonalityAI combines psychometric AI profiling with real-time market data to reveal your core strengths, identify high-fit careers, and build personalized skill execution roadmaps.
             </p>
 
             <div class="hero-actions">
-
-                <a href="{% url 'assessment:start_assessment' %}"
-                   class="btn btn-primary">
-
-                    Start Assessment
-
-                    <span class="arrow">?</span>
-
+                <a href="{% url 'assessment:start_assessment' %}" class="btn btn-primary btn-large">
+                    Start Assessment <i class="bi bi-arrow-right arrow"></i>
                 </a>
 
-                <a href="#features" class="btn btn-secondary">
-                    Explore Platform
+                <a href="#capabilities" class="btn btn-secondary btn-large">
+                    Explore Capabilities
                 </a>
-
             </div>
 
             <div class="hero-trust">
+                <div class="trust-badge-item">
+                    <i class="bi bi-shield-check"></i>
+                    <span>APA Big Five Psychometric Framework Compliant</span>
+                </div>
+                <div class="trust-badge-item">
+                    <i class="bi bi-graph-up-arrow"></i>
+                    <span>Quantitative Machine Learning Matching</span>
+                </div>
+            </div>
 
-                <div class="avatar-stack">
-                    <span>U</span>
-                    <span>P</span>
-                    <span>A</span>
-                    <span>+</span>
+        </div>
+
+        <!-- HERO DASHBOARD PREVIEW CARD -->
+
+        <div class="hero-visual">
+
+            <div class="dashboard-card">
+
+                <div class="card-header">
+                    <div>
+                        <span class="card-subtitle-text">PSYCHOMETRIC PROFILE SUMMARY</span>
+                        <h3 class="card-title-text">OCEAN Trait Distribution</h3>
+                    </div>
+
+                    <span class="badge-tag">
+                        <i class="bi bi-check2-circle"></i> Verified Profile
+                    </span>
                 </div>
 
-                <div>
-                    <strong>Built for meaningful self-discovery</strong>
-                    <small>
-                        Personality insights designed to help you understand yourself.
-                    </small>
+                <div class="metric-group">
+
+                    <div class="metric-item">
+                        <div class="metric-label-row">
+                            <span class="metric-name">Openness (Cognitive Flexibility)</span>
+                            <span class="metric-val">88%</span>
+                        </div>
+                        <div class="metric-bar-track">
+                            <div class="metric-bar-fill" style="width: 88%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="metric-item">
+                        <div class="metric-label-row">
+                            <span class="metric-name">Conscientiousness (Execution Discipline)</span>
+                            <span class="metric-val">94%</span>
+                        </div>
+                        <div class="metric-bar-track">
+                            <div class="metric-bar-fill" style="width: 94%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="metric-item">
+                        <div class="metric-label-row">
+                            <span class="metric-name">Extraversion (Communication & Leadership)</span>
+                            <span class="metric-val">72%</span>
+                        </div>
+                        <div class="metric-bar-track">
+                            <div class="metric-bar-fill" style="width: 72%;"></div>
+                        </div>
+                    </div>
+
+                    <div class="metric-item">
+                        <div class="metric-label-row">
+                            <span class="metric-name">Agreeableness (Collaborative Empathy)</span>
+                            <span class="metric-val">85%</span>
+                        </div>
+                        <div class="metric-bar-track">
+                            <div class="metric-bar-fill" style="width: 85%;"></div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="career-match-preview">
+                    <div>
+                        <div class="match-role-title">Primary Recommended Career Path</div>
+                        <div class="match-role-sub">Software Engineer / Systems Architect</div>
+                    </div>
+                    <div class="match-percent-pill">
+                        96% Compatibility
+                    </div>
                 </div>
 
             </div>
 
         </div>
 
-
-        <!-- HERO VISUAL -->
-
-        <div class="hero-visual reveal">
-
-            <div class="orbit orbit-one"></div>
-            <div class="orbit orbit-two"></div>
-
-            <div class="dashboard-window">
-
-                <div class="window-top">
-
-                    <div class="window-title">
-                        <small>YOUR PROFILE</small>
-                        <strong>Personality Overview</strong>
-                    </div>
-
-                    <div class="online-pill">
-                        <span></span>
-                        Analysis
-                    </div>
-
-                </div>
-
-                <div class="personality-visual">
-
-                    <div class="radar-placeholder">
-
-                        <div class="radar-ring ring-1"></div>
-                        <div class="radar-ring ring-2"></div>
-                        <div class="radar-ring ring-3"></div>
-
-                        <div class="radar-shape"></div>
-
-                        <span class="axis axis-o">O</span>
-                        <span class="axis axis-c">C</span>
-                        <span class="axis axis-e">E</span>
-                        <span class="axis axis-a">A</span>
-                        <span class="axis axis-n">N</span>
-
-                    </div>
-
-                </div>
-
-                <div class="trait-bars">
-
-                    <div class="trait-row">
-                        <div>
-                            <span>Openness</span>
-                            <small>Creativity & curiosity</small>
-                        </div>
-                        <div class="bar">
-                            <i style="width: 82%"></i>
-                        </div>
-                        <strong>82%</strong>
-                    </div>
-
-                    <div class="trait-row">
-                        <div>
-                            <span>Conscientiousness</span>
-                            <small>Structure & discipline</small>
-                        </div>
-                        <div class="bar">
-                            <i style="width: 91%"></i>
-                        </div>
-                        <strong>91%</strong>
-                    </div>
-
-                    <div class="trait-row">
-                        <div>
-                            <span>Extraversion</span>
-                            <small>Energy & communication</small>
-                        </div>
-                        <div class="bar">
-                            <i style="width: 68%"></i>
-                        </div>
-                        <strong>68%</strong>
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            <div class="floating-card score-card">
-
-                <small>PERSONALITY SCORE</small>
-
-                <strong>86.4</strong>
-
-                <span>Strong profile match</span>
-
-            </div>
-
-
-            <div class="floating-card career-card">
-
-                <div class="career-icon"></div>
-
-                <div>
-                    <small>TOP CAREER</small>
-                    <strong>Data Analyst</strong>
-                </div>
-
-                <b>94%</b>
-
-            </div>
-
-        </div>
-
     </div>
-
-    <div class="hero-scroll">
-        <span></span>
-        Scroll to explore
-    </div>
-
 </section>
 
 
 <!-- =========================================================
-     STATS
+     STATS METRICS
 ========================================================= -->
 
 <section class="stats-section">
 
     <div class="container stats-grid">
 
-        <div class="stat reveal">
+        <div class="stat-item">
             <strong data-count="5">0</strong>
-            <span>Core Personality Traits</span>
+            <span>OCEAN Primary Dimensions</span>
         </div>
 
-        <div class="stat reveal">
-            <strong data-count="9">0</strong>
-            <span>Career Categories</span>
+        <div class="stat-item">
+            <strong data-count="40" data-suffix="+">0</strong>
+            <span>Industry Role Pathways</span>
         </div>
 
-        <div class="stat reveal">
+        <div class="stat-item">
             <strong data-count="25">0</strong>
-            <span>Assessment Questions</span>
+            <span>Psychometric Indicators</span>
         </div>
 
-        <div class="stat reveal">
+        <div class="stat-item">
             <strong data-count="100" data-suffix="%">0</strong>
-            <span>Personalized Results</span>
+            <span>Deterministic Scoring</span>
         </div>
 
     </div>
@@ -307,98 +250,61 @@
 
 
 <!-- =========================================================
-     FEATURES
+     PLATFORM CAPABILITIES (PASTEL ACCENT CARDS)
 ========================================================= -->
 
-<section class="section features-section" id="features">
+<section class="section" id="capabilities">
 
     <div class="container">
 
-        <div class="section-heading reveal">
-
-            <span class="section-label">
-                WHY PERSONALITYAI
-            </span>
-
-            <h2>
-                More than a test.
-                <span>A complete self-discovery experience.</span>
-            </h2>
-
-            <p>
-                Turn your personality assessment into meaningful insights
-                that help you understand yourself and make better decisions.
+        <div class="section-header">
+            <span class="section-tag">PLATFORM CAPABILITIES</span>
+            <h2 class="section-title">End-to-End Career <span>Intelligence Architecture</span></h2>
+            <p class="section-desc">
+                From initial psychometric assessment to targeted skill execution, PersonalityAI provides structured decision support for long-term career growth.
             </p>
-
         </div>
 
+        <div class="grid-3">
 
-        <div class="feature-grid">
-
-            <article class="feature-card reveal">
-
-                <div class="feature-number">01</div>
-
-                <div class="feature-icon">
-                    ?
+            <div class="capability-card">
+                <div class="card-icon-box bg-badge-yellow">
+                    <i class="bi bi-cpu-fill"></i>
                 </div>
-
-                <h3>Personality Analysis</h3>
-
+                <h3>Psychometric Assessment Engine</h3>
                 <p>
-                    Explore your personality traits and understand the
-                    characteristics that shape your preferences and behavior.
+                    Evaluates cognitive flexibility, goal orientation, social assertiveness, and stress resilience through standardized psychometric questions.
                 </p>
-
-                <a href="#personality">
-                    Learn more <span>?</span>
+                <a href="#assessment" class="link-arrow">
+                    Read Methodology <i class="bi bi-arrow-right"></i>
                 </a>
+            </div>
 
-            </article>
-
-
-            <article class="feature-card reveal">
-
-                <div class="feature-number">02</div>
-
-                <div class="feature-icon">
-                    ?
+            <div class="capability-card">
+                <div class="card-icon-box bg-badge-green">
+                    <i class="bi bi-diagram-3-fill"></i>
                 </div>
-
-                <h3>Career Intelligence</h3>
-
+                <h3>Predictive Career Analytics</h3>
                 <p>
-                    Connect your personality profile with career categories
-                    and discover opportunities aligned with your strengths.
+                    Matches individual personality profiles against industry job requirements using weighted trait scoring algorithms.
                 </p>
-
-                <a href="#careers">
-                    Explore careers <span>?</span>
+                <a href="#matching" class="link-arrow">
+                    Explore Career Matching <i class="bi bi-arrow-right"></i>
                 </a>
+            </div>
 
-            </article>
-
-
-            <article class="feature-card reveal">
-
-                <div class="feature-number">03</div>
-
-                <div class="feature-icon">
-                    ?
+            <div class="capability-card">
+                <div class="card-icon-box bg-badge-blue">
+                    <i class="bi bi-list-check"></i>
                 </div>
-
-                <h3>Personalized Reports</h3>
-
+                <h3>Actionable Skill Roadmaps</h3>
                 <p>
-                    Get a detailed assessment report with personality insights,
-                    recommended careers and practical development guidance.
+                    Generates structured phase-by-phase learning pathways with verified learning resources and milestone progress tracking.
                 </p>
-
-                <a href="{% url 'assessment:start_assessment' %}">
-                    Get your report <span>?</span>
+                <a href="{% url 'assessment:start_assessment' %}" class="link-arrow">
+                    Start Roadmap <i class="bi bi-arrow-right"></i>
                 </a>
-
-            </article>
+            </div>
 
         </div>
 
@@ -408,136 +314,65 @@
 
 
 <!-- =========================================================
-     PERSONALITY / OCEAN
+     PSYCHOMETRIC MODEL (OCEAN)
 ========================================================= -->
 
-<section class="section personality-section" id="personality">
+<section class="section" id="assessment" style="background: var(--bg-alt);">
 
-    <div class="container personality-grid">
+    <div class="container ocean-split">
 
-        <div class="personality-copy reveal">
-
-            <span class="section-label">
-                THE BIG FIVE
-            </span>
-
-            <h2>
-                Five traits.
-                <span>One unique personality.</span>
-            </h2>
-
-            <p>
-                PersonalityAI evaluates five major dimensions of personality.
-                Together, they create a richer picture of how you think,
-                communicate and respond to the world.
+        <div>
+            <span class="section-tag">SCIENTIFIC FOUNDATION</span>
+            <h2 class="section-title" style="text-align:left;">The Big Five <span>(OCEAN) Trait Architecture</span></h2>
+            <p class="section-desc" style="text-align:left; margin-bottom:24px;">
+                Recognized globally as the gold standard in personality psychology, the Five-Factor Model provides a reliable framework for understanding workplace performance and behavioral tendencies.
             </p>
 
-            <a href="{% url 'assessment:start_assessment' %}"
-               class="btn btn-primary">
-
-                Discover Your Profile
-                <span class="arrow">?</span>
-
+            <a href="{% url 'assessment:start_assessment' %}" class="btn btn-primary" style="margin-top: 10px;">
+                Discover Your Trait Profile <i class="bi bi-arrow-right arrow"></i>
             </a>
-
         </div>
 
+        <div class="trait-list-card">
 
-        <div class="ocean-panel reveal">
-
-            <div class="ocean-header">
-                <span>PERSONALITY PROFILE</span>
-                <strong>OCEAN analysis</strong>
+            <div class="trait-item-row">
+                <div class="trait-badge">O</div>
+                <div class="trait-content">
+                    <h4>Openness to Experience</h4>
+                    <p>Measures intellectual curiosity, creative problem-solving, and adaptability to complex concepts.</p>
+                </div>
             </div>
 
-
-            <div class="ocean-row">
-
-                <div class="trait-letter">O</div>
-
-                <div class="ocean-info">
-                    <strong>Openness</strong>
-                    <small>Curiosity & creativity</small>
-
-                    <div class="ocean-bar">
-                        <span style="width: 82%"></span>
-                    </div>
+            <div class="trait-item-row">
+                <div class="trait-badge">C</div>
+                <div class="trait-content">
+                    <h4>Conscientiousness</h4>
+                    <p>Evaluates organizational discipline, reliability, goal orientation, and detail management.</p>
                 </div>
-
-                <b>82</b>
-
             </div>
 
-
-            <div class="ocean-row">
-
-                <div class="trait-letter">C</div>
-
-                <div class="ocean-info">
-                    <strong>Conscientiousness</strong>
-                    <small>Discipline & organization</small>
-
-                    <div class="ocean-bar">
-                        <span style="width: 91%"></span>
-                    </div>
+            <div class="trait-item-row">
+                <div class="trait-badge">E</div>
+                <div class="trait-content">
+                    <h4>Extraversion</h4>
+                    <p>Measures interpersonal energy, communication style, assertiveness, and leadership drive.</p>
                 </div>
-
-                <b>91</b>
-
             </div>
 
-
-            <div class="ocean-row">
-
-                <div class="trait-letter">E</div>
-
-                <div class="ocean-info">
-                    <strong>Extraversion</strong>
-                    <small>Energy & communication</small>
-
-                    <div class="ocean-bar">
-                        <span style="width: 68%"></span>
-                    </div>
+            <div class="trait-item-row">
+                <div class="trait-badge">A</div>
+                <div class="trait-content">
+                    <h4>Agreeableness</h4>
+                    <p>Assesses collaborative empathy, teamwork orientation, and interpersonal trust building.</p>
                 </div>
-
-                <b>68</b>
-
             </div>
 
-
-            <div class="ocean-row">
-
-                <div class="trait-letter">A</div>
-
-                <div class="ocean-info">
-                    <strong>Agreeableness</strong>
-                    <small>Cooperation & empathy</small>
-
-                    <div class="ocean-bar">
-                        <span style="width: 75%"></span>
-                    </div>
+            <div class="trait-item-row">
+                <div class="trait-badge">N</div>
+                <div class="trait-content">
+                    <h4>Neuroticism (Emotional Stability)</h4>
+                    <p>Measures emotional resilience, stress regulation, and composure under pressure.</p>
                 </div>
-
-                <b>75</b>
-
-            </div>
-
-
-            <div class="ocean-row">
-
-                <div class="trait-letter">N</div>
-
-                <div class="ocean-info">
-                    <strong>Neuroticism</strong>
-                    <small>Emotional sensitivity</small>
-
-                    <div class="ocean-bar">
-                        <span style="width: 42%"></span>
-                    </div>
-                </div>
-
-                <b>42</b>
-
             </div>
 
         </div>
@@ -548,98 +383,45 @@
 
 
 <!-- =========================================================
-     PROCESS
+     WORKFLOW PIPELINE (NUMBERED CIRCLES)
 ========================================================= -->
 
-<section class="section process-section" id="process">
+<section class="workflow-section" id="workflow">
 
     <div class="container">
 
-        <div class="section-heading centered reveal">
-
-            <span class="section-label">
-                SIMPLE PROCESS
-            </span>
-
-            <h2>
-                From <span>questions</span> to clarity.
-            </h2>
-
-            <p>
-                A simple assessment experience designed to turn your
-                responses into useful personality and career insights.
+        <div class="section-header">
+            <span class="section-tag">METHODOLOGY</span>
+            <h2 class="section-title">Structured <span>4-Step Analysis Pipeline</span></h2>
+            <p class="section-desc">
+                A rigorous workflow designed to transform assessment responses into meaningful career direction.
             </p>
-
         </div>
 
+        <div class="workflow-grid">
 
-        <div class="process-line">
-
-            <div class="process-step reveal">
-
-                <div class="step-circle">
-                    01
-                </div>
-
-                <span class="step-dot"></span>
-
-                <h3>Answer</h3>
-
-                <p>
-                    Complete the personality assessment with honest responses.
-                </p>
-
+            <div class="workflow-card">
+                <div class="workflow-step-num">1</div>
+                <h4>Take Assessment</h4>
+                <p>Complete 25 calibrated psychometric trait questions.</p>
             </div>
 
-
-            <div class="process-step reveal">
-
-                <div class="step-circle">
-                    02
-                </div>
-
-                <span class="step-dot"></span>
-
-                <h3>Analyze</h3>
-
-                <p>
-                    Your responses are evaluated across the five OCEAN traits.
-                </p>
-
+            <div class="workflow-card">
+                <div class="workflow-step-num">2</div>
+                <h4>Trait Analysis</h4>
+                <p>System computes your precise OCEAN trait distribution scores.</p>
             </div>
 
-
-            <div class="process-step reveal">
-
-                <div class="step-circle">
-                    03
-                </div>
-
-                <span class="step-dot"></span>
-
-                <h3>Discover</h3>
-
-                <p>
-                    Receive your personality profile and career recommendations.
-                </p>
-
+            <div class="workflow-card">
+                <div class="workflow-step-num">3</div>
+                <h4>Career Matching</h4>
+                <p>ML matching engine calculates role compatibility indices.</p>
             </div>
 
-
-            <div class="process-step reveal">
-
-                <div class="step-circle">
-                    04
-                </div>
-
-                <span class="step-dot"></span>
-
-                <h3>Grow</h3>
-
-                <p>
-                    Use your insights to plan your personal and career growth.
-                </p>
-
+            <div class="workflow-card">
+                <div class="workflow-step-num">4</div>
+                <h4>Roadmap Execution</h4>
+                <p>Follow tailored learning steps and track daily milestones.</p>
             </div>
 
         </div>
@@ -650,145 +432,23 @@
 
 
 <!-- =========================================================
-     CAREER DISCOVERY
+     CALL TO ACTION BANNER
 ========================================================= -->
 
-<section class="section career-section" id="careers">
+<section class="container cta-section" id="matching">
 
-    <div class="container career-grid">
-
-        <div class="career-map reveal">
-
-            <div class="map-grid"></div>
-
-            <div class="map-center">
-
-                <span></span>
-
-                <strong>PERSONALITY</strong>
-
-            </div>
-
-            <div class="map-node node-tech">
-                Technology
-            </div>
-
-            <div class="map-node node-business">
-                Business
-            </div>
-
-            <div class="map-node node-creative">
-                Creative
-            </div>
-
-            <div class="map-node node-education">
-                Education
-            </div>
-
-            <div class="connection connection-one"></div>
-            <div class="connection connection-two"></div>
-            <div class="connection connection-three"></div>
-            <div class="connection connection-four"></div>
-
+    <div class="cta-banner">
+        <div>
+            <h2>Accelerate Your Professional Direction</h2>
+            <p>Take the scientific Big Five assessment to analyze your personality strengths and align with high-compatibility career pathways.</p>
         </div>
 
-
-        <div class="career-copy reveal">
-
-            <span class="section-label">
-                CAREER DISCOVERY
-            </span>
-
-            <h2>
-                Your personality can
-                <span>guide your direction.</span>
-            </h2>
-
-            <p>
-                PersonalityAI connects your personality profile with career
-                categories and individual career paths to help identify
-                possibilities that fit your natural strengths.
-            </p>
-
-            <ul class="check-list">
-
-                <li>
-                    <span></span>
-                    Personality-based career matching
-                </li>
-
-                <li>
-                    <span></span>
-                    Career compatibility scoring
-                </li>
-
-                <li>
-                    <span></span>
-                    Personalized career recommendations
-                </li>
-
-                <li>
-                    <span></span>
-                    Career learning roadmaps
-                </li>
-
-            </ul>
-
-            <a href="{% url 'assessment:start_assessment' %}"
-               class="btn btn-primary">
-
-                Find Your Career Direction
-                <span class="arrow">?</span>
-
-            </a>
-
-        </div>
-
+        <a href="{% url 'assessment:start_assessment' %}" class="cta-btn-white">
+            Begin Free Assessment &rarr;
+        </a>
     </div>
 
 </section>
-
-
-<!-- =========================================================
-     CTA
-========================================================= -->
-
-<section class="cta-section">
-
-    <div class="cta-glow"></div>
-
-    <div class="container">
-
-        <div class="cta-box reveal">
-
-            <span class="section-label">
-                START YOUR JOURNEY
-            </span>
-
-            <h2>
-                The next step starts
-                <span>with understanding yourself.</span>
-            </h2>
-
-            <p>
-                Take the PersonalityAI assessment and discover what your
-                personality can tell you about your strengths and future.
-            </p>
-
-            <a href="{% url 'assessment:start_assessment' %}"
-               class="btn btn-primary btn-large">
-
-                Start Your Assessment
-                <span class="arrow">?</span>
-
-            </a>
-
-        </div>
-
-    </div>
-
-</section>
-
 
 </main>
 
@@ -802,92 +462,47 @@
     <div class="container footer-grid">
 
         <div class="footer-brand">
-
             <a href="/" class="brand">
-                <img src="{% static 'images/logo.png' %}" alt="Personality AI Logo" style="width:34px; height:34px; object-fit:contain; margin-right:10px; border-radius:8px; filter: drop-shadow(0 0 8px rgba(54,169,255,0.5));">
+                <img src="{% static 'images/logo.png' %}" alt="PersonalityAI Logo" style="width:30px; height:30px; object-fit:contain; border-radius:6px;">
                 <span class="brand-text">
                     Personality<span>AI</span>
                 </span>
             </a>
-
             <p>
-                An intelligent personality assessment platform for
-                self-discovery and career exploration.
+                Quantitative psychometric personality assessment & career alignment platform.
             </p>
-
         </div>
 
-
-        <div class="footer-column">
-
-            <h4>Platform</h4>
-
-            <a href="{% url 'assessment:start_assessment' %}">
-                Assessment
-            </a>
-
-            <a href="{% url 'dashboard_home' %}">
-                Dashboard
-            </a>
-
-            <a href="#personality">
-                Personality
-            </a>
-
-            <a href="#careers">
-                Careers
-            </a>
-
+        <div class="footer-col">
+            <h5>Platform</h5>
+            <a href="{% url 'assessment:start_assessment' %}">Psychometric Assessment</a>
+            <a href="{% url 'dashboard_home' %}">Dashboard</a>
+            <a href="#assessment">OCEAN Framework</a>
         </div>
 
-
-        <div class="footer-column">
-
-            <h4>Explore</h4>
-
-            <a href="#features">
-                Features
-            </a>
-
-            <a href="#process">
-                How It Works
-            </a>
-
-            <a href="{% url 'login' %}">
-                Sign In
-            </a>
-
+        <div class="footer-col">
+            <h5>Capabilities</h5>
+            <a href="#capabilities">Career Analytics</a>
+            <a href="#workflow">Methodology Pipeline</a>
+            <a href="{% url 'login' %}">Sign In</a>
         </div>
 
-
-        <div class="footer-column">
-
-            <h4>Personality</h4>
-
-            <a href="#personality">Openness</a>
-            <a href="#personality">Conscientiousness</a>
-            <a href="#personality">Extraversion</a>
-            <a href="#personality">Agreeableness</a>
-
+        <div class="footer-col">
+            <h5>Dimensions</h5>
+            <a href="#assessment">Openness</a>
+            <a href="#assessment">Conscientiousness</a>
+            <a href="#assessment">Extraversion</a>
+            <a href="#assessment">Agreeableness</a>
         </div>
 
     </div>
 
-
     <div class="container footer-bottom">
-
-        <span>
-            � 2026 PersonalityAI. All rights reserved.
-        </span>
-
-        <span>
-            Built for meaningful self-discovery.
-        </span>
-
+        <span>© 2026 PersonalityAI. All rights reserved.</span>
+        <span>Psychometric Career Alignment Engine.</span>
     </div>
 
 </footer>
-
 
 <script src="{% static 'home/home.js' %}"></script>
 

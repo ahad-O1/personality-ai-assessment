@@ -5,15 +5,25 @@
 
 {% block extra_css %}
     <style>
+        :root {
+            --primary: #ea580c;
+            --primary-dark: #c2410c;
+            --bg: #fff6f0;
+            --card-bg: #ffffff;
+            --text: #0f172a;
+            --muted: #64748b;
+            --border: #fde8e8;
+        }
+
         * {
             box-sizing: border-box;
         }
 
         body {
             margin: 0;
-            font-family: Arial, sans-serif;
-            background: #f6f9ff;
-            color: #0f172a;
+            font-family: 'Plus Jakarta Sans', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
         }
 
         .app {
@@ -23,13 +33,16 @@
 
         .sidebar {
             width: 280px;
-            background: linear-gradient(180deg, #061b4a, #08245f);
-            color: white;
-            padding: 28px 22px;
+            background: #ffffff;
+            border-right: 1px solid var(--border);
+            color: var(--text);
+            padding: 30px 22px;
             position: fixed;
             top: 0;
             bottom: 0;
             left: 0;
+            z-index: 100;
+            box-shadow: 4px 0 24px rgba(234, 88, 12, 0.04);
         }
 
         .logo {
@@ -37,45 +50,76 @@
             align-items: center;
             gap: 12px;
             font-size: 22px;
-            font-weight: bold;
+            font-weight: 800;
             margin-bottom: 40px;
-            color: white;
+            color: var(--text);
         }
 
         .sidebar-logo-img {
-            width: 36px;
-            height: 36px;
+            width: 38px;
+            height: 38px;
             object-fit: contain;
-            border-radius: 8px;
-            filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.5));
+            border-radius: 10px;
         }
 
         .logo span.ai-text {
-            color: #38bdf8;
+            color: var(--primary);
         }
 
         .menu a {
-            display: block;
-            color: #dbeafe;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #64748b;
             text-decoration: none;
-            padding: 16px 18px;
+            padding: 14px 18px;
             border-radius: 12px;
-            margin-bottom: 12px;
-            font-weight: bold;
+            margin-bottom: 8px;
+            font-weight: 700;
+            font-size: 14px;
+            transition: all 0.2s ease;
         }
 
         .menu a.active,
         .menu a:hover {
-            background: #2563eb;
-            color: white;
+            background: #fff0e6;
+            color: var(--primary);
+            border: 1px solid #fed7aa;
         }
 
         .sidebar-card {
-            margin-top: 45px;
-            background: linear-gradient(135deg, #2563eb, #7c3aed);
-            border-radius: 18px;
+            margin-top: 50px;
+            background: linear-gradient(135deg, #ea580c, #f97316);
+            border-radius: 20px;
             padding: 24px;
             text-align: center;
+            color: white;
+            box-shadow: 0 10px 25px rgba(234, 88, 12, 0.25);
+        }
+
+        .sidebar-card h3 {
+            margin: 0 0 8px;
+            font-size: 16px;
+            color: white;
+        }
+
+        .sidebar-card p {
+            margin: 0 0 16px;
+            font-size: 12px;
+            color: #ffedd5;
+            line-height: 1.5;
+        }
+
+        .sidebar-card .btn-side {
+            display: inline-block;
+            background: white;
+            color: var(--primary);
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: 800;
+            font-size: 13px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
         .main {
@@ -84,27 +128,23 @@
         }
 
         .topbar {
-            height: 82px;
-            background: white;
+            height: 76px;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
             display: flex;
-            justify-content: flex-end;
+            justify-content: space-between;
             align-items: center;
             padding: 0 45px;
-            border-bottom: 1px solid #e5e7eb;
-        }
-
-        .search {
-            width: 420px;
-            background: #f1f5f9;
-            border: none;
-            padding: 14px 20px;
-            border-radius: 30px;
-            font-size: 15px;
+            border-bottom: 1px solid var(--border);
+            position: sticky;
+            top: 0;
+            z-index: 90;
         }
 
         .user-box {
-            font-weight: bold;
-            color: #1e3a8a;
+            font-weight: 800;
+            color: var(--text);
+            font-size: 15px;
         }
 
         .content {
@@ -112,106 +152,157 @@
         }
 
         .hero {
-            background: linear-gradient(135deg, #ffffff, #eef4ff);
+            background: #ffffff;
+            border: 1px solid var(--border);
             border-radius: 24px;
-            padding: 45px;
+            padding: 42px;
             display: grid;
             grid-template-columns: 1.3fr 0.7fr;
             gap: 30px;
             align-items: center;
-            box-shadow: 0 8px 25px rgba(15, 23, 42, 0.08);
+            box-shadow: 0 12px 32px rgba(234, 88, 12, 0.05);
         }
 
         .hero h1 {
-            font-size: 42px;
+            font-size: clamp(28px, 3.5vw, 40px);
             margin: 0;
-            color: #0f172a;
+            color: var(--text);
+            font-weight: 800;
+            line-height: 1.2;
+        }
+
+        .hero h1 span {
+            color: var(--primary);
         }
 
         .hero p {
-            color: #64748b;
-            font-size: 17px;
+            color: var(--muted);
+            font-size: 16px;
             line-height: 1.7;
-            margin: 18px 0;
+            margin: 16px 0 24px;
         }
 
-        .btn {
-            display: inline-block;
-            background: #2563eb;
+        .btn-orange {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--primary);
             color: white;
             text-decoration: none;
-            padding: 15px 28px;
-            border-radius: 12px;
-            font-weight: bold;
-            margin-top: 12px;
+            padding: 14px 28px;
+            border-radius: 30px;
+            font-weight: 700;
+            font-size: 14px;
+            box-shadow: 0 8px 20px rgba(234, 88, 12, 0.25);
+            transition: transform 0.2s ease, background 0.2s ease;
+        }
+
+        .btn-orange:hover {
+            transform: translateY(-2px);
+            background: var(--primary-dark);
         }
 
         .hero-card {
-            background: white;
-            border-radius: 22px;
-            padding: 28px;
-            box-shadow: 0 8px 25px rgba(15, 23, 42, 0.08);
+            background: #fff6f0;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 26px;
         }
 
         .hero-card h3 {
-            color: #0f172a;
+            color: var(--text);
             margin-top: 0;
+            font-size: 17px;
+            font-weight: 800;
         }
 
         .check-item {
-            background: #f8fafc;
-            padding: 14px;
-            border-radius: 12px;
-            margin-bottom: 12px;
-            color: #334155;
-            font-weight: bold;
+            background: #ffffff;
+            border: 1px solid var(--border);
+            padding: 12px 14px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            color: var(--text);
+            font-weight: 700;
+            font-size: 13px;
         }
 
         .stats {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 22px;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
             margin-top: 28px;
         }
 
         .stat-card {
             background: white;
-            padding: 25px;
+            border: 1px solid var(--border);
+            padding: 24px;
             border-radius: 18px;
-            box-shadow: 0 8px 25px rgba(15, 23, 42, 0.08);
+            box-shadow: 0 8px 24px rgba(234, 88, 12, 0.04);
+            transition: all 0.2s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(234, 88, 12, 0.12);
         }
 
         .stat-card h2 {
-            color: #2563eb;
+            color: var(--primary);
             margin: 0;
-            font-size: 34px;
+            font-size: 32px;
+            font-weight: 800;
+        }
+
+        .stat-card p {
+            margin: 4px 0 0;
+            color: var(--muted);
+            font-size: 13px;
+            font-weight: 600;
         }
 
         .feature-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 22px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
             margin-top: 28px;
         }
 
         .feature-card {
             background: white;
-            padding: 28px;
+            border: 1px solid var(--border);
+            padding: 26px;
             border-radius: 18px;
-            box-shadow: 0 8px 25px rgba(15, 23, 42, 0.08);
+            box-shadow: 0 8px 24px rgba(234, 88, 12, 0.04);
         }
 
         .feature-card h3 {
-            color: #1e3a8a;
+            color: var(--text);
+            margin: 0 0 8px;
+            font-size: 17px;
+            font-weight: 800;
+        }
+
+        .feature-card p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.65;
         }
 
         .tip {
             margin-top: 28px;
-            background: #eff6ff;
-            border: 1px solid #bfdbfe;
+            background: #fff0e6;
+            border: 1px solid #fed7aa;
             border-radius: 16px;
-            padding: 18px 22px;
-            color: #1e3a8a;
+            padding: 20px 24px;
+            color: var(--text);
+            font-size: 14px;
+        }
+
+        .tip b {
+            color: var(--primary);
         }
 
         @media (max-width: 1000px) {
@@ -226,15 +317,11 @@
 
             .hero {
                 grid-template-columns: 1fr;
+                padding: 28px 22px;
             }
 
-            .stats,
-            .feature-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .search {
-                display: none;
+            .content {
+                padding: 24px 20px;
             }
         }
     </style>
@@ -249,12 +336,11 @@
                 <span>Personality<span class="ai-text">AI</span></span>
             </div>
 
-
             <div class="menu">
-              <a href="{% url 'dashboard_home' %}" class="active">Dashboard</a>
+                <a href="{% url 'dashboard_home' %}" class="active">Dashboard</a>
 
                 {% if user.is_authenticated %}
-                <a href="{% url 'user_dashboard' %}">Dashboard</a>
+                <a href="{% url 'user_dashboard' %}">My Profile</a>
                 <a href="{% url 'start_assessment' %}">Take Assessment</a>
                 <a href="{% url 'logout' %}">Logout</a>
                 {% else %}
@@ -268,9 +354,9 @@
                 <p>Complete your assessment and discover your personality-based career path.</p>
 
                 {% if user.is_authenticated %}
-                <a class="btn" href="{% url 'start_assessment' %}">Start Assessment</a>
+                <a class="btn-side" href="{% url 'start_assessment' %}">Start Assessment</a>
                 {% else %}
-                <a class="btn" href="{% url 'register' %}">Get Started</a>
+                <a class="btn-side" href="{% url 'register' %}">Get Started</a>
                 {% endif %}
             </div>
         </aside>
@@ -280,7 +366,7 @@
             <div class="topbar">
                 <div class="user-box">
                     {% if user.is_authenticated %}
-                    Welcome, {{ user.username }}
+                    Welcome, {{ user.username }} 👋
                     {% else %}
                     Guest User
                     {% endif %}
@@ -291,16 +377,16 @@
 
                 <section class="hero">
                     <div>
-                        <h1>AI-Based Adaptive Personality Assessment</h1>
+                        <h1>AI-Based <span>Adaptive Personality</span> Assessment</h1>
                         <p>
                             Discover your Big Five personality traits using a dynamic Django web application
                             and receive personalized career recommendations with visual reports.
                         </p>
 
                         {% if user.is_authenticated %}
-                        <a class="btn" href="{% url 'start_assessment' %}">Start Assessment</a>
+                        <a class="btn-orange" href="{% url 'start_assessment' %}">Start Assessment &rarr;</a>
                         {% else %}
-                        <a class="btn" href="{% url 'register' %}">Create Account</a>
+                        <a class="btn-orange" href="{% url 'register' %}">Create Account &rarr;</a>
                         {% endif %}
                     </div>
 

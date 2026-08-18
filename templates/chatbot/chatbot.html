@@ -3,21 +3,20 @@
 <link rel="stylesheet" href="{% static 'css/chatbot.css' %}">
 
 <!-- Floating Chat Toggle Button -->
-<button id="chatToggle" class="chat-toggle" title="Chat with AI Assistant" aria-label="Open Chat">
-    <i class="bi bi-chat-dots-fill"></i>
+<button id="chatToggle" class="chat-toggle" title="AI Career Advisor" aria-label="Open Chat">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+    </svg>
 </button>
 
 <!-- Chat Window Container -->
 <div class="chat-container" id="chatContainer">
 
-    <div class="chat-header">
-        <div class="chat-header-title">
-            <div>
-                <h3>AI Career Assistant</h3>
-                <p>Personality & Career Guidance</p>
-            </div>
+    <div class="chat-header" style="display:flex;justify-content:space-between;align-items:center;padding:14px 18px;">
+        <div>
+            <h3 style="margin:0;font-size:15px;font-weight:800;letter-spacing:0.3px;">AI CAREER ADVISOR</h3>
+            <p style="margin:2px 0 0;font-size:11px;opacity:0.85;">Personalized Career Guidance & Assessment Support</p>
         </div>
-
         <button id="closeChat" class="close-chat" title="Close Chat" aria-label="Close Chat">
             &times;
         </button>
@@ -26,26 +25,34 @@
     <div class="chat-body" id="chatBody">
         <div class="message ai-message">
             <div class="bubble">
-                <p>Hello! I am your AI Career Assistant.</p>
-                <p>Ask me questions such as:</p>
-                <ul>
-                    <li>Why was this career recommended?</li>
-                    <li>What skills should I learn next?</li>
-                    <li>Which career suits my personality best?</li>
-                </ul>
+                <p style="margin:0 0 6px;font-weight:800;color:#0f172a;">Welcome to AI Career Advisor</p>
+                <p style="margin:0;font-size:13px;color:#334155;line-height:1.6;">Ask any question regarding your personality assessment scores, recommended careers, or required skill roadmaps.</p>
             </div>
         </div>
+    </div>
+
+    <!-- Quick Prompt Chips -->
+    <div id="advisorChips" class="chat-chips" style="padding:8px 12px;display:flex;gap:6px;overflow-x:auto;background:#f8fafc;border-top:1px solid #e2e8f0;">
+        <button type="button" class="chip-btn" data-prompt="Why was my top career recommended?" style="background:#eff6ff;border:1px solid #bfdbfe;color:#1d4ed8;padding:5px 12px;border-radius:12px;font-size:11px;cursor:pointer;white-space:nowrap;font-weight:700;">
+            Why recommended?
+        </button>
+        <button type="button" class="chip-btn" data-prompt="What skills should I learn first?" style="background:#eff6ff;border:1px solid #bfdbfe;color:#1d4ed8;padding:5px 12px;border-radius:12px;font-size:11px;cursor:pointer;white-space:nowrap;font-weight:700;">
+            Key skills to learn
+        </button>
+        <button type="button" class="chip-btn" data-prompt="Summarize my personality assessment score" style="background:#f1f5f9;border:1px solid #cbd5e1;color:#475569;padding:5px 12px;border-radius:12px;font-size:11px;cursor:pointer;white-space:nowrap;font-weight:700;">
+            Assessment Summary
+        </button>
     </div>
 
     <div class="chat-input">
         <input
             id="userInput"
             type="text"
-            placeholder="Ask about your career..."
+            placeholder="Type your question..."
             autocomplete="off"
         >
 
-        <button id="sendBtn" type="button">
+        <button id="sendBtn" type="button" style="font-weight:700;">
             Send
         </button>
 
@@ -53,3 +60,5 @@
     </div>
 
 </div>
+
+<script src="{% static 'js/chatbot.js' %}"></script>
