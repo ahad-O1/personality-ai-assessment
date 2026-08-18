@@ -97,8 +97,8 @@ def submit_career_feedback(request, result_id):
         id=1,
         defaults={
             "model_version": "1.0",
-            "current_accuracy": 53.06,
-            "previous_accuracy": 53.06,
+            "current_accuracy": 77.01,
+            "previous_accuracy": 76.62,
             "feedback_since_last_training": 0,
             "retraining_running": False,
         },
