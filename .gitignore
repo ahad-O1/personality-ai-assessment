@@ -24,6 +24,9 @@ personality_ai_backup/
 .vscode/
 .idea/
 
+# Scratch / temp files
+scratch/
+
 # OS files
 .DS_Store
 Thumbs.db

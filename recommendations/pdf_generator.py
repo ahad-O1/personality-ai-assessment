@@ -40,22 +40,24 @@ from recommendations.recommendation_engine import get_recommended_careers
 # Color palette
 # =========================================================
 
-PRIMARY = HexColor("#1E3A8A")
-PRIMARY_LIGHT = HexColor("#2563EB")
-SECONDARY = HexColor("#7C3AED")
+PRIMARY = HexColor("#F5793A")        # Warm Orange
+PRIMARY_DARK = HexColor("#C2410C")   # Deep Burnt Orange
+PRIMARY_LIGHT = HexColor("#F97316")  # Accent Orange
+SECONDARY = HexColor("#EA580C")
 
-TEXT_DARK = HexColor("#0F172A")
-TEXT_MUTED = HexColor("#64748B")
+TEXT_DARK = HexColor("#1A1A2E")      # Dark Navy
+TEXT_MUTED = HexColor("#64748B")     # Slate Gray
 
-BACKGROUND = HexColor("#F8FAFC")
+BACKGROUND = HexColor("#FAFAFA")
 CARD_BACKGROUND = HexColor("#FFFFFF")
-LIGHT_BLUE = HexColor("#EFF6FF")
-LIGHT_PURPLE = HexColor("#F5F3FF")
-LIGHT_GREEN = HexColor("#ECFDF5")
-LIGHT_ORANGE = HexColor("#FFF7ED")
+LIGHT_PEACH = HexColor("#FDF0E7")    # Warm light peach background for section headers
+LIGHT_BLUE = HexColor("#FDF0E7")     # Light Peach fallback
+LIGHT_PURPLE = HexColor("#FFF7ED")   # Soft Orange background
+LIGHT_GREEN = HexColor("#ECFDF5")    # Soft Green tint
+LIGHT_ORANGE = HexColor("#FFF7ED")   # Soft Orange tint
 
-BORDER = HexColor("#E2E8F0")
-PROGRESS_BACKGROUND = HexColor("#E5E7EB")
+BORDER = HexColor("#FCE4D6")         # Soft orange border
+PROGRESS_BACKGROUND = HexColor("#F3F4F6")
 SUCCESS = HexColor("#059669")
 WARNING = HexColor("#D97706")
 
@@ -152,7 +154,7 @@ def get_level_badge_colors(level):
         return LIGHT_GREEN, SUCCESS
     if level == "low":
         return LIGHT_ORANGE, WARNING
-    return LIGHT_BLUE, PRIMARY
+    return LIGHT_ORANGE, PRIMARY
 
 
 def build_styles():
@@ -178,7 +180,7 @@ def build_styles():
             fontSize=9,
             leading=12,
             alignment=TA_CENTER,
-            textColor=HexColor("#DBEAFE"),
+            textColor=HexColor("#FFEDD5"),
         ),
 
         "section_title": ParagraphStyle(
@@ -187,7 +189,7 @@ def build_styles():
             fontName="Helvetica-Bold",
             fontSize=11.5,
             leading=14,
-            textColor=PRIMARY,
+            textColor=TEXT_DARK,
         ),
 
         "card_title": ParagraphStyle(
@@ -196,7 +198,17 @@ def build_styles():
             fontName="Helvetica-Bold",
             fontSize=9.5,
             leading=12,
-            textColor=PRIMARY,
+            textColor=PRIMARY_DARK,
+            spaceAfter=2,
+        ),
+
+        "card_title_green": ParagraphStyle(
+            "CardTitleGreen",
+            parent=sample_styles["Heading3"],
+            fontName="Helvetica-Bold",
+            fontSize=9.5,
+            leading=12,
+            textColor=SUCCESS,
             spaceAfter=2,
         ),
 
@@ -206,7 +218,7 @@ def build_styles():
             fontName="Helvetica-Bold",
             fontSize=11,
             leading=14,
-            textColor=PRIMARY,
+            textColor=TEXT_DARK,
         ),
 
         "body": ParagraphStyle(
@@ -251,7 +263,7 @@ def build_styles():
             fontName="Helvetica-Bold",
             fontSize=15,
             leading=18,
-            textColor=PRIMARY,
+            textColor=PRIMARY_DARK,
             spaceAfter=3,
         ),
 
@@ -286,7 +298,7 @@ def section_heading(title, styles):
 
     heading.setStyle(
         TableStyle([
-            ("BACKGROUND", (0, 0), (-1, -1), LIGHT_BLUE),
+            ("BACKGROUND", (0, 0), (-1, -1), LIGHT_PEACH),
             ("BOX", (0, 0), (-1, -1), 0.6, BORDER),
             ("LEFTPADDING", (0, 0), (-1, -1), 9),
             ("RIGHTPADDING", (0, 0), (-1, -1), 9),
@@ -298,10 +310,10 @@ def section_heading(title, styles):
     return heading
 
 
-def bullet_paragraph(text, styles):
+def bullet_paragraph(text, styles, bullet_color="#F5793A"):
     """Create a clean bullet paragraph."""
     return Paragraph(
-        f'<font color="#2563EB">•</font>&nbsp;&nbsp;{safe_text(text)}',
+        f'<font color="{bullet_color}">•</font>&nbsp;&nbsp;{safe_text(text)}',
         styles["body"],
     )
 
@@ -440,8 +452,8 @@ def build_personality_summary(
 
     summary_card.setStyle(
         TableStyle([
-            ("BACKGROUND", (0, 0), (-1, -1), LIGHT_PURPLE),
-            ("BOX", (0, 0), (-1, -1), 0.7, HexColor("#DDD6FE")),
+            ("BACKGROUND", (0, 0), (-1, -1), LIGHT_ORANGE),
+            ("BOX", (0, 0), (-1, -1), 0.7, BORDER),
             ("LEFTPADDING", (0, 0), (-1, -1), 10),
             ("RIGHTPADDING", (0, 0), (-1, -1), 10),
             ("TOPPADDING", (0, 0), (-1, 0), 8),
@@ -462,7 +474,7 @@ def build_personality_summary(
 
     if environment_items:
         environment_content.extend(
-            bullet_paragraph(item, styles)
+            bullet_paragraph(item, styles, bullet_color="#F5793A")
             for item in environment_items[:4]
         )
     else:
@@ -471,12 +483,12 @@ def build_personality_summary(
         )
 
     domain_content = [
-        Paragraph("RECOMMENDED DOMAINS", styles["card_title"]),
+        Paragraph("RECOMMENDED DOMAINS", styles["card_title_green"]),
     ]
 
     if domain_items:
         domain_content.extend(
-            bullet_paragraph(item, styles)
+            bullet_paragraph(item, styles, bullet_color="#059669")
             for item in domain_items[:4]
         )
     else:
@@ -492,10 +504,10 @@ def build_personality_summary(
 
     details_table.setStyle(
         TableStyle([
-            ("BACKGROUND", (0, 0), (0, 0), LIGHT_BLUE),
+            ("BACKGROUND", (0, 0), (0, 0), LIGHT_ORANGE),
             ("BACKGROUND", (1, 0), (1, 0), LIGHT_GREEN),
             ("BOX", (0, 0), (0, 0), 0.6, BORDER),
-            ("BOX", (1, 0), (1, 0), 0.6, BORDER),
+            ("BOX", (1, 0), (1, 0), 0.6, HexColor("#A7F3D0")),
             ("LEFTPADDING", (0, 0), (-1, -1), 9),
             ("RIGHTPADDING", (0, 0), (-1, -1), 9),
             ("TOPPADDING", (0, 0), (-1, -1), 7),
@@ -524,7 +536,7 @@ def build_ocean_scores(result, styles):
     rows = []
 
     for trait, score in scores:
-        score_color = get_score_color(score)
+        score_color = PRIMARY_LIGHT
 
         label = Paragraph(trait, styles["score"])
 
@@ -534,7 +546,7 @@ def build_ocean_scores(result, styles):
                 f"{trait}Value",
                 parent=styles["score"],
                 alignment=TA_LEFT,
-                textColor=score_color,
+                textColor=PRIMARY_DARK,
             ),
         )
 
@@ -572,12 +584,12 @@ def build_ocean_scores(result, styles):
 def build_strengths_growth(strengths, improvements, styles):
     """Build strengths and growth areas cards."""
     strength_content = [
-        Paragraph("TOP STRENGTHS", styles["card_title"]),
+        Paragraph("TOP STRENGTHS", styles["card_title_green"]),
     ]
 
     if strengths:
         strength_content.extend(
-            bullet_paragraph(item, styles)
+            bullet_paragraph(item, styles, bullet_color="#059669")
             for item in strengths[:5]
         )
     else:
@@ -591,7 +603,7 @@ def build_strengths_growth(strengths, improvements, styles):
 
     if improvements:
         improvement_content.extend(
-            bullet_paragraph(item, styles)
+            bullet_paragraph(item, styles, bullet_color="#F5793A")
             for item in improvements[:5]
         )
     else:
@@ -608,7 +620,7 @@ def build_strengths_growth(strengths, improvements, styles):
         TableStyle([
             ("BACKGROUND", (0, 0), (0, 0), LIGHT_GREEN),
             ("BACKGROUND", (1, 0), (1, 0), LIGHT_ORANGE),
-            ("BOX", (0, 0), (0, 0), 0.6, BORDER),
+            ("BOX", (0, 0), (0, 0), 0.6, HexColor("#A7F3D0")),
             ("BOX", (1, 0), (1, 0), 0.6, BORDER),
             ("LEFTPADDING", (0, 0), (-1, -1), 9),
             ("RIGHTPADDING", (0, 0), (-1, -1), 9),
@@ -729,13 +741,13 @@ def build_skill_tags(skills, styles):
                     ParagraphStyle(
                         f"Skill{safe_text(skill)}",
                         parent=styles["small"],
-                        textColor=PRIMARY,
+                        textColor=PRIMARY_DARK,
                         alignment=TA_CENTER,
                     ),
                 )]],
                 colWidths=[None],
                 style=TableStyle([
-                    ("BACKGROUND", (0, 0), (-1, -1), LIGHT_BLUE),
+                    ("BACKGROUND", (0, 0), (-1, -1), LIGHT_PEACH),
                     ("BOX", (0, 0), (-1, -1), 0.4, BORDER),
                     ("LEFTPADDING", (0, 0), (-1, -1), 4),
                     ("RIGHTPADDING", (0, 0), (-1, -1), 4),
@@ -809,7 +821,7 @@ def build_career_card(career, index, styles):
 
     rank_circle.setStyle(
         TableStyle([
-            ("BACKGROUND", (0, 0), (-1, -1), PRIMARY_LIGHT),
+            ("BACKGROUND", (0, 0), (-1, -1), PRIMARY),
             ("VALIGN", (0, 0), (-1, -1), "MIDDLE"),
             ("ALIGN", (0, 0), (-1, -1), "CENTER"),
         ])
@@ -858,7 +870,7 @@ def build_career_card(career, index, styles):
     # Reasons content
     reasons_content = [Paragraph("WHY RECOMMENDED", styles["card_title"])]
     if reasons:
-        reasons_content.extend(bullet_paragraph(r, styles) for r in reasons[:2])
+        reasons_content.extend(bullet_paragraph(r, styles, bullet_color="#F5793A") for r in reasons[:2])
     else:
         reasons_content.append(Paragraph("Personality profile aligns with this career.", styles["body"]))
 
@@ -867,7 +879,7 @@ def build_career_card(career, index, styles):
     if roadmap:
         for step_idx, step in enumerate(roadmap[:2], start=1):
             roadmap_content.append(
-                Paragraph(f'<font color="#2563EB"><b>{step_idx}.</b></font>&nbsp;&nbsp;{safe_text(step)}', styles["body"])
+                Paragraph(f'<font color="#F5793A"><b>{step_idx}.</b></font>&nbsp;&nbsp;{safe_text(step)}', styles["body"])
             )
     else:
         roadmap_content.append(Paragraph("Focus on core domain skills.", styles["body"]))
@@ -879,34 +891,34 @@ def build_career_card(career, index, styles):
 
     two_col_details.setStyle(
         TableStyle([
-            ("BACKGROUND", (0, 0), (0, 0), LIGHT_BLUE),
-            ("BACKGROUND", (1, 0), (1, 0), LIGHT_PURPLE),
+            ("BACKGROUND", (0, 0), (0, 0), LIGHT_PEACH),
+            ("BACKGROUND", (1, 0), (1, 0), LIGHT_ORANGE),
             ("BOX", (0, 0), (0, 0), 0.5, BORDER),
             ("BOX", (1, 0), (1, 0), 0.5, BORDER),
-            ("LEFTPADDING", (0, 0), (-1, -1), 7),
-            ("RIGHTPADDING", (0, 0), (-1, -1), 7),
-            ("TOPPADDING", (0, 0), (-1, -1), 5),
-            ("BOTTOMPADDING", (0, 0), (-1, -1), 5),
+            ("LEFTPADDING", (0, 0), (-1, -1), 6),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 6),
+            ("TOPPADDING", (0, 0), (-1, -1), 4),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 4),
             ("VALIGN", (0, 0), (-1, -1), "TOP"),
         ])
     )
 
     content = [
         card_header,
-        Spacer(1, 1.5 * mm),
+        Spacer(1, 1 * mm),
         Paragraph(description, styles["body"]),
-        Spacer(1, 1.5 * mm),
+        Spacer(1, 1 * mm),
         Paragraph("<b>Recommended Skills:</b>", styles["small"]),
         Spacer(1, 1 * mm),
         build_skill_tags(skills, styles),
-        Spacer(1, 1.5 * mm),
+        Spacer(1, 1 * mm),
         ScoreProgressBar(
             score,
             width=166 * mm,
-            height=4 * mm,
+            height=3.8 * mm,
             bar_color=get_score_color(score),
         ),
-        Spacer(1, 2 * mm),
+        Spacer(1, 1.5 * mm),
         two_col_details,
     ]
 
@@ -925,15 +937,15 @@ def build_career_card(career, index, styles):
             TableStyle([
                 ("BACKGROUND", (0, 0), (-1, -1), LIGHT_ORANGE),
                 ("BOX", (0, 0), (-1, -1), 0.4, HexColor("#FED7AA")),
-                ("LEFTPADDING", (0, 0), (-1, -1), 7),
-                ("RIGHTPADDING", (0, 0), (-1, -1), 7),
-                ("TOPPADDING", (0, 0), (-1, -1), 4),
-                ("BOTTOMPADDING", (0, 0), (-1, -1), 4),
+                ("LEFTPADDING", (0, 0), (-1, -1), 6),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 6),
+                ("TOPPADDING", (0, 0), (-1, -1), 3),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 3),
             ])
         )
 
         content.extend([
-            Spacer(1, 1.5 * mm),
+            Spacer(1, 1 * mm),
             warning_card,
         ])
 
@@ -946,10 +958,10 @@ def build_career_card(career, index, styles):
         TableStyle([
             ("BACKGROUND", (0, 0), (-1, -1), CARD_BACKGROUND),
             ("BOX", (0, 0), (-1, -1), 0.7, BORDER),
-            ("LEFTPADDING", (0, 0), (-1, -1), 8),
-            ("RIGHTPADDING", (0, 0), (-1, -1), 8),
-            ("TOPPADDING", (0, 0), (-1, -1), 8),
-            ("BOTTOMPADDING", (0, 0), (-1, -1), 8),
+            ("LEFTPADDING", (0, 0), (-1, -1), 6),
+            ("RIGHTPADDING", (0, 0), (-1, -1), 6),
+            ("TOPPADDING", (0, 0), (-1, -1), 4),
+            ("BOTTOMPADDING", (0, 0), (-1, -1), 4),
         ])
     )
 
@@ -1111,7 +1123,7 @@ def download_report(request, result_id):
     story.append(Spacer(1, 3.5 * mm))
 
     # Top 5 AI Career Recommendations
-    story.append(CondPageBreak(55 * mm))
+    story.append(CondPageBreak(30 * mm))
 
     story.append(
         section_heading(
@@ -1135,7 +1147,7 @@ def download_report(request, result_id):
                 )
             )
 
-            story.append(Spacer(1, 3 * mm))
+            story.append(Spacer(1, 2 * mm))
 
     else:
         no_career_card = Table(
