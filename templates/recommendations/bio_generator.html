@@ -160,9 +160,12 @@
     ✅ Copied to clipboard!
 </div>
 
+{{ personality_type|json_script:"personality-type-data" }}
+{{ strengths|json_script:"strengths-data" }}
+
 <script>
-    const personalityType = "{{ personality_type }}";
-    const strengthsList = [{% for s in strengths %}"{{ s }}",{% endfor %}];
+    const personalityType = JSON.parse(document.getElementById('personality-type-data').textContent || '""');
+    const strengthsList = JSON.parse(document.getElementById('strengths-data').textContent || '[]');
     let currentTone = "corporate";
 
     function updateWordStats() {

@@ -630,7 +630,7 @@
             {% for node in structured_roadmap %}
             <div class="roadmap-item {% if node.completed %}completed-item{% endif %}" id="node-item-{{ node.index }}">
                 <div class="custom-checkbox {% if node.completed %}checked{% endif %}"
-                     onclick="toggleStep({{ career.id }}, {{ node.index }})"
+                     onclick="toggleStep('{{ career.id }}', '{{ node.index }}')"
                      id="chk-{{ node.index }}">
                     <i class="bi bi-check-lg" style="{% if not node.completed %}display:none;{% endif %}" id="chk-icon-{{ node.index }}"></i>
                 </div>

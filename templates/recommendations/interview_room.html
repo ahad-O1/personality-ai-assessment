@@ -308,8 +308,9 @@
 {% endblock %}
 
 {% block extra_js %}
+{{ session.id|json_script:"session-id-data" }}
 <script>
-const sessionId = {{ session.id }};
+const sessionId = JSON.parse(document.getElementById('session-id-data').textContent);
 let cachedNextQuestion = null;
 let cachedRedirectUrl = null;
 

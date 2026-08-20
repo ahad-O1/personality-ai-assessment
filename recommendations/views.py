@@ -182,7 +182,7 @@ def career_tracker_dashboard(request):
             active_goal.save()
 
     if not active_goal:
-        latest_result = AssessmentResult.objects.filter(user=user).order_by("-created_at").first()
+        latest_result = AssessmentResult.objects.filter(session__user=user).order_by("-created_at").first()
         if latest_result:
             careers = get_recommended_careers(latest_result, top_n=1)
             if careers:
