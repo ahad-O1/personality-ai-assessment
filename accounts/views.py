@@ -190,10 +190,10 @@ def login_view(request):
         username_or_email = request.POST.get("username", "").strip()
         password = request.POST.get("password", "")
 
-        # Allow login using username or email
-        user = User.objects.filter(username=username_or_email).first()
+        # Allow login using username or email (case-insensitive)
+        user = User.objects.filter(username__iexact=username_or_email).first()
         if not user:
-            user = User.objects.filter(email=username_or_email.lower()).first()
+            user = User.objects.filter(email__iexact=username_or_email).first()
 
         if user and user.check_password(password):
             if not user.is_active:
